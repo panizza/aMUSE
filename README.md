@@ -1,2 +1,2 @@
-aMUSE
+aMUSEment for the masses
 =====
