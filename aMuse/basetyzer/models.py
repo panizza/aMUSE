@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Exhibit(models.Model):
     name = models.CharField(max_length=50)
@@ -16,13 +17,13 @@ class Item(models.Model):
     description = models.TextField()
     author = models.CharField(max_length=50)
     release_date = models.DateField()
-    photo = models.ImageField(path__to="images/items/")
+    photo = models.ImageField(upload_to="images/items/")
     nfc_tag = models.ForeignKey(NFC)
     exhibit = models.ManyToManyField(Exhibit)
     
 class Experience(models.Model):
     date = models.DateTimeField()
-    user = models.ForeignKey(user)
+    user = models.ForeignKey(User)
     confirmed = models.BooleanField()
     hash_url = models.CharField(max_length=40)
     
@@ -34,7 +35,7 @@ class Comment(models.Model):
     content = models.TextField()
     
 class Photo(models.Model):
-    content = models.ImageField(path__to="images/userphoto/")
+    content = models.ImageField(upload_to="images/userphoto/")
     
 class Scan(models.Model):
     content = models.ForeignKey(Item)
