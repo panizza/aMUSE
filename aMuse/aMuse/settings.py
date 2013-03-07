@@ -1,5 +1,6 @@
 # Django settings for aMuse project.
-from os.path import dirname, abspath
+from os.path import dirname, abspath,join,normpath
+
 ROOT = dirname(abspath(__file__)).replace('\\', '/') + '/'
 
 DEBUG = True
@@ -109,11 +110,12 @@ ROOT_URLCONF = 'aMuse.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'aMuse.wsgi.application'
 
+SETTINGS_PATH = dirname(__file__)
+# Find templates in the same folder as settings.py.
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+   join(SETTINGS_PATH, '../webinator/templates')
+   #"/Users/les/sites/env/amuse/project/aMUSE/aMuse/webinator/templates/webinator"
+    )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
