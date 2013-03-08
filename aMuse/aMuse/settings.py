@@ -2,6 +2,7 @@
 from os.path import dirname, abspath,join,normpath
 
 ROOT = dirname(abspath(__file__)).replace('\\', '/') + '/'
+SETTINGS_PATH = dirname(__file__)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -64,14 +65,15 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
-
+#STATIC_ROOT = ''
+STATIC_ROOT = join(SETTINGS_PATH, '../')
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    join(SETTINGS_PATH, '../webinator/static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -110,7 +112,7 @@ ROOT_URLCONF = 'aMuse.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'aMuse.wsgi.application'
 
-SETTINGS_PATH = dirname(__file__)
+
 # Find templates in the same folder as settings.py.
 TEMPLATE_DIRS = (
    join(SETTINGS_PATH, '../webinator/templates')
