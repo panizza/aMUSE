@@ -1,0 +1,29 @@
+{% load url from future %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        {% block supertitle %}
+            {% block title %}
+        	{% endblock %}
+        {% endblock %}
+    </title>
+    {% block viewport %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock viewport %}
+    
+    {% block extrastyle %}
+        {# QUA METTICI I FILE CSS CHE VANNO USATI IN TUTTE LE PAGINE#}
+    {% endblock %}
+
+    {% block extrascript %}
+        {# QUA METTICI I FILE JS CHE VANNO USATI IN TUTTE LE PAGINE#}
+    {% endblock %}
+</head>
+<body>
+    {% block container %}
+    {% endblock %}
+
+</body>
+</html>
