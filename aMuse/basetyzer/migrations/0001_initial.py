@@ -19,13 +19,13 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'basetyzer', ['Exhibit'])
 
-        # Adding model 'NFC'
-        db.create_table(u'basetyzer_nfc', (
+        # Adding model 'Tag'
+        db.create_table(u'basetyzer_tag', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('serial', self.gf('django.db.models.fields.CharField')(max_length=50)),
             ('in_use', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
-        db.send_create_signal(u'basetyzer', ['NFC'])
+        db.send_create_signal(u'basetyzer', ['Tag'])
 
         # Adding model 'Item'
         db.create_table(u'basetyzer_item', (
@@ -35,7 +35,7 @@ class Migration(SchemaMigration):
             ('author', self.gf('django.db.models.fields.CharField')(max_length=50)),
             ('release_date', self.gf('django.db.models.fields.DateField')()),
             ('photo', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
-            ('nfc_tag', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['basetyzer.NFC'])),
+            ('tag', self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['basetyzer.Tag'])),
         ))
         db.send_create_signal(u'basetyzer', ['Item'])
 
@@ -94,8 +94,8 @@ class Migration(SchemaMigration):
         # Deleting model 'Exhibit'
         db.delete_table(u'basetyzer_exhibit')
 
-        # Deleting model 'NFC'
-        db.delete_table(u'basetyzer_nfc')
+        # Deleting model 'Tag'
+        db.delete_table(u'basetyzer_tag')
 
         # Deleting model 'Item'
         db.delete_table(u'basetyzer_item')
@@ -186,16 +186,10 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.TextField', [], {}),
             'exhibit': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['basetyzer.Exhibit']", 'symmetrical': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'nfc_tag': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['basetyzer.NFC']"}),
             'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             'release_date': ('django.db.models.fields.DateField', [], {}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'default': 'None', 'to': u"orm['basetyzer.Tag']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        u'basetyzer.nfc': {
-            'Meta': {'object_name': 'NFC'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'in_use': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'serial': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         u'basetyzer.photo': {
             'Meta': {'object_name': 'Photo'},
@@ -206,6 +200,12 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Scan'},
             'content': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['basetyzer.Item']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+        },
+        u'basetyzer.tag': {
+            'Meta': {'object_name': 'Tag'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'in_use': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'serial': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},

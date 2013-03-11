@@ -24,7 +24,7 @@ class Item(models.Model):
     author = models.CharField(max_length=50)
     release_date = models.DateField()
     photo = models.ImageField(upload_to="images/items/")
-    tag = models.ForeignKey(Tag)
+    tag = models.ForeignKey(Tag, null=False, default=None)
     exhibit = models.ManyToManyField(Exhibit)
 
     def __unicode__(self):
