@@ -11,7 +11,7 @@ class Exhibit(models.Model):
     def __unicode__(self):
         return "%s" % (self.name,)
     
-class NFC(models.Model):
+class Tag(models.Model):
     serial = models.CharField(max_length=50)
     in_use = models.BooleanField()
 
@@ -24,7 +24,7 @@ class Item(models.Model):
     author = models.CharField(max_length=50)
     release_date = models.DateField()
     photo = models.ImageField(upload_to="images/items/")
-    nfc_tag = models.ForeignKey(NFC)
+    tag = models.ForeignKey(Tag, null=False, default=None)
     exhibit = models.ManyToManyField(Exhibit)
 
     def __unicode__(self):
