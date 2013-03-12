@@ -1,49 +1,48 @@
-<meta charset="utf-8">
-<title>Login page example</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+{% extends "webinator/base.html" %}
+
+{%  block title %}
+    Login
+{% endblock %}
+{% load staticfiles %}
+
+
 
 <!-- Le styles -->
+{% block extrastyle %}
+    <style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color:rgb(230, 230, 230);
+        }
 
-{%  load staticfiles %}
-<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-<style type="text/css">
-    body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-image: url({% static "img/galaxy.jpg" %} );
-        background-size: 100%;
-    }
+        .form-signin {
+            max-width: 300px;
+            padding: 10px 29px 29px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 2px solid rgba(247, 202, 145, 0.43);
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            -webkit-box-shadow: 10 5px 5px rgba(0,0,0,.05);
+            -moz-box-shadow: 10 5px 5px rgba(0,0,0,.05);
+            box-shadow: 10 5px 5px rgba(0,0,0,.05);
+        }
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+        .form-signin input[type="text"],
+        .form-signin input[type="password"] {
+            font-size: 16px;
+            height: auto;
+            margin-bottom: 15px;
+            padding: 7px 9px;
+        }
 
-    .form-signin {
-        max-width: 300px;
-        padding: 10px 29px 29px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 2px solid #e5e5e5;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        border-radius: 20px;
-        -webkit-box-shadow: 10 5px 5px rgba(0,0,0,.05);
-        -moz-box-shadow: 10 5px 5px rgba(0,0,0,.05);
-        box-shadow: 10 5px 5px rgba(0,0,0,.05);
-    }
-    .form-signin .form-signin-heading,
-    .form-signin .checkbox {
-        margin-bottom: 10px;
-    }
-    .form-signin input[type="text"],
-    .form-signin input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-    }
-
-</style>
-<link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
-
+    </style>
+{% endblock %}
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="../assets/js/html5shiv.js"></script>
@@ -55,42 +54,33 @@
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 <link rel="shortcut icon" href="../assets/ico/favicon.png"> -->
-</head>
 
-<body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="user_details.html">aMUSE</a>
+
+{% block container %}
+    <div class="container-fluid pagination">
+        <div class="span3">
+                <h2>aMuX</h2>
+                <p>A fabulouss muesum eXperience</p>
+
 
         </div>
-    </div>
-</div>
-<div class="container" style="padding-left: 60px;
-                                        padding-top: 80px;">
-
-    <form class="form-signin" method="post">
-        {% csrf_token %}
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="input-block-level" placeholder="Email address">
-        <input type="password" class="input-block-level" placeholder="Password">
-        <label class="checkbox">
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-large btn-primary" type="submit" >Sign in</button>
-    </form>
-
-</div> <!-- /container -->
-
+        <div class="span5">
+        <form class="form-signin" method="post">
+            {% csrf_token %}
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <input type="text" class="input-block-level" placeholder="Email address">
+            <input type="password" class="input-block-level" placeholder="Password">
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+            <button class="btn btn-large btn-primary btn-warning" type="submit" >Sign in</button>
+        </form>
+        </div>
+     </div>
+     <!-- /container -->
+{% endblock %}
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{% static "js/jquery-1.9.0.js" %}"></script>
-<script src="{% static "js/bootstrap.js" %}" ></script>
-</body>
-</html>
+
+
