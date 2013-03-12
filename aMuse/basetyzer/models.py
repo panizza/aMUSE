@@ -13,7 +13,7 @@ class Exhibit(models.Model):
     
 class Tag(models.Model):
     serial = models.CharField(max_length=50)
-    in_use = models.BooleanField()
+    in_use = models.BooleanField(editable=False)
 
     def __unicode__(self):
         return "%s" % (self.serial,)
@@ -31,10 +31,10 @@ class Item(models.Model):
         return "%s" % (self.title,)
     
 class Experience(models.Model):
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
-    confirmed = models.BooleanField()
-    hash_url = models.CharField(max_length=40)
+    confirmed = models.BooleanField(default=False)
+    hash_url = models.CharField(max_length=40, default='', editable=False)
 
     def __unicode__(self):
         return "%s - %s" % (self.user.username, self.date,)
@@ -67,10 +67,10 @@ class Scan(models.Model):
 
 class Action(models.Model):
     date_performed = models.DateTimeField()
-    scan = models.ForeignKey(Scan)
-    photo = models.ForeignKey(Photo)
-    comment = models.ForeignKey(Comment)
+    scan = models.ForeignKey(Scan, null=True, default=None)
+    comment = models.ForeignKey(Comment, null=True, default=None)
+    photo = models.ForeignKey(Photo, null=True, default=None)
     experience = models.ForeignKey(Experience)
 
     def __unicode__(self):
-        return "%s" % (self.experience, self.date)
+        return "%s" % (self.experience)
