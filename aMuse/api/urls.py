@@ -1,12 +1,8 @@
 from django.conf.urls import patterns, include, url
-from piston.resource import Resource
-from api.handlers import ItemHandler, ResponseHandler
+from api.views import get_item, save_visit
 
-item_handler = Resource(ItemHandler)
-response_handler = Resource(ResponseHandler)
 
 urlpatterns = patterns('api.views',
-    #url(r'^info/(?P<id>\d+)/$$', item_handler, name='obtain_item_info'),
-    url(r'^info/(?P<item_id>\d+)/$', item_handler),
-    url(r'^save/$', response_handler),
+    url(r'^info/(?P<id_item>\d+)/$', 'get_item', name="get_info"),
+    url(r'^save/$', 'save_visit', name="save_visit"),
 )
