@@ -2,8 +2,11 @@ Django==1.5
 PIL==1.1.7
 South==0.7.6
 Werkzeug==0.8.3
+decorator==3.4.0
+django-ajaxutils==0.2
 django-extensions==1.1.0
-hg+https://bitbucket.org/jespern/django-piston
 ipython==0.13.1
+pytz==2012j
+requests==1.1.0
 six==1.2.0
 wsgiref==0.1.2
