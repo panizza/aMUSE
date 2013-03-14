@@ -1,7 +1,2 @@
 aMUSEment for the masses
 =====
-
-
-
-
-
