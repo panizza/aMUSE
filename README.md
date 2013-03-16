@@ -19,3 +19,15 @@ aMUSEment for the masses
 
 * `workon amuse`
 * avviare il server con `python manage.py runserver`
+
+
+API REFERENCE
+---------------------
+###GET
+* api/e/ -> return a list of all the exhibitions
+* api/e/<id_exhibition>/ -> return the info about one exhibition
+* api/e/<id_exhibition>/i/ -> return the items referred to an exhibition
+* api/i/<id_item>/ -> return the info about one item
+
+###POST
+* api/ex/save/ -> allow the devices to save an experience

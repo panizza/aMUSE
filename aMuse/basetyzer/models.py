@@ -12,6 +12,9 @@ class Exhibit(models.Model):
     def __unicode__(self):
         return "%s" % (self.name,)
 
+    class Meta:
+        ordering = ['date_begin']
+
 
 class Tag(models.Model):
     serial = models.CharField(max_length=50)
@@ -19,7 +22,6 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.serial,)
-
 
 class Item(models.Model):
     title = models.CharField(max_length=50)
@@ -33,6 +35,9 @@ class Item(models.Model):
     def __unicode__(self):
         return "%s" % (self.title,)
 
+    class Meta:
+        ordering = ['pk']
+
 
 class Experience(models.Model):
     date = models.DateTimeField(auto_now_add=True)
@@ -42,7 +47,10 @@ class Experience(models.Model):
 
     def __unicode__(self):
         return "%s - %s" % (self.user.username, self.date,)
-    
+
+    class Meta:
+        ordering = ['date']
+
     def hashit(self):
         from hashlib import sha1
         return sha1(self.pk).hexdigest()
@@ -78,3 +86,6 @@ class Action(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.experience)
+
+    class Meta:
+        ordering = ['experience', 'date_performed']
