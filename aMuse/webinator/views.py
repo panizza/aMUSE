@@ -11,7 +11,7 @@ def do_login(request):
         user = authenticate(username = user_name,password = pwd)
 
         if user is not  None:
-            return render_to_response('webinator/user_details.html',{'user':user,'message':'Hello ' + str(user_name)})
+            return render_to_response('webinator/user_details.html',{'user':user})
         else:
-            return render_to_response('registration/login.html',{'message':'Wrong username or password'})
+            return render_to_response('registration/login.html',{'state':'Wrong username or password'})
 

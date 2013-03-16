@@ -42,9 +42,11 @@
                 </button>
                 <a class="brand" href="user_details.html">aMUSE</a>
                 <div class="nav-collapse collapse">
+                    {% block state %}
                     <p class="navbar-text pull-right" style="padding-right: 20px;">
-                        {{ message }}
+                        {{ state }}
                     </p>
+                    {% endblock %}
                 </div>
             </div>
         </div>
