@@ -6,7 +6,6 @@ aMUSEment for the masses
 1.  installare python-pip (per python2)
 
 2.  da pip installare virtualenvwrapper
-
 *   `echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc`
 *   `echo "source" `which virtualenvwrapper.sh` >> ~/.bashrc`
 
@@ -30,5 +29,4 @@ aMUSEment for the masses
 1. `workon amuse`
 
 2. per avviarei il server
-
 *   `python manage.py runserver`
