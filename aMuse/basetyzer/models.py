@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Exhibit(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
@@ -10,13 +11,15 @@ class Exhibit(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.name,)
-    
+
+
 class Tag(models.Model):
     serial = models.CharField(max_length=50)
     in_use = models.BooleanField(editable=False)
 
     def __unicode__(self):
         return "%s" % (self.serial,)
+
 
 class Item(models.Model):
     title = models.CharField(max_length=50)
@@ -29,7 +32,8 @@ class Item(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.title,)
-    
+
+
 class Experience(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
