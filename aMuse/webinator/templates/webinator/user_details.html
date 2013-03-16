@@ -29,6 +29,20 @@
       <script src="../assets/js/html5shiv.js"></script>
     <![endif]-->
 
+{% block state %}
+    <div class="btn-group pull-right">
+        <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
+            Hello, {{ user.username }}
+        <span class="caret"></span>
+        </button>
+
+        <ul class="dropdown-menu">
+            <li>
+                <a href="/webinator/logout">Log out</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
 
 {% block container %}
 <div class="container-fluid">
