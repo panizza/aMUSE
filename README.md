@@ -1,6 +1,6 @@
 aMUSEment for the masses
 =====
-
+---------------------
 SOLO LA PRIMA VOLTA
     1. installare python-pip (per python2)
     2. da pip installare virtualenvwrapper
