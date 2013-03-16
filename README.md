@@ -6,9 +6,8 @@ aMUSEment for the masses
 *  installare python-pip (per python2)
 *  da pip installare virtualenvwrapper
 *   `echo 'export WORKON_HOME=$HOME/.virtualenvs' >> ~/.bashrc`
-*   `echo 'source' \`which virtualenvwrapper.sh\` >> ~/.bashrc`
+*   echo 'source' `which virtualenvwrapper.sh` >> ~/.bashrc
 *   `mkvirtualenv --no-site-packages amuse`
-
 *  `workon amuse`
 *  clonare il repository e posizionarsi dentro (cd aMUSE)
 *  `git checkout devel`
