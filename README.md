@@ -18,5 +18,4 @@ aMUSEment for the masses
 ###OGNI VOLTA CHE SI VUOLE LAVORARE
 
 * `workon amuse`
-
-avviare il server con *   `python manage.py runserver`
+* avviare il server con `python manage.py runserver`
