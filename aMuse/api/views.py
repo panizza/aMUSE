@@ -22,7 +22,7 @@ def get_exhibitions_list(request):
         .values('pk', 'name', 'description')
     return {
         'data': list(exhibitions)
-    }
+    }, 200
 
 
 @ajax(require="GET", login_required=False)
@@ -33,7 +33,7 @@ def get_exhibition_info(request, id_exhibition):
     :param id_exhibition: the pk of an exhibition instance
     """
     exhibition = get_object_or_404(Exhibit, pk=id_exhibition)
-    return model_to_dict(exhibition, exclude=["owner"])
+    return model_to_dict(exhibition, exclude=["owner"]), 200
 
 
 @ajax(require="GET", login_required=False)
@@ -43,10 +43,11 @@ def get_items_list(request, id_exhibition):
     :param request: the standard request given by Django
     :param id_exhibition: the pk of an exhibition instance
     """
-    items = Item.objects.filter(exhibit=id_exhibition).values('pk', 'title')
+    exhibition = get_object_or_404(Exhibit, pk=id_exhibition)
+    items = Item.objects.filter(exhibit=exhibition).values('pk', 'title')
     return {
         'data': list(items)
-    }
+    }, 200
 
 
 @ajax(require="GET", login_required=False)
@@ -57,10 +58,9 @@ def get_item_info(request, id_item):
     :param id_item: the pk of an item instance
     """
     item = get_object_or_404(Item, pk=id_item)
-    item_json = model_to_dict(item, exclude=['exhibit'])
-    item_json['tag'] = model_to_dict(Tag.objects.get(pk=int(item_json['tag'])))
+    item_json = model_to_dict(item, exclude=['exhibit', 'tag'])
     item_json['photo'] = item_json['photo'].url
-    return item_json
+    return item_json, 200
 
 
 @ajax(require="POST", login_required=False)
