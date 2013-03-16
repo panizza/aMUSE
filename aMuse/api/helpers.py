@@ -38,7 +38,7 @@ def save_experience_data(experience, my_experience, user, user_created):
                 return {
                            "status": "error",
                            "error": "Item does not exist"
-                       }, 404
+                }, 404
             scan = Scan.objects.create(content=item)
             action.scan = scan
         if not exp.get('photo', '') == '':
@@ -53,4 +53,4 @@ def save_experience_data(experience, my_experience, user, user_created):
     return {
                "status": "saved",
                "error": ""
-           }, 200
+    }, 200
