@@ -134,6 +134,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'api',
     'basetyzer',
+    'webinator',
+    'kiosk'
 )
 
 # A sample logging configuration. The only tangible logging
