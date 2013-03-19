@@ -4,7 +4,7 @@
     Login
 {% endblock %}
 {% load staticfiles %}
-
+{% load url from future %}
 
 
 <!-- Le styles -->
@@ -69,10 +69,12 @@
         </div>
 
         <div class="span5">
-        <form class="form-signin" method="post" action="{% url 'webinator.views.do_login' %}">
+        <form class="form-signin" method="post" action="{% url 'login' %}">
             {% csrf_token %}
+            {{ form.errors }}
+            {{ form.non_field_errors }}
             <h2 class="form-signin-heading">Please sign in</h2>
-            <input name="email" id="email" type="text" class="input-block-level" placeholder="Email address">
+            <input name="username" id="username" type="text" class="input-block-level" placeholder="Email address">
             <input name="password"  id="password" type="password" class="input-block-level" placeholder="Password">
             <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me
@@ -88,3 +90,4 @@
 <!-- Placed at the end of the document so the pages load faster -->
 
 
+S

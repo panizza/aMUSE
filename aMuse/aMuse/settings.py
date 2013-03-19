@@ -1,5 +1,8 @@
 # Django settings for aMuse project.
 from os.path import dirname, abspath,join,normpath
+from django.core.urlresolvers import reverse
+from django.utils.functional import lazy
+
 
 ROOT = dirname(abspath(__file__)).replace('\\', '/') + '/'
 SETTINGS_PATH = dirname(__file__)
@@ -166,3 +169,8 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_NAME = 'login'
+reverse_lazy = lazy(reverse, str)
+LOGIN_URL = reverse_lazy(LOGIN_NAME)
+LOGIN_REDIRECT_URL = "/webinator/"
