@@ -174,3 +174,5 @@ LOGIN_NAME = 'login'
 reverse_lazy = lazy(reverse, str)
 LOGIN_URL = reverse_lazy(LOGIN_NAME)
 LOGIN_REDIRECT_URL = "/webinator/"
+
+from local_settings import *

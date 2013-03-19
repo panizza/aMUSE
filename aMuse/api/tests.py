@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from basetyzer.models import Exhibit
+from aMuse.basetyzer.models import Exhibit
 import json as j
 
 class ExhibitionTest(TestCase):
@@ -18,6 +18,7 @@ class ExhibitionTest(TestCase):
         self.assertEqual(response.status_code, 404)
         response = self.client.get('/api/e/1/')
         self.assertEqual(response.status_code, 200)
+
 
 class ItemTest(TestCase):
     fixtures = ['test.json']

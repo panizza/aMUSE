@@ -1,19 +1,5 @@
-import hashlib
-import base64
-from django.core.files.base import ContentFile
-from StringIO import StringIO
-from PIL import Image
-from basetyzer.models import Item, Scan, Photo, Comment, Action, Experience
-
-
-def save_image(image_b64):
-    """ Return image name and the real image from a base64
-    :param image_b64: base64 encoded string
-    """
-    image = base64.decodestring(image_b64.replace(' ', '+'))
-    image_sha1 = hashlib.sha1(image).hexdigest()
-    extension = '.' + Image.open(StringIO(image)).format.lower()
-    return image_sha1 + extension, ContentFile(image)
+from aMuse.basetyzer.models import Item, Scan, Photo, Comment, Action
+from aMuse.utils.helpers import save_image
 
 
 def save_experience_data(experience, my_experience, user, user_created):

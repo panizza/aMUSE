@@ -1,5 +1,5 @@
 from django.contrib import admin
-from basetyzer.models import Item, Exhibit, Tag, Experience
+from aMuse.basetyzer.models import Item, Exhibit, Tag, Experience
 
 admin.site.register(Item)
 admin.site.register(Exhibit)

@@ -1,12 +1,13 @@
+from datetime import date as dt
 from ajaxutils.decorators import ajax
 from django.contrib.auth.models import User
-from .helpers import save_experience_data
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
-from basetyzer.models import Item, Experience, Exhibit, Tag
 from ajaxutils.http import json
-from datetime import date as dt
+from .helpers import save_experience_data
+from aMuse.basetyzer.models import Item, Experience, Exhibit, Tag
+from aMuse.utils.helpers import send_mail
 
 
 @ajax(require="GET", login_required=False)
@@ -81,6 +82,10 @@ def visit_save(request):
         my_experience = Experience.objects.create(user=user)
         toret, status_code = save_experience_data(experience, my_experience,
                                                   user, user_created)
+        if user_created and status_code == 200:
+            user.is_active = False
+            status = send_mail(user.email, "Link al form per la registrazione", "aMUX Registration")
+            print "email " + status + " " + user.email
         return toret, status_code
     else:
         return {
