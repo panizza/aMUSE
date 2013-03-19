@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from aMuse.basetyzer.models import Exhibit
+from basetyzer.models import Exhibit
 import json as j
 
 class ExhibitionTest(TestCase):

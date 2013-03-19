@@ -6,8 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
 from ajaxutils.http import json
 from .helpers import save_experience_data
-from aMuse.basetyzer.models import Item, Experience, Exhibit, Tag
-from aMuse.utils.helpers import send_mail
+from basetyzer.models import Item, Experience, Exhibit, Tag
+from api.helpers import register_new_user
 
 
 @ajax(require="GET", login_required=False)
@@ -83,9 +83,7 @@ def visit_save(request):
         toret, status_code = save_experience_data(experience, my_experience,
                                                   user, user_created)
         if user_created and status_code == 200:
-            user.is_active = False
-            status = send_mail(user.email, "Link al form per la registrazione", "aMUX Registration")
-            print "email " + status + " " + user.email
+            status = register_new_user(user)
         return toret, status_code
     else:
         return {

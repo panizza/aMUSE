@@ -15,10 +15,10 @@ def save_image(image_b64):
     extension = '.' + Image.open(StringIO(image)).format.lower()
     return image_sha1 + extension, ContentFile(image)
 
-def send_mail(email, body, subject):
+def send_email(email, body, subject):
     if email_validator(email):
         try:
-            send_mail(subject, body, "no-reply@amux.net", email, fail_silently=True)
+            send_mail(subject, body, "no-reply@amux.net", [email], fail_silently=True)
         except BadHeaderError:
             return 'failed'
     return 'success'

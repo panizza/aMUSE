@@ -1,6 +1,6 @@
-from aMuse.basetyzer.models import Item, Scan, Photo, Comment, Action
-from aMuse.utils.helpers import save_image
-
+from basetyzer.models import Item, Scan, Photo, Comment, Action
+from utils.helpers import save_image
+from utils.helpers import send_email
 
 def save_experience_data(experience, my_experience, user, user_created):
     """ Save all the actions into the database. Return a json and a status code
@@ -40,3 +40,20 @@ def save_experience_data(experience, my_experience, user, user_created):
                "status": "saved",
                "error": ""
     }, 200
+
+
+def register_new_user(user):
+    """ Register a new user
+        1. Flag the user as inactive
+        2. Create the link for the password creation
+        3. Send the email
+
+    :param user: the user's instance
+    """
+    user.is_active = False
+    user.save()
+    body = "Link al form per la registrazione"
+    subject = "aMUX Registration"
+    status = send_email(user.email, body, subject)
+    print "email " + status + " " + user.email
+    return status
