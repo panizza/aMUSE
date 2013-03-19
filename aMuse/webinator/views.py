@@ -2,15 +2,16 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from basetyzer.models import Experience
 
 
 @login_required()
 def index(request):
-    if request.GET:
-        return render(request, 'webinator/user_details.html', {
-            'user': request.user, 'message': ''})
-    else:
-        logout(request)
-        return render(request, 'registration/login.html', {
-            'state': 'POST not allowed'}
-        )
+    visit = Experience.objects.filter(user=request.user)
+
+    return render(request, 'webinator/user_details.html', {
+        'user': request.user,
+        'message': '',
+        'visit_confirmed': visit.filter(confirmed=True),
+        'visit_not_confirmed': visit.exclude(confirmed=True)
+    })

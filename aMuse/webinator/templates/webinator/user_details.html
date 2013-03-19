@@ -51,17 +51,13 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header">My visits</li>
-                    <li class="active"><a href="#">Visit 1</a></li>
-                    <li><a href="#">Visit 2</a></li>
-                    <li><a href="#">Visit 3</a></li>
-                    <li><a href="#">Visit 4</a></li>
+                    {% for vis in visit_confirmed %}
+                        <li><a href="#">{{ vis.date }}</a></li>
+                    {% endfor %}
                     <li class="nav-header">Visits to be confirmed</li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
+                    {% for vis in visit_not_confirmed %}
+                        <li><a href="#">{{ vis.date }}</a></li>
+                    {% endfor %}
                     <li class="nav-header">Sidebar</li>
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>
