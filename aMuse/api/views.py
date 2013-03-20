@@ -9,7 +9,7 @@ from ajaxutils.http import json
 from .helpers import save_experience_data
 from basetyzer.models import Item, Experience, Exhibit, Tag
 from api.helpers import register_new_user
-
+from django.http import HttpResponse
 
 @ajax(require="GET", login_required=False)
 def get_exhibitions_list(request):
@@ -97,9 +97,10 @@ def visit_save(request):
 ######################################
 @login_required
 def api_test_for_some_code(request):
+    from api.helpers import generate_url_reset
     from django.utils.http import int_to_base36
     from django.contrib.auth.tokens import default_token_generator
     """ ONLY DEBUG VIEW
     """
     user = request.user
-    print generate_url_reset(user)
+    return HttpResponse(generate_url_reset(user))

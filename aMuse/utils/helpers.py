@@ -5,10 +5,6 @@ from django.core.mail import BadHeaderError, send_mail
 import hashlib
 import base64
 import re
-from django.utils.http import int_to_base36
-from django.contrib.auth.tokens import default_token_generator
-from aMuse.settings import SITE_URL
-from django.core.urlresolvers import reverse
 
 
 def save_image(image_b64):
@@ -34,10 +30,3 @@ def email_validator(email):
     if re.match('([\w\-\.\+]+@(\w[\w\-]+\.)+[\w\-]+)', email):
         return True
     return False
-
-def generate_url_reset(user):
-    uid = int_to_base36(user.pk)
-    token = default_token_generator.make_token(user)
-    url = SITE_URL + reverse('reset_password_new_user')
-    uid_token = "{0}-{1}".format(uid, token)
-    return url+uid_token

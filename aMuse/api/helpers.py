@@ -1,7 +1,10 @@
 from basetyzer.models import Item, Scan, Photo, Comment, Action
-from utils.helpers import save_image, generate_url_reset
+from utils.helpers import save_image
 from utils.helpers import send_email
-
+from django.utils.http import int_to_base36
+from django.contrib.auth.tokens import default_token_generator
+from aMuse.settings import SITE_URL
+from django.core.urlresolvers import reverse
 
 def save_experience_data(experience, my_experience, user, user_created):
     """ Save all the actions into the database. Return a json and a status code
@@ -43,6 +46,12 @@ def save_experience_data(experience, my_experience, user, user_created):
     }, 200
 
 
+def generate_url_reset(user):
+    uid = int_to_base36(user.pk)
+    token = default_token_generator.make_token(user)
+    url = reverse('reset_password_new_user', args=[uid, token])
+    return SITE_URL + url
+
 def register_new_user(user, request):
     """ Register a new user
         1. Flag the user as inactive
@@ -58,5 +67,6 @@ def register_new_user(user, request):
     user.save()
     # 2. Create the link for the password creation
     url = generate_url_reset(user)
+    # TODO[panizza] 3. send email
     print url
     return True

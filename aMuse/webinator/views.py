@@ -1,23 +1,43 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from basetyzer.models import Experience
+from basetyzer.models import Experience, CustomUser
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import base36_to_int
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 
 def reset_password_new_user(request, uidb36, token):
-    if request.method == "GET":
-        pass
-        #TODO[panizza]:ritorna la pagina web
-    pass
-"""    assert uidb36 is not None and token is not None  # checked by URLconf
-    if post_reset_redirect is None:
-        post_reset_redirect = reverse('django.contrib.auth.views.password_reset_complete')
     try:
         uid_int = base36_to_int(uidb36)
-        user = UserModel._default_manager.get(pk=uid_int)
-    except (ValueError, OverflowError, UserModel.DoesNotExist):
+        user = CustomUser.objects.get(pk=uid_int)
+    except (ValueError, OverflowError, CustomUser.DoesNotExist):
         user = None
 
-    if user is not None and token_generator.check_token(user, token):"""
+    if user is not None and user.need_reset \
+        and default_token_generator.check_token(user, token):
+        validlink = True
+        if request.method == "POST":
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                user.need_reset = False
+                user.save()
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+        else:
+            form = SetPasswordForm(None)
+    else:
+        validlink = False
+        form = None
+    return render(request, 'registration/reset_password_complete.html', {
+        'form': form,
+        'validlink': validlink
+    })
+
 
 @login_required()
 def index(request):
