@@ -51,10 +51,9 @@ def index(request):
     :param request: the standard request given by Django
     """
     visit = Experience.objects.filter(user=request.user)
-
     return render(request, 'webinator/user_details.html', {
         'user': request.user,
         'message': '',
         'visit_confirmed': visit.filter(confirmed=True),
-        'visit_not_confirmed': visit.exclude(confirmed=True)
+        'visit_not_confirmed': visit.filter(confirmed=False)
     })
