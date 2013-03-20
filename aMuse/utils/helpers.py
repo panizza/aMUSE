@@ -17,6 +17,7 @@ def save_image(image_b64):
     return image_sha1 + extension, ContentFile(image)
 
 def send_email(email, body, subject):
+    #TODO[panizza]: change this with an async method (http://python-rq.org)
     if email_validator(email):
         try:
             send_mail(subject, body, "no-reply@amux.net", [email], fail_silently=True)

@@ -8,7 +8,7 @@ from ajaxutils.http import json
 from .helpers import save_experience_data
 from basetyzer.models import Item, Experience, Exhibit, Tag, CustomUser
 from api.helpers import register_new_user
-from django.http import HttpResponse
+
 
 @ajax(require="GET", login_required=False)
 def get_exhibitions_list(request):
@@ -66,7 +66,7 @@ def get_item_info(request, id_item):
 
 @ajax(require="POST", login_required=False)
 @csrf_exempt
-def visit_save(request):
+def save_experience(request):
     """ Save all the experience information receiver by a POST request
     :rtype : application/json
     :param request: the standard request given by Django
@@ -85,7 +85,8 @@ def visit_save(request):
                                                   user, user_created)
         if status_code == 200:
             if user_created:
-                register_new_user(user, request)
+                url = register_new_user(user, request)
+                print url
         else:
             return {
                        "status": "error",

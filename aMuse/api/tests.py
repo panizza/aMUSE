@@ -39,3 +39,11 @@ class ItemTest(TestCase):
         self.assertEqual(response.status_code, 404)
         response = self.client.get('/api/i/1/')
         self.assertEqual(response.status_code, 200)
+
+class ExperienceTest(TestCase):
+    #fixtures = ['test.json']
+    def setUp(self):
+        self.client = Client()
+
+    def test_save_experience(self):
+        pass

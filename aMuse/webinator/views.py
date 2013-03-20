@@ -10,6 +10,11 @@ from django.core.urlresolvers import reverse
 
 
 def reset_password_new_user(request, uidb36, token):
+    """ Checks the link the user clicked and prompts for a new password
+    :param request: the standard request given by Django
+    :param uidb36: the id's hash
+    :param token: token created dynamically
+    """
     try:
         uid_int = base36_to_int(uidb36)
         user = CustomUser.objects.get(pk=uid_int)
@@ -41,6 +46,10 @@ def reset_password_new_user(request, uidb36, token):
 
 @login_required()
 def index(request):
+    """ The main view. This view render a template with all the available
+        experiences
+    :param request: the standard request given by Django
+    """
     visit = Experience.objects.filter(user=request.user)
 
     return render(request, 'webinator/user_details.html', {
