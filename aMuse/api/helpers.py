@@ -11,8 +11,8 @@ def save_experience_data(experience, my_experience, user, user_created):
     :rtype : application/json, status_code
     :param experience: JSON that contains all the actions
     :param my_experience: Experience's instance
-    :param user: User's instance
-    :param user_created: True/False. is User instance created now?
+    :param user: CustomUser's instance
+    :param user_created: True/False. is CustomUser instance created now?
     """
     for exp in experience:
         action = Action()
@@ -53,20 +53,17 @@ def generate_url_reset(user):
     return SITE_URL + url
 
 def register_new_user(user, request):
-    """ Register a new user
+    """ Register a new CustomUser
         1. Flag the user as inactive
         2. Create the link for the password creation
         3. Send the email
 
     :param user: the user's instance
     """
-    # 1. Flag the user as inactive and need_reset = True
+    # 1. Flag the CustomUser as inactive and need_reset = True
     user.is_active = False
-    user.save(commit=False)
     user.need_reset = True
     user.save()
     # 2. Create the link for the password creation
     url = generate_url_reset(user)
     # TODO[panizza] 3. send email
-    print url
-    return True

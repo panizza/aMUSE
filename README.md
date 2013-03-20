@@ -15,6 +15,7 @@ INFO PER INSTALLAZIONE E UTILIZZO
 *  `pip install -r requirements/essentials.txt` (NON da superuser)
 *  `python manage.py syncdb`
 *  `python manage.py migrate`
+*  `python manage.py createsuperuser`
 
 ###OGNI VOLTA CHE SI VUOLE LAVORARE
 

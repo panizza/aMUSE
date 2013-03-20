@@ -12,7 +12,7 @@ urlpatterns = patterns('api.views',
     url(r'^i/(?P<id_item>\d+)/$', 'get_item_info',
         name="get_item_info"),
 
-    url(r'^ex/save/$', 'visit_save',
+    url(r'^exp/s/$', 'visit_save',
         name="save_visit"),
 
     ######################################
