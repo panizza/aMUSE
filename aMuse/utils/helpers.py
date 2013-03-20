@@ -8,7 +8,8 @@ import re
 
 
 def save_image(image_b64):
-    """ Return image name and the real image from a base64
+    """
+    Return image name and the real image from a base64
     :param image_b64: base64 encoded string
     """
     image = base64.decodestring(image_b64.replace(' ', '+'))
@@ -26,7 +27,8 @@ def send_email(email, body, subject):
     return 'success'
 
 def email_validator(email):
-    """ An email validator
+    """
+    An email validator
     """
     if re.match('([\w\-\.\+]+@(\w[\w\-]+\.)+[\w\-]+)', email):
         return True

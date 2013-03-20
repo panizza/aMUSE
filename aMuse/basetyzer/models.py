@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from datetime import date
+
 
 
 class ExhibitionManager(models.Manager):
-    """ This class save developers life.
+    """
+    This class save developers life.
     """
     def available(self):
         """ Return a QuerySet. The QuerySet contains all the Exhibition that
@@ -15,13 +16,15 @@ class ExhibitionManager(models.Manager):
 
 
 class CustomUser(AbstractUser):
-    """ Extend the standard User's model
+    """
+    Extend the standard User's model
     """
     need_reset = models.BooleanField(default=False)
 
 
 class Exhibit(models.Model):
-    """ The main model. This contains pretty much everything
+    """
+    The main model. This contains pretty much everything
     """
     name = models.CharField(max_length=50)
     description = models.TextField()
@@ -38,7 +41,8 @@ class Exhibit(models.Model):
 
 
 class Tag(models.Model):
-    """ A model containing all the available tags
+    """
+    A model containing all the available tags
     """
     serial = models.CharField(max_length=50)
     in_use = models.BooleanField(editable=False)
@@ -48,7 +52,8 @@ class Tag(models.Model):
 
 
 class Item(models.Model):
-    """ A model containing all the item
+    """
+    A model containing all the item
     """
     title = models.CharField(max_length=50)
     description = models.TextField()
@@ -66,7 +71,8 @@ class Item(models.Model):
 
 
 class Experience(models.Model):
-    """ Storage for the user's experiences
+    """
+    Storage for the user's experiences
     """
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(CustomUser)
@@ -106,7 +112,8 @@ class Scan(models.Model):
 
 
 class Action(models.Model):
-    """ The Action model is the storage for the real experiences informations
+    """
+    The Action model is the storage for the real experiences information
     """
     date_performed = models.DateTimeField()
     scan = models.ForeignKey(Scan, null=True, default=None)
@@ -119,3 +126,15 @@ class Action(models.Model):
 
     class Meta:
         ordering = ['experience', 'date_performed']
+
+
+class SuperQRCode(models.Model):
+    """
+    SuperQRCode contains the current qr_code verification for experiences
+    uploads. Number of tuples = 1
+    """
+    text = models.CharField(max_length=40)
+    last_edit = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return "%s" % self.text

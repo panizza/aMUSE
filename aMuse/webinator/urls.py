@@ -8,5 +8,8 @@ urlpatterns = patterns('webinator.views',
         url(r'^logout/', logout, {'next_page': '/webinator/'}, name='logout'),
 
         url(r'^user/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
-         'reset_password_new_user', name='reset_password_new_user')
+         'reset_password_new_user', name='reset_password_new_user'),
+
+        url(r'^qr/$', 'qr_code_generator', name='qr_code_generator')
+
 )

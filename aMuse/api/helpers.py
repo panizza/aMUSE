@@ -8,7 +8,8 @@ from django.core.urlresolvers import reverse
 
 
 def save_experience_data(experience, my_experience, user, user_created):
-    """ Save all the actions into the database. Return a json and a status code
+    """
+    Save all the actions into the database. Return a json and a status code
     :rtype : application/json, int
     :param experience: JSON that contains all the actions
     :param my_experience: Experience's instance
@@ -48,8 +49,9 @@ def save_experience_data(experience, my_experience, user, user_created):
 
 
 def generate_url_reset(user):
-    """ Generate a URL. The first part is a global setting, the second is
-        created dinamically
+    """
+    Generate a URL. The first part is a global setting, the second is
+    created dinamically
     :param user: a standard CustomUser instance
     :return: string, the entire url
     """
@@ -59,7 +61,8 @@ def generate_url_reset(user):
     return SITE_URL + url
 
 def register_new_user(user, request):
-    """ Register a new CustomUser
+    """
+    Register a new CustomUser
         1. Flag the user as inactive
         2. Create the link for the password creation
         3. Send the email
