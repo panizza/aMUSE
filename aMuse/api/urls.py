@@ -13,5 +13,10 @@ urlpatterns = patterns('api.views',
         name="get_item_info"),
 
     url(r'^ex/save/$', 'visit_save',
-        name="save_visit")
+        name="save_visit"),
+
+    ######################################
+    ##### ONLY FOR DEBUG! DO NOT EDIT#####
+    ######################################
+    url(r'^test/$', 'api_test_for_some_code')
 )

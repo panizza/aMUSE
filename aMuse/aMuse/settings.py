@@ -175,6 +175,10 @@ reverse_lazy = lazy(reverse, str)
 LOGIN_URL = reverse_lazy(LOGIN_NAME)
 LOGIN_REDIRECT_URL = "/webinator/"
 
+
+AUTH_USER_MODEL = 'basetyzer.CustomUser'
+SITE_URL = ""
+
 ## Import local settings
 try:
     from local_settings import *

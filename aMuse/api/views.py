@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
 from ajaxutils.http import json
 from .helpers import save_experience_data
 from basetyzer.models import Item, Experience, Exhibit, Tag
@@ -83,10 +84,22 @@ def visit_save(request):
         toret, status_code = save_experience_data(experience, my_experience,
                                                   user, user_created)
         if user_created and status_code == 200:
-            status = register_new_user(user)
+            status = register_new_user(user, request)
         return toret, status_code
     else:
         return {
                    "status": "error",
                    "error": "JSON malformed"
         }, 400
+
+######################################
+##### ONLY FOR DEBUG! DO NOT EDIT#####
+######################################
+@login_required
+def api_test_for_some_code(request):
+    from django.utils.http import int_to_base36
+    from django.contrib.auth.tokens import default_token_generator
+    """ ONLY DEBUG VIEW
+    """
+    user = request.user
+    print generate_url_reset(user)

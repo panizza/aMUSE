@@ -1,13 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
+
+class CustomUser(AbstractUser):
+    need_reset = models.BooleanField(default=False)
 
 class Exhibit(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     date_begin = models.DateField()
     date_end = models.DateField()
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(CustomUser)
 
     def __unicode__(self):
         return "%s" % (self.name,)
@@ -41,7 +45,7 @@ class Item(models.Model):
 
 class Experience(models.Model):
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(CustomUser)
     confirmed = models.BooleanField(default=False)
     hash_url = models.CharField(max_length=40, default='', editable=False)
 

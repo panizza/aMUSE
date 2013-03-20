@@ -1,6 +1,7 @@
 from basetyzer.models import Item, Scan, Photo, Comment, Action
-from utils.helpers import save_image
+from utils.helpers import save_image, generate_url_reset
 from utils.helpers import send_email
+
 
 def save_experience_data(experience, my_experience, user, user_created):
     """ Save all the actions into the database. Return a json and a status code
@@ -42,7 +43,7 @@ def save_experience_data(experience, my_experience, user, user_created):
     }, 200
 
 
-def register_new_user(user):
+def register_new_user(user, request):
     """ Register a new user
         1. Flag the user as inactive
         2. Create the link for the password creation
@@ -50,10 +51,12 @@ def register_new_user(user):
 
     :param user: the user's instance
     """
+    # 1. Flag the user as inactive and need_reset = True
     user.is_active = False
+    user.save(commit=False)
+    user.need_reset = True
     user.save()
-    body = "Link al form per la registrazione"
-    subject = "aMUX Registration"
-    status = send_email(user.email, body, subject)
-    print "email " + status + " " + user.email
-    return status
+    # 2. Create the link for the password creation
+    url = generate_url_reset(user)
+    print url
+    return True
