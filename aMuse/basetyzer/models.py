@@ -1,12 +1,24 @@
 from django.db import models
-#from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
+from datetime import date
+
+
+class ExhibitionManager(models.Manager):
+    """ This class save developers life.
+    """
+    def available(self):
+        """ Return a QuerySet. The QuerySet contains all the Exhibition that
+            ends after today and started before today
+        """
+        return self.get_query_set().exclude(date_end__lt=date.today()).\
+            exclude(date_begin__gt=date.today())
 
 
 class CustomUser(AbstractUser):
     """ Extend the standard User's model
     """
     need_reset = models.BooleanField(default=False)
+
 
 class Exhibit(models.Model):
     """ The main model. This contains pretty much everything
@@ -16,6 +28,7 @@ class Exhibit(models.Model):
     date_begin = models.DateField()
     date_end = models.DateField()
     owner = models.ForeignKey(CustomUser)
+    objects = ExhibitionManager()
 
     def __unicode__(self):
         return "%s" % (self.name,)
@@ -32,6 +45,7 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.serial,)
+
 
 class Item(models.Model):
     """ A model containing all the item

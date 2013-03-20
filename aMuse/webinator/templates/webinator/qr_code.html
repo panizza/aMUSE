@@ -1,0 +1,5 @@
+{% extends 'webinator/base.html' %}
+
+{% block container %}
+    <img src="http://chart.googleapis.com/chart?cht=qr&chs={{ size }}x{{ size }}&chl={{ text }}" />
+{% endblock %}
