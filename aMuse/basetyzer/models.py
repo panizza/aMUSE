@@ -39,17 +39,6 @@ class Exhibit(models.Model):
         ordering = ['date_begin']
 
 
-class Tag(models.Model):
-    """
-    A model containing all the available tags
-    """
-    serial = models.CharField(max_length=50)
-    in_use = models.BooleanField()
-
-    def __unicode__(self):
-        return "%s" % (self.serial,)
-
-
 class Item(models.Model):
     """
     A model containing all the item
@@ -59,7 +48,7 @@ class Item(models.Model):
     author = models.CharField(max_length=50)
     release_date = models.DateField()
     photo = models.ImageField(upload_to="images/items/")
-    tag = models.ForeignKey(Tag, null=False, default=None)
+    tag = models.CharField(max_length=40, null=False, blank=True)
     exhibit = models.ManyToManyField(Exhibit)
 
     def __unicode__(self):
@@ -121,7 +110,7 @@ class Action(models.Model):
     experience = models.ForeignKey(Experience)
 
     def __unicode__(self):
-        return "%s" % (self.experience)
+        return "%s" % (self.experience,)
 
     class Meta:
         ordering = ['experience', 'date_performed']
@@ -136,7 +125,7 @@ class SuperQRCode(models.Model):
     last_edit = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return "%s" % self.text
+        return "%s" % (self.text,)
 
     class Meta:
         verbose_name = "QRCode Verificator"

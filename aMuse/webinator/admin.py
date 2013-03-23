@@ -1,5 +1,5 @@
 from django.contrib import admin
-from basetyzer.models import Item, Exhibit, Tag, CustomUser, SuperQRCode
+from basetyzer.models import Item, Exhibit, CustomUser, SuperQRCode
 from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 
@@ -11,7 +11,10 @@ class CustomUserAdmin(admin.ModelAdmin):
 class ExhibitAdmin(admin.ModelAdmin):
     fieldsets = (
         (
-            "Exhibition", dict(fields=["name", "description"])
+            "Exhibition", dict(
+                classes=("wide",),
+                fields=["name", ]
+            )
         ),
         (
             "Dates", dict(fields=["date_begin", "date_end"])
@@ -21,8 +24,7 @@ class ExhibitAdmin(admin.ModelAdmin):
         ),
     )
     list_filter = ["date_end"]
-    list_display = ("name", "date_begin", "date_end")
-    list_display_links = ("name",)
+    list_display = ("name", "description", "date_begin", "date_end",)
     search_fields = ["name"]
 
 
@@ -38,10 +40,9 @@ class ItemAdmin(admin.ModelAdmin):
     )
     filter_vertical = ["exhibit",]
     list_filter = ["exhibit", "author"]
-    list_display = ("title", "author", )
-    list_display_links = ("title",)
+    list_display = ("title", "description", "author" )
     search_fields = ["title", "author"]
-
+    readonly_fields = ('tag',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Exhibit, ExhibitAdmin)
@@ -49,5 +50,4 @@ admin.site.register(Item, ItemAdmin)
 admin.site.unregister(Group)
 admin.site.unregister(Site)
 
-admin.site.register(Tag)
 admin.site.register(SuperQRCode)

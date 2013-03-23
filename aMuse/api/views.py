@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 from ajaxutils.http import json
 from .helpers import save_experience_data
-from basetyzer.models import Item, Experience, Exhibit, Tag, CustomUser, SuperQRCode
+from basetyzer.models import Item, Experience, Exhibit, CustomUser, SuperQRCode
 from api.helpers import register_new_user
 
 

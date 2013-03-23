@@ -129,17 +129,23 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'grappelli.dashboard',
     'grappelli',
-
     'django.contrib.admin',
-    'south',
     'django_extensions',
+
+)
+#MY APPS
+INSTALLED_APPS += (
     'api',
     'basetyzer',
     'webinator',
     'kiosk'
+)
+
+#DEV APPS
+INSTALLED_APPS += (
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
