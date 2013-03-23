@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from hashlib import sha1
 
+
 class ExhibitionManager(models.Manager):
     """
     This class save developers life.
@@ -22,6 +23,7 @@ class CustomUser(AbstractUser):
     Extend the standard User's model
     """
     need_reset = models.BooleanField(default=False)
+
 
 class Exhibit(models.Model):
     """
@@ -70,7 +72,8 @@ class Experience(models.Model):
     hash_url = models.CharField(max_length=40, default='', )
 
     def __unicode__(self):
-        return "%s - %s" % (self.user.username, self.date,)
+        return "%s - %s" % (self.user.username,
+                            self.date.replace(microsecond=0, tzinfo=None),)
 
     class Meta:
         ordering = ['date']

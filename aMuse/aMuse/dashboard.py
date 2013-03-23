@@ -6,7 +6,7 @@ from grappelli.dashboard.utils import get_admin_site_name
 
 class CustomIndexDashboard(Dashboard):
     """
-    Custom index dashboard for www.
+    Custom index dashboard for the admin page.
     """
 
     def init_with_context(self, context):
@@ -64,7 +64,7 @@ class CustomIndexDashboard(Dashboard):
 
         self.children.append(modules.RecentActions(
             _('Recent Actions'),
-            limit=10,
+            limit=5,
             collapsible=False,
             column=2,
             ))
