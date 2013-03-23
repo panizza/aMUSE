@@ -5,6 +5,7 @@
     Welcome {{ user.username }}
 {% endblock %}
 {% block extrastyle %}
+   <link href="{% static "css/timeline_style.css" %}" rel="stylesheet">
    <style type="text/css">
         body {
             padding-top: 60px;
@@ -23,6 +24,10 @@
             }
         }
     </style>
+{% endblock %}
+{% block extrascript %}
+    <script src="{% static "js/jquery.timelinr-0.9.52.js" %}" ></script>
+
 {% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -45,6 +50,47 @@
 {% endblock %}
 
 {% block container %}
+    <script>
+        $(function(){
+            $().timelinr({
+                orientation: 'horizontal',
+                // value: horizontal | vertical, default to horizontal
+                containerDiv: '#timeline',
+                // value: any HTML tag or #id, default to #timeline
+                datesDiv: '#dates',
+                // value: any HTML tag or #id, default to #dates
+                datesSelectedClass: 'selected',
+                // value: any class, default to selected
+                datesSpeed: 'normal',
+                // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to normal
+                issuesDiv : '#issues',
+                // value: any HTML tag or #id, default to #issues
+                issuesSelectedClass: 'selected',
+                // value: any class, default to selected
+                issuesSpeed: 'fast',
+                // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to fast
+                issuesTransparency: 0.2,
+                // value: integer between 0 and 1 (recommended), default to 0.2
+                issuesTransparencySpeed: 500,
+                // value: integer between 100 and 1000 (recommended), default to 500 (normal)
+                prevButton: '#prev',
+                // value: any HTML tag or #id, default to #prev
+                nextButton: '#next',
+                // value: any HTML tag or #id, default to #next
+                arrowKeys: 'false',
+                // value: true/false, default to false
+                startAt: 1,
+                // value: integer, default to 1 (first)
+                autoPlay: 'false',
+                // value: true | false, default to false
+                autoPlayDirection: 'forward',
+                // value: forward | backward, default to forward
+                autoPlayPause: 2000
+                // value: integer (1000 = 1 seg), default to 2000 (2segs)< });
+            });
+        })
+
+    </script>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
@@ -64,47 +110,38 @@
                     <li><a href="#">Link</a></li>
                 </ul>
             </div><!--/.well -->
-        </div><!--/span-->
+        </div><!--/span timeline-->
         <div class="span9">
             <div class="hero-unit">
-                <h1>Hello, world!</h1>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-            </div>
-            <div class="row-fluid">
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
-            <div class="row-fluid">
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
+                <div id="inner_wrap">
+                    <div id="timeline">
+                        <ul id="dates">
+                            <li><a href="#1">1</a></li>
+                            <li><a href="#2">2</a></li>
+                            <li><a href="#3">3</a></li>
+                            <li><a href="#4">4</a></li>
+                        </ul>
+                        <ul id="issues">
+                           <li id="1">
+                               <h1>First</h1>
+                               <p> ASD ASD</p>
+                           </li>
+                            <li id="2">
+                                <h1>Second</h1>
+                                <p> LOL LOL</p>
+                            </li>
+                            <li id="3">
+                                <h1>Third</h1>
+                                <p> XD XD</p>
+                            </li>
+                            <li id="4">
+                                <h1>Fourth</h1>
+                                <p> WTF WTF</p>
+                            </li>
+                        </ul>
+                    </div><!-- div timeline -->
+                </div><!-- div inner wrap -->
+            </div><!-- hero unit -->
         </div><!--/span-->
     </div><!--/row-->
 
