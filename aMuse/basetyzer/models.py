@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from datetime import date
 
 
 class ExhibitionManager(models.Manager):
@@ -20,7 +20,6 @@ class CustomUser(AbstractUser):
     Extend the standard User's model
     """
     need_reset = models.BooleanField(default=False)
-
 
 class Exhibit(models.Model):
     """
@@ -138,5 +137,6 @@ class SuperQRCode(models.Model):
 
     def __unicode__(self):
         return "%s" % self.text
+
     class Meta:
         verbose_name = "QRCode Verificator"
