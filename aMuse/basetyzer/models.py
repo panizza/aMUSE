@@ -45,7 +45,7 @@ class Tag(models.Model):
     A model containing all the available tags
     """
     serial = models.CharField(max_length=50)
-    in_use = models.BooleanField(editable=False)
+    in_use = models.BooleanField()
 
     def __unicode__(self):
         return "%s" % (self.serial,)
@@ -77,7 +77,7 @@ class Experience(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(CustomUser)
     confirmed = models.BooleanField(default=False)
-    hash_url = models.CharField(max_length=40, default='', editable=False)
+    hash_url = models.CharField(max_length=40, default='', )
 
     def __unicode__(self):
         return "%s - %s" % (self.user.username, self.date,)
