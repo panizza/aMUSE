@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import date
-
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from hashlib import sha1
 
 class ExhibitionManager(models.Manager):
     """
@@ -128,4 +130,13 @@ class SuperQRCode(models.Model):
         return "%s" % (self.text,)
 
     class Meta:
-        verbose_name = "QRCode Verificator"
+        verbose_name = "QRCode"
+
+
+@receiver(post_save, sender=Item)
+def item_post_save(sender, **kwargs):
+    item = kwargs['instance']
+    if not item.tag:
+        hash = sha1(str(item.pk)).hexdigest()
+        item.tag = hash
+        item.save()

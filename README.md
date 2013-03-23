@@ -5,12 +5,11 @@ INFO PER INSTALLAZIONE E UTILIZZO
 ###SOLO LA PRIMA VOLTA
 
 *  installare python-pip (per python2)
-*  da pip installare virtualenvwrapper
-*   `echo 'export WORKON_HOME=$HOME/.virtualenvs' >> ~/.bashrc`
-*   echo 'source' `which virtualenvwrapper.sh` >> ~/.bashrc
-*   `mkvirtualenv --no-site-packages amuse`
+*  da pip installare virtualenvwrapper (http://lilihan.cn/painless-way-to-setup-virtualenv-and-virtualenvwrapper-on-ubuntu-10-10/)
+
+*  `mkvirtualenv --no-site-packages amuse`
 *  `workon amuse`
-*  clonare il repository e posizionarsi dentro (cd aMUSE)
+*   clonare il repository e posizionarsi dentro (cd aMUSE)
 *  `git checkout devel`
 *  `pip install -r requirements/essentials.txt` (NON da superuser)
 *  `python manage.py syncdb`
@@ -32,4 +31,4 @@ API REFERENCE
 * api/i/`id_item`/ -> return the info about one item
 
 ###POST
-* api/ex/save/ -> allow the devices to save an experience
+* api/exp/s/ -> allow the devices to save an experience
