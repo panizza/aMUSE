@@ -69,7 +69,7 @@ MEDIA_URL = ''
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
 #STATIC_ROOT = ''
-STATIC_ROOT = join(SETTINGS_PATH, '../')
+STATIC_ROOT = join(SETTINGS_PATH, 'static_all')
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
@@ -129,10 +129,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
+
+    'grappelli.dashboard',
+    'grappelli',
+
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    'django.contrib.admindocs',
     'south',
     'django_extensions',
     'api',
@@ -178,6 +179,16 @@ LOGIN_REDIRECT_URL = "/webinator/"
 
 AUTH_USER_MODEL = 'basetyzer.CustomUser'
 SITE_URL = ""
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.request",
+    "django.core.context_processors.i18n",
+    'django.contrib.messages.context_processors.messages',
+)
+GRAPPELLI_INDEX_DASHBOARD = 'aMuse.dashboard.CustomIndexDashboard'
+GRAPPELLI_ADMIN_TITLE = 'aMUX - Amusement for the masses'
 
 ## Import local settings
 try:

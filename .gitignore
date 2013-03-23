@@ -7,3 +7,4 @@ local_settings.py
 media/
 .DS_Store
 .sqlite
+static_all/

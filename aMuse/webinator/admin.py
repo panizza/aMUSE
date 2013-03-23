@@ -1,5 +1,5 @@
 from django.contrib import admin
-from basetyzer.models import Item, Exhibit, Tag, Experience, CustomUser
+from basetyzer.models import Item, Exhibit, Tag, CustomUser, SuperQRCode
 from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 
@@ -46,6 +46,8 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Exhibit, ExhibitAdmin)
 admin.site.register(Item, ItemAdmin)
-
 admin.site.unregister(Group)
 admin.site.unregister(Site)
+
+admin.site.register(Tag)
+admin.site.register(SuperQRCode)

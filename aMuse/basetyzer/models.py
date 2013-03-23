@@ -138,3 +138,5 @@ class SuperQRCode(models.Model):
 
     def __unicode__(self):
         return "%s" % self.text
+    class Meta:
+        verbose_name = "QRCode Verificator"
