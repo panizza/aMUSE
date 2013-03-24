@@ -23,11 +23,46 @@
                 padding-right: 5px;
             }
         }
+        .nav-header-trash{
+            color: red;
+        }
+        #trash-title{
+            background-color: #ffffff;
+        }
+        #gallery { float: left; width: 65%; min-height: 12em; }
+        .gallery.custom-state-active { background: #eee; }
+        .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+        .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
+        .gallery li a { float: right; }
+        .gallery li a.ui-icon-zoomin { float: left; }
+        .gallery li img { width: 100%; cursor: move; }
+
+        #trash { float: right; width: 32%; min-height: 18em; padding: 1%; }
+        #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+        #trash h4 .ui-icon { float: left; }
+        #trash .gallery h5 { display: none; }
+
     </style>
 {% endblock %}
 {% block extrascript %}
     <script src="{% static "js/jquery.timelinr-0.9.52.js" %}" ></script>
+    <script>
+        $(function(){
+           $("#visit").click(function(){
+                $("#visit_title").text($("#visit").text());
+           });
+           $(function(){
+               $("#draggable").draggable();
+               $("#trash").droppable({
+                           drop:function(event,ui){
+                               alert("dragged");
+                               $(this).find("p");
 
+                           }
+                       });
+           });
+        });
+    </script>
 {% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -50,53 +85,14 @@
 {% endblock %}
 
 {% block container %}
-    <script>
-        $(function(){
-            $().timelinr({
-                orientation: 'horizontal',
-                // value: horizontal | vertical, default to horizontal
-                containerDiv: '#timeline',
-                // value: any HTML tag or #id, default to #timeline
-                datesDiv: '#dates',
-                // value: any HTML tag or #id, default to #dates
-                datesSelectedClass: 'selected',
-                // value: any class, default to selected
-                datesSpeed: 'normal',
-                // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to normal
-                issuesDiv : '#issues',
-                // value: any HTML tag or #id, default to #issues
-                issuesSelectedClass: 'selected',
-                // value: any class, default to selected
-                issuesSpeed: 'fast',
-                // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to fast
-                issuesTransparency: 0.2,
-                // value: integer between 0 and 1 (recommended), default to 0.2
-                issuesTransparencySpeed: 500,
-                // value: integer between 100 and 1000 (recommended), default to 500 (normal)
-                prevButton: '#prev',
-                // value: any HTML tag or #id, default to #prev
-                nextButton: '#next',
-                // value: any HTML tag or #id, default to #next
-                arrowKeys: 'false',
-                // value: true/false, default to false
-                startAt: 1,
-                // value: integer, default to 1 (first)
-                autoPlay: 'false',
-                // value: true | false, default to false
-                autoPlayDirection: 'forward',
-                // value: forward | backward, default to forward
-                autoPlayPause: 2000
-                // value: integer (1000 = 1 seg), default to 2000 (2segs)< });
-            });
-        })
 
-    </script>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header">My visits</li>
+                        <li><a id="visit" href="#1">Visita al muse</a></li>
                     {% for vis in visit_confirmed %}
                         <li><a href="#">{{ vis.date }}</a></li>
                     {% endfor %}
@@ -110,37 +106,34 @@
                     <li><a href="#">Link</a></li>
                 </ul>
             </div><!--/.well -->
-        </div><!--/span timeline-->
+        <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header nav-header-trash">Trash</li>
+                <li id="trash-title">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </li>
+            </ul>
+        </div>
+        </div>
         <div class="span9">
+            <h1 id="visit_title"></h1>
             <div class="hero-unit">
-                <div id="inner_wrap">
-                    <div id="timeline">
-                        <ul id="dates">
-                            <li><a href="#1">1</a></li>
-                            <li><a href="#2">2</a></li>
-                            <li><a href="#3">3</a></li>
-                            <li><a href="#4">4</a></li>
-                        </ul>
-                        <ul id="issues">
-                           <li id="1">
-                               <h1>First</h1>
-                               <p> ASD ASD</p>
-                           </li>
-                            <li id="2">
-                                <h1>Second</h1>
-                                <p> LOL LOL</p>
-                            </li>
-                            <li id="3">
-                                <h1>Third</h1>
-                                <p> XD XD</p>
-                            </li>
-                            <li id="4">
-                                <h1>Fourth</h1>
-                                <p> WTF WTF</p>
+                <div class="row">
+                    <div class="ui-widget ui-helper-clearfix">
+                        <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+                            <li class="ui-widget-content ui-corner-tr">
+                                <h5 class="ui-widget-header">T.A.R.D.I.S</h5>
+                                <img src="{% static 'img/images.jpeg' %}" alt="Tardis" width="96" height="72" />
+                                <a href="{% static 'img/images.jpeg' %}" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+                                <a title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
                             </li>
                         </ul>
-                    </div><!-- div timeline -->
-                </div><!-- div inner wrap -->
+                    </div>
+                </div><!-- row -->
             </div><!-- hero unit -->
         </div><!--/span-->
     </div><!--/row-->
@@ -148,9 +141,21 @@
     <hr>
 
     <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; aTeam 2013</p>
     </footer>
 
 </div><!--/.fluid-container-->
 
 {% endblock %}
+<!--
+                    test photos
+                     <div id="draggable" class="span3">
+                        <h4>1</h4>
+                        <img src="{% static 'img/angry_cat_face.jpg' %}"  />
+                        <p>Some description</p>
+                    </div>
+                    <div class="span3">
+                        <h4>2</h4>
+                        <img src="{% static 'img/images.jpeg' %}" width="150" height="150" />
+                        <p>Time And Relative Dimensions In Space</p>
+                    </div> -->
