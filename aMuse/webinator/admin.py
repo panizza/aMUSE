@@ -12,9 +12,9 @@ class NoPermissionAdmin(admin.ModelAdmin):
     actions = None
 
 
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(NoPermissionAdmin):
     #TODO[panizza]: modificare e dividere visivamente le info
-    list_display = ["username", "email", "is_staff"]
+    list_display = ["username", "email", "is_staff", "need_reset"]
 
 
 class ExhibitAdmin(admin.ModelAdmin):
