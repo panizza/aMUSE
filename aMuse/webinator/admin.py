@@ -20,7 +20,7 @@ class CustomUserAdmin(NoPermissionAdmin):
 class ExhibitAdmin(admin.ModelAdmin):
     fieldsets = (
         (
-            "Exhibition", dict(fields=["name"])
+            "Exhibition", dict(fields=["name", "description"])
         ),
         (
             "Dates", dict(fields=["date_begin", "date_end"])
@@ -30,8 +30,16 @@ class ExhibitAdmin(admin.ModelAdmin):
         ),
     )
     list_filter = ["name"]
-    list_display = ("name", "description", "date_begin", "date_end", "is_visitable", )
+    list_display = ("name", "my_description", "date_begin", "date_end", "is_visitable", )
     search_fields = ["name"]
+
+    def my_description(self, exhibit):
+        if len(exhibit.description) <= 250:
+            return exhibit.description
+        else:
+            return ' '.join(str(cc) for cc in exhibit.description[:250].split(' ')[:-1])
+
+    my_description.short_description = "Description"
 
     def is_visitable(self, exhibit):
         return True if exhibit in Exhibit.objects.available() else False

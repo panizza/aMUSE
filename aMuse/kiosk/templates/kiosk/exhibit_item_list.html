@@ -1,0 +1,13 @@
+{% extends 'webinator/base.html' %}
+{% block container %}
+    <span><h1>{{ exhibit.name }}</h1>
+    <h2>{{ exhibit.date_begin }} - {{ exhibit.date_end }}</h2></span>
+    <p>{{ exhibit.description }}</p><hr>
+    {% for item in item_list %}
+        <p>Title: {{ item.title }}</p>
+        <p>Description: {{ item.description }}</p>
+        <p>Author: {{ item.author}}</p>
+        <p>Release Date: {{ item.release_date }}</p>
+        <p>Photo: {{ item.photo }}</p>
+    {% endfor %}
+{% endblock %}
