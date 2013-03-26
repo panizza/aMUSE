@@ -1,6 +1,6 @@
 {% extends 'webinator/base.html' %}
 {% load staticfiles %}
-
+{% load url from future %}
 {% block title %}
     Welcome {{ user.username }}
 {% endblock %}
@@ -124,8 +124,8 @@
                         title = $link.siblings( "img" ).attr( "alt" ),
                         $modal = $( "img[src$='" + src + "']" );
 
-                if ( $modal.length ) {
-                    $modal.dialog( "open" );
+                if (!$modal.length ) {
+                    $modal.dialog().dialog( "open" );
                 } else {
                     var img = $( "<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />" )
                             .attr( "src", src ).appendTo( "body" );
@@ -188,7 +188,7 @@
                     <li class="nav-header">My visits</li>
                         <li><a id="visit" href="#1">Visita al muse</a></li>
                     {% for vis in visit_confirmed %}
-                        <li><a href="#">{{ vis.date }}</a></li>
+                        <li><a href="{% url 'action_list' vis.pk %}">{{ vis.date }}</a></li>
                     {% endfor %}
                     <li class="nav-header">Visits to be confirmed</li>
                     {% for vis in visit_not_confirmed %}
@@ -213,7 +213,6 @@
                             <li class="ui-widget-content ui-corner-tr">
                                 <h5 class="ui-widget-header">T.A.R.D.I.S</h5>
                                 <img src="{% static 'img/images.jpeg' %}" alt="Tardis" width="96" height="72" />
-                                <p>Time and relative dimensions in space</p>
                                 <a href="{% static 'img/images.jpeg' %}" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
                                 <a title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
 
@@ -234,15 +233,3 @@
 </div><!--/.fluid-container-->
 
 {% endblock %}
-<!--
-                    test photos
-                     <div id="draggable" class="span3">
-                        <h4>1</h4>
-                        <img src="{% static 'img/angry_cat_face.jpg' %}"  />
-                        <p>Some description</p>
-                    </div>
-                    <div class="span3">
-                        <h4>2</h4>
-                        <img src="{% static 'img/images.jpeg' %}" width="150" height="150" />
-                        <p>Time And Relative Dimensions In Space</p>
-                    </div> -->

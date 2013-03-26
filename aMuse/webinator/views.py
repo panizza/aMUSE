@@ -5,10 +5,11 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import base36_to_int
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from .helpers import create_qr
 from datetime import datetime, timedelta, date
+from django.shortcuts import get_object_or_404
 
 
 def reset_password_new_user(request, uidb36, token):
@@ -84,3 +85,10 @@ def qr_code_generator(request):
         'size': size,
         'text': qr_code.text
     })
+
+def action_list(request, experience_id):
+    exp = get_object_or_404(Experience,pk = experience_id)
+    action = exp.action_set.all()
+    return HttpResponse(exp)
+def experience_preview(request):
+    return render(request, 'webinator/preview.html')
