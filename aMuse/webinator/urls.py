@@ -10,7 +10,7 @@ urlpatterns = patterns('webinator.views',
         url(r'^preview/', 'experience_preview', name='preview'),
         url(r'^user/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
          'reset_password_new_user', name='reset_password_new_user'),
+        url(r'^qr/$', 'qr_code_generator', name='qr_code_generator'),
 
-        url(r'^qr/$', 'qr_code_generator', name='qr_code_generator')
 
 )

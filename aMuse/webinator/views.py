@@ -89,6 +89,9 @@ def qr_code_generator(request):
 def action_list(request, experience_id):
     exp = get_object_or_404(Experience,pk = experience_id)
     action = exp.action_set.all()
-    return HttpResponse(exp)
+    return render(request,'webinator/imagelist.html',{'list':action})
+
 def experience_preview(request):
     return render(request, 'webinator/preview.html')
+
+

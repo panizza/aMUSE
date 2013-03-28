@@ -1,0 +1,13 @@
+{%  load staticfiles %}
+
+<script src="{% static "js/image_viewer.js" %}" />
+<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+    {% for item in list %}
+    <li class="ui-widget-content ui-corner-tr">
+        <h5 class="ui-widget-header">{{ item.pk }} </h5>
+        <img src="{{ item.photo }}" alt="{{ item.comment }}" width="96" height="72" />
+        <a href="{{ item.photo }}" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+        <a title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+    </li>
+    {% endfor %}
+</ul>
