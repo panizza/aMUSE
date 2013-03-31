@@ -5,7 +5,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import base36_to_int
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .helpers import create_qr
 from datetime import datetime, timedelta, date
@@ -87,11 +87,20 @@ def qr_code_generator(request):
     })
 
 def action_list(request, experience_id):
-    exp = get_object_or_404(Experience,pk = experience_id)
+    """
+    (no docs)
+    :param request: the standard request given by Django
+    :param experience_id:
+    """
+    exp = get_object_or_404(Experience, pk=experience_id)
     action = exp.action_set.all()
-    return render(request,'webinator/imagelist.html',{'list':action})
+    return render(request, 'webinator/imagelist.html', {'list': action})
 
 def experience_preview(request):
+    """
+    (no docs)
+    :param request: the standard request given by Django
+    """
     return render(request, 'webinator/preview.html')
 
 
