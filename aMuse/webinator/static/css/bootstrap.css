@@ -327,7 +327,6 @@ a:focus {
 .span4 {
   width: 300px;
 }
-
 .span3 {
   width: 220px;
 }
@@ -6137,7 +6136,7 @@ a.badge:focus {
 }
 
 .hero-unit li {
-  line-height: 30px;
+  line-height: 20px;
 }
 
 .pull-right {

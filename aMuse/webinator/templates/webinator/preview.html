@@ -1,0 +1,124 @@
+{% extends 'webinator/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Timeline preview
+{% endblock %}
+{% block extrastyle %}
+    <link href="{% static "css/timeline_style.css" %}" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+{% endblock %}
+{% block extrascript %}
+    <script src="{% static "js/jquery.timelinr-0.9.52.js" %}" ></script>
+    <script>
+        $(function(){
+            $().timelinr({
+                orientation: 'horizontal',
+                // value: horizontal | vertical, default to horizontal
+                containerDiv: '#timeline',
+                // value: any HTML tag or #id, default to #timeline
+                datesDiv: '#dates',
+                // value: any HTML tag or #id, default to #dates
+                datesSelectedClass: 'selected',
+                // value: any class, default to selected
+                datesSpeed: 'normal',
+                // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to normal
+                issuesDiv : '#issues',
+                // value: any HTML tag or #id, default to #issues
+                issuesSelectedClass: 'selected',
+                // value: any class, default to selected
+                issuesSpeed: 'fast',
+                // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to fast
+                issuesTransparency: 0.2,
+                // value: integer between 0 and 1 (recommended), default to 0.2
+                issuesTransparencySpeed: 500,
+                // value: integer between 100 and 1000 (recommended), default to 500 (normal)
+                prevButton: '#prev',
+                // value: any HTML tag or #id, default to #prev
+                nextButton: '#next',
+                // value: any HTML tag or #id, default to #next
+                arrowKeys: 'false',
+                // value: true/false, default to false
+                startAt: 1,
+                // value: integer, default to 1 (first)
+                autoPlay: 'false',
+                // value: true | false, default to false
+                autoPlayDirection: 'forward',
+                // value: forward | backward, default to forward
+                autoPlayPause: 2000
+                // value: integer (1000 = 1 seg), default to 2000 (2segs)< });
+            });
+        })
+    </script>
+{% endblock %}
+
+{% block state %}
+    <div class="btn-group pull-right">
+        <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
+            Hello, {{ user.username }}
+            <span class="caret"></span>
+        </button>
+
+        <ul class="dropdown-menu pull-right">
+            <li>
+                <a href="/webinator/logout">Log out</a>
+            </li>
+            <li><a href="/webinator/">Back to visits</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block container %}
+    <div class="container-fluid">
+            <div class="span9">
+                <div class="hero-unit">
+                    <div id="inner_wrap">
+                        <div id="timeline">
+                            <ul id="dates">
+                                <li><a href="#1">1</a></li>
+                                <li><a href="#2">2</a></li>
+                                <li><a href="#3">3</a></li>
+                                <li><a href="#4">4</a></li>
+                            </ul>
+                            <ul id="issues">
+                                <li id="1">
+                                    <h1>First</h1>
+                                    <p> ASD ASD</p>
+                                </li>
+                                <li id="2">
+                                    <h1>Second</h1>
+                                    <p> LOL LOL</p>
+                                </li>
+                                <li id="3">
+                                    <h1>Third</h1>
+                                    <p> XD XD</p>
+                                </li>
+                                <li id="4">
+                                    <h1>Fourth</h1>
+                                    <p> WTF WTF</p>
+                                </li>
+                            </ul>
+                        </div><!-- div timeline -->
+                    </div><!-- div inner wrap -->
+                </div><!-- hero unit -->
+            </div><!--/span-->
+        </div><!--/row-->
+
+{%  endblock %}

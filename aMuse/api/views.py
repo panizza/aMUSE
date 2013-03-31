@@ -47,16 +47,18 @@ def save_experience(request):
         my_experience = Experience.objects.create(user=user)
         toret, status_code = save_experience_data(experience, my_experience,
                                                   user, user_created)
-        if status_code == 200:
-            if user_created:
+        if user_created:
+            if status_code == 200:
                 url = register_new_user(user, request)
                 print url
-        else:
-            return {
-                       "status": "error",
-                       "error": "JSON malformed"
-            }, 400
+            else:
+                user.delete()
         return toret, status_code
+    else:
+        return {
+                   "status": "error",
+                   "error": "JSON malformed"
+        }, 400
 
 
 ######################################

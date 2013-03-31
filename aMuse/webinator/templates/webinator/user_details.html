@@ -1,10 +1,11 @@
 {% extends 'webinator/base.html' %}
 {% load staticfiles %}
-
+{% load url from future %}
 {% block title %}
     Welcome {{ user.username }}
 {% endblock %}
 {% block extrastyle %}
+   <link href="{% static "css/timeline_style.css" %}" rel="stylesheet">
    <style type="text/css">
         body {
             padding-top: 60px;
@@ -22,7 +23,36 @@
                 padding-right: 5px;
             }
         }
+        .nav-header-trash{
+            color: red;
+        }
+        #trash-title{
+            background-color: #ffffff;
+        }
+        #gallery { float: left; width: 65%; min-height: 12em; }
+        .gallery.custom-state-active { background: #eee; }
+        .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+        .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
+        .gallery li a { float: right; }
+        .gallery li a.ui-icon-zoomin { float: left; }
+        .gallery li img { width: 100%; cursor: move; }
+
+        #trash { float: right; width: 97%; min-height: 18em; padding: 1%; }
+        #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+        #trash h4 .ui-icon { float: left; }
+        #trash .gallery h5 { display: none; }
+
     </style>
+{% endblock %}
+{% block extrascript %}
+    <script src="{% static "js/jquery.timelinr-0.9.52.js" %}" ></script>
+    <script>
+        $(function(){
+           $(".visit").click(function(){
+                $("#visit_title").text($(".visit").text());
+           });
+        });
+    </script>
 {% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -39,12 +69,23 @@
         <ul class="dropdown-menu pull-right">
             <li>
                 <a href="/webinator/logout">Log out</a>
+                <a href="/webinator/user">Personal Info</a>
             </li>
         </ul>
     </div>
 {% endblock %}
 
 {% block container %}
+
+<script>
+    $(function(){
+        $(".visit").click(function(){
+                    var id= this.getAttribute("pk");
+                    $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
+                }
+        );
+    });
+</script>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
@@ -52,7 +93,7 @@
                 <ul class="nav nav-list">
                     <li class="nav-header">My visits</li>
                     {% for vis in visit_confirmed %}
-                        <li><a href="#">{{ vis.date }}</a></li>
+                        <li><a class="visit" pk={{ vis.pk }}>{{ vis.date }}</a></li>
                     {% endfor %}
                     <li class="nav-header">Visits to be confirmed</li>
                     {% for vis in visit_not_confirmed %}
@@ -64,54 +105,29 @@
                     <li><a href="#">Link</a></li>
                 </ul>
             </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-            <div class="hero-unit">
-                <h1>Hello, world!</h1>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+            <div id="trash" class="ui-widget-content ui-state-default">
+                <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash"></span> Modified Items</h4>
             </div>
-            <div class="row-fluid">
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
-            <div class="row-fluid">
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="span4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn" href="#">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
+        </div>
+        <script>
+
+        </script>
+        <div class="span9">
+            <h1 id="visit_title">No visit selected</h1>
+            <div class="hero-unit">
+                <div class="row">
+                    <div id="gallery-content" class="ui-widget ui-helper-clearfix">
+
+                    </div><!-- /Gallery content -->
+                </div><!-- /row -->
+            </div><!-- /hero unit -->
         </div><!--/span-->
     </div><!--/row-->
 
     <hr>
 
     <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; aTeam 2013</p>
     </footer>
 
 </div><!--/.fluid-container-->
