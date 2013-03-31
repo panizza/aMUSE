@@ -12,5 +12,8 @@ urlpatterns = patterns('webinator.views',
          'reset_password_new_user', name='reset_password_new_user'),
         url(r'^qr/$', 'qr_code_generator', name='qr_code_generator'),
 
+        url(r'^action/(?P<id_action>\d+)/edit/$', 'edit_action', name='edit_action'),
+
+
 
 )

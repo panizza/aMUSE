@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from basetyzer.models import Experience, CustomUser, SuperQRCode
+from basetyzer.models import Experience, CustomUser, SuperQRCode, Action
 from django.contrib.auth import login
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.http import base36_to_int
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.views.decorators.csrf import csrf_exempt
 from .helpers import create_qr
 from datetime import datetime, timedelta, date
 from django.shortcuts import get_object_or_404
+from ajaxutils.decorators import ajax
 
 
 def reset_password_new_user(request, uidb36, token):
@@ -86,6 +89,7 @@ def qr_code_generator(request):
         'text': qr_code.text
     })
 
+
 def action_list(request, experience_id):
     """
     (no docs)
@@ -96,6 +100,7 @@ def action_list(request, experience_id):
     action = exp.action_set.all()
     return render(request, 'webinator/imagelist.html', {'list': action})
 
+
 def experience_preview(request):
     """
     (no docs)
@@ -103,4 +108,33 @@ def experience_preview(request):
     """
     return render(request, 'webinator/preview.html')
 
+
+@csrf_exempt
+@ajax(require="POST")
+def edit_action(request, id_action):
+    """
+    Allow the user edit an action (only comments can be edited)
+    :param request: the standard request given by Django
+    :param id_action:
+    """
+   # import pdb;pdb.set_trace()
+    action = get_object_or_404(Action, pk=id_action)
+    text_comment = request.POST.get('comment', None)
+    if not text_comment:
+        return {
+            "status": "error",
+            "error": "Comment parameter not found"
+        }, 404
+    action.comment.content = text_comment
+    try:
+        action.comment.save()
+    except:
+        return {
+            "status": "error",
+            "error": "Error while saving the comment"
+        }, 500
+    return {
+        "status": "saved",
+        "error": ""
+    }, 200
 
