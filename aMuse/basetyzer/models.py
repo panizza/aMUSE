@@ -34,7 +34,7 @@ class Exhibit(models.Model):
     date_begin = models.DateField()
     date_end = models.DateField()
     owner = models.ForeignKey(CustomUser)
-    image = models.ImageField(upload_to="images/exhibit/")
+    image = thumbnail.ImageField(upload_to="images/exhibit/")
     objects = ExhibitionManager()
 
     def __unicode__(self):

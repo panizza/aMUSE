@@ -18,7 +18,7 @@ class CustomUserAdmin(NoPermissionAdmin):
     list_display = ['username', 'email', 'is_staff', 'need_reset']
 
 
-class ExhibitAdmin(admin.ModelAdmin):
+class ExhibitAdmin(AdminImageMixin, admin.ModelAdmin):
     fieldsets = (
         (
             'Exhibition', dict(fields=['name', 'description', 'image'])
