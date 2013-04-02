@@ -10,14 +10,14 @@ from api.helpers import register_new_user
 
 
 @ajax(require="GET", login_required=False)
-def get_item_info(request, id_item):
+def get_item_info(request, hash_item):
     """
     Provides information regarding a specific object identified by id
     :rtype : application/json
     :param request: the standard request given by Django
     :param id_item: the pk of an item instance
     """
-    item = get_object_or_404(Item, pk=id_item)
+    item = get_object_or_404(Item, tag=hash_item)
     item_json = model_to_dict(item, exclude=['exhibit', 'tag'])
     item_json['photo'] = item_json['photo'].url
     return item_json, 200

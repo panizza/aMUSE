@@ -90,17 +90,19 @@ def qr_code_generator(request):
     })
 
 
+@login_required
 def action_list(request, experience_id):
     """
     (no docs)
     :param request: the standard request given by Django
-    :param experience_id:
+    :param experience_id: the experience instance
     """
     exp = get_object_or_404(Experience, pk=experience_id)
     action = exp.action_set.all()
     return render(request, 'webinator/imagelist.html', {'list': action})
 
 
+@login_required
 def experience_preview(request):
     """
     (no docs)
@@ -110,15 +112,14 @@ def experience_preview(request):
 
 
 @csrf_exempt
-@ajax(require="POST")
-def edit_action(request, id_action):
+@ajax(require='POST', login_required=True)
+def edit_action(request, action_id):
     """
     Allow the user edit an action (only comments can be edited)
     :param request: the standard request given by Django
-    :param id_action:
+    :param action_id: the action instance
     """
-   # import pdb;pdb.set_trace()
-    action = get_object_or_404(Action, pk=id_action)
+    action = get_object_or_404(Action, pk=action_id)
     text_comment = request.POST.get('comment', None)
     if not text_comment:
         return {
@@ -133,8 +134,33 @@ def edit_action(request, id_action):
             "status": "error",
             "error": "Error while saving the comment"
         }, 500
-    return {
-        "status": "saved",
-        "error": ""
-    }, 200
+    else:
+        return {
+            "status": "saved",
+            "error": ""
+        }, 200
+
+
+@csrf_exempt
+@ajax(require='GET', login_required=True)
+def delete_action(request, action_id):
+    """
+    Allow the user to delete an action
+    :param request: the standard request given by Django
+    :param action_id: the action instance
+    :return:
+    """
+    action = get_object_or_404(Action, pk=action_id)
+    try:
+        action.delete()
+    except:
+        return {
+                   "status": "error",
+                   "error": "Error while deleting the action"
+        }, 404
+    else:
+        return {
+            "status": "saved",
+            "error": ""
+        }, 200
 
