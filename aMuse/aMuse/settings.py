@@ -43,8 +43,8 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = 'media'
-
+MEDIA_ROOT = join(SETTINGS_PATH,'../../media')
+print MEDIA_ROOT
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     'grappelli',
     'django.contrib.admin',
     'django_extensions',
+    'sorl.thumbnail',
 
 )
 #MY APPS
@@ -177,6 +178,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 GRAPPELLI_INDEX_DASHBOARD = 'aMuse.dashboard.CustomIndexDashboard'
 GRAPPELLI_ADMIN_TITLE = 'aMUX - Amusement for the masses'
+
 
 ## Import local settings
 try:

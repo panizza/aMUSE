@@ -2,6 +2,8 @@ from django.contrib import admin
 from basetyzer.models import Item, Exhibit, CustomUser
 from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
+from sorl.thumbnail.admin import AdminImageMixin
+
 
 class NoPermissionAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
@@ -44,7 +46,7 @@ class ExhibitAdmin(admin.ModelAdmin):
     is_visitable.short_description = 'Can visit?'
 
 
-class ItemAdmin(admin.ModelAdmin):
+class ItemAdmin(AdminImageMixin, admin.ModelAdmin):
     fieldsets = (
             (
                 'Item Info', dict(fields=['title', 'description', 'author',

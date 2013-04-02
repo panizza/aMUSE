@@ -4,7 +4,7 @@ from datetime import date
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from hashlib import sha1
-
+from sorl import thumbnail
 
 class ExhibitionManager(models.Manager):
     """
@@ -52,7 +52,7 @@ class Item(models.Model):
     description = models.TextField()
     author = models.CharField(max_length=50)
     release_date = models.DateField()
-    photo = models.ImageField(upload_to="images/items/")
+    photo = thumbnail.ImageField(upload_to="images/items/")
     tag = models.CharField(max_length=40, null=False, blank=True)
     exhibit = models.ManyToManyField(Exhibit)
 

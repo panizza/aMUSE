@@ -7,6 +7,7 @@ from ajaxutils.http import json
 from .helpers import save_experience_data
 from basetyzer.models import Item, Experience, Exhibit, CustomUser, SuperQRCode
 from api.helpers import register_new_user
+from sorl.thumbnail import get_thumbnail
 
 
 @ajax(require="GET", login_required=False)
@@ -19,7 +20,12 @@ def get_item_info(request, hash_item):
     """
     item = get_object_or_404(Item, tag=hash_item)
     item_json = model_to_dict(item, exclude=['exhibit', 'tag'])
-    item_json['photo'] = item_json['photo'].url
+    try:
+        thumbnail = get_thumbnail(item.photo, '100x100', format="PNG")
+    except:
+        thumbnail = item.photo
+    else:
+        item_json['photo'] = thumbnail.url
     return item_json, 200
 
 
