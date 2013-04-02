@@ -100,6 +100,7 @@ WSGI_APPLICATION = 'aMuse.wsgi.application'
 
 # Find templates in the same folder as settings.py.
 TEMPLATE_DIRS = (
+    join(SETTINGS_PATH, '../webinator/templates')
    #"/Users/les/sites/env/amuse/project/aMUSE/aMuse/webinator/templates/webinator"
 )
 
