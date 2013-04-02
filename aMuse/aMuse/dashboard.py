@@ -11,6 +11,7 @@ class CustomIndexDashboard(Dashboard):
 
     def init_with_context(self, context):
         site_name = get_admin_site_name(context)
+        #import pdb;pdb.set_trace()
 
         exhibit_info = modules.ModelList(
             title=_('Exhibit Information'),

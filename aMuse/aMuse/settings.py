@@ -118,6 +118,7 @@ INSTALLED_APPS = (
 )
 #MY APPS
 INSTALLED_APPS += (
+    'aMuse',
     'api',
     'basetyzer',
     'webinator',
