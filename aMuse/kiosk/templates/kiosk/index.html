@@ -1,17 +1,36 @@
 {% extends 'webinator/base.html' %}
 {% load url from future %}
+{% load thumbnail %}
 {% block title %}
     nigr
 {% endblock %}
+{% block extrastyle %}
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
 
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+{% endblock %}
 {% block container %}
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
             <div class="hero-unit">
-                <h1>Hello, world!</h1>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+                <h1>Museum Kiosk</h1>
+                <p>This is the museum kiosk. Click one of the bottom exhibit bla bla bla.</p>
             </div>
             <div class="row-fluid">
             {% for exhibit in exhibition_list %}
@@ -21,8 +40,11 @@
                     {% endif %}
                     <div class="span6">
                         <h2>{{ exhibit.name }}</h2>
+                        {% thumbnail exhibit.image "200x200" as im %}
+                            <img style="padding-right: 10px" align="left" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
                         <p>{{ exhibit.description }}</p>
-                        <p><a class="btn" href="{% url 'exhibit_item_list' exhibit.pk %}">View details</a></p>
+                        <p style="float:right"><a class="btn" href="{% url 'exhibit_item_list' exhibit.pk %}">View details</a></p>
                         </div>
                 {% endfor %}
             </div><!--/span-->

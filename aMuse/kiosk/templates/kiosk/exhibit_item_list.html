@@ -1,13 +1,52 @@
 {% extends 'webinator/base.html' %}
+{% load url from future %}
+{% load thumbnail %}
+{% load staticfiles %}
+
+{% block extrastyle %}
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        body{
+            padding-left: 10px;
+        }
+        .thumb {
+            padding-right: 10px
+        }
+    </style>
+{% endblock %}
+
 {% block container %}
+    {% thumbnail exhibit.image "200x200" as im %}
+        <img class="thumb" align="left" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+    {% endthumbnail %}
     <span><h1>{{ exhibit.name }}</h1>
     <h2>{{ exhibit.date_begin }} - {{ exhibit.date_end }}</h2></span>
     <p>{{ exhibit.description }}</p><hr>
+
+
     {% for item in item_list %}
+        {% thumbnail item.photo "150x150" as im %}
+            <img class="thumb" align="left" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
         <p>Title: {{ item.title }}</p>
         <p>Description: {{ item.description }}</p>
         <p>Author: {{ item.author}}</p>
         <p>Release Date: {{ item.release_date }}</p>
-        <p>Photo: {{ item.photo }}</p>
+        <hr>
     {% endfor %}
 {% endblock %}
