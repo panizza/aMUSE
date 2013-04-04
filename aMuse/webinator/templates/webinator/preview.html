@@ -85,7 +85,7 @@
                 // value: any HTML tag or #id, default to #prev
                 nextButton: '#next',
                 // value: any HTML tag or #id, default to #next
-                arrowKeys: 'false',
+                arrowKeys: 'true',
                 // value: true/false, default to false
                 startAt: 1,
                 // value: integer, default to 1 (first)
@@ -127,9 +127,10 @@
                                     <li><a href="#1">1</a></li>
                                     <li><a href="#2">2</a></li>
                                     <li><a href="#3">3</a></li>
-                                    <li><a href="#4">4</a></li>
                                 </ul>
                                 <ul id="issues">
+                                    <a href="#" id="next">+</a>
+                                    <a href="#" id="prev" style="display: none;">-</a>
                                     <li id="1">
                                         <h1>TITOLO</h1>
                                         <img src="{% static "img/timeline/quadro.jpg" %}"/>
@@ -144,6 +145,17 @@
                                     <li id="2">
                                         <h1>TITOLO 1</h1>
                                         <img src="{% static "img/timeline/quadro1.jpg" %}"/>
+                                        <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                            e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+
+                                        </p>
+                                    </li>
+
+                                    <li id="3">
+                                        <h1>TITOLO 2</h1>
+                                        <img src="{% static "img/timeline/quadro2.jpg" %}"/>
                                         <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
                                             Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
                                             e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
