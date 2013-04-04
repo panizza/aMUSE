@@ -23,6 +23,29 @@
                 padding-right: 5px;
             }
         }
+        a {
+            color: #646464;
+            text-decoration: none;
+        }
+
+        #issues li h1 {
+            color: #FF7A00;
+            text-align: center;
+        }
+
+        #issues li p {
+            color:#000000;
+            margin-right: 0px;
+            text-align: left;
+            margin-left: 50%;
+        }
+
+        #issues li.selected img{
+            margin-top: 2%;
+        }
+
+
+
     </style>
 {% endblock %}
 {% block extrascript %}
@@ -85,40 +108,49 @@
     </div>
 {% endblock %}
 
+<center>
 {% block container %}
-    <div class="container-fluid">
-            <div class="span9">
-                <div class="hero-unit">
-                    <div id="inner_wrap">
-                        <div id="timeline">
-                            <ul id="dates">
-                                <li><a href="#1">1</a></li>
-                                <li><a href="#2">2</a></li>
-                                <li><a href="#3">3</a></li>
-                                <li><a href="#4">4</a></li>
-                            </ul>
-                            <ul id="issues">
-                                <li id="1">
-                                    <h1>First</h1>
-                                    <p> ASD ASD</p>
-                                </li>
-                                <li id="2">
-                                    <h1>Second</h1>
-                                    <p> LOL LOL</p>
-                                </li>
-                                <li id="3">
-                                    <h1>Third</h1>
-                                    <p> XD XD</p>
-                                </li>
-                                <li id="4">
-                                    <h1>Fourth</h1>
-                                    <p> WTF WTF</p>
-                                </li>
-                            </ul>
-                        </div><!-- div timeline -->
-                    </div><!-- div inner wrap -->
-                </div><!-- hero unit -->
-            </div><!--/span-->
-        </div><!--/row-->
+    <div class="container-fluid" style="margin-left: 7%;" >
+                <div class="span9">
+                    <div class="hero-unit" style="width:100%">
+                        <div id="inner_wrap">
+                            <div id="timeline" style="background-color: #eeeeee; height: auto">
+                                <ul id="dates">
+                                    <li><a href="#1">1</a></li>
+                                    <li><a href="#2">2</a></li>
+                                    <li><a href="#3">3</a></li>
+                                    <li><a href="#4">4</a></li>
+                                </ul>
+                                <ul id="issues">
+                                    <li id="1">
+                                        <h1>TITOLO</h1>
+                                        <img src="{% static "img/timeline/quadro.jpg" %}"/>
+                                        <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                            e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+
+                                        </p>
+                                    </li>
+
+                                    <li id="2">
+                                        <h1>TITOLO 1</h1>
+                                        <img src="{% static "img/timeline/quadro1.jpg" %}"/>
+                                        <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                            e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+
+                                        </p>
+                                    </li>
+
+                                </ul>
+                            </div><!-- div timeline -->
+                        </div><!-- div inner wrap -->
+                    </div><!-- hero unit -->
+                </div><!--/span-->
+    </div><!--/row-->
+
 
 {%  endblock %}
+</center>
