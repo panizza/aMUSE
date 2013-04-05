@@ -28,6 +28,14 @@ DATABASES = {
     }
 }
 
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    },
+}
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -116,6 +124,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_extensions',
     'sorl.thumbnail',
+    'django_rq',
 
 )
 #MY APPS

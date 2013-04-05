@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^django-rq/', include('django_rq.urls')),
 )
 
 if settings.DEBUG:

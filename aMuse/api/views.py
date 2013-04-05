@@ -70,6 +70,9 @@ def save_experience(request):
 ######################################
 ##### ONLY FOR DEBUG! DO NOT EDIT#####
 ######################################
-@login_required
+import django_rq
+from django.http import HttpResponse
+from utils.helpers import send_email
 def api_test_for_some_code(request):
-    pass
+    job=send_email.delay('panizza01@gmail.com', 'exterminate', 'dalek')
+    return HttpResponse(job.result)

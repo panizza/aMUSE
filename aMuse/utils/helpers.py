@@ -17,6 +17,8 @@ def save_image(image_b64):
     extension = '.' + Image.open(StringIO(image)).format.lower()
     return image_sha1 + extension, ContentFile(image)
 
+from django_rq.decorators import job
+@job
 def send_email(email, body, subject):
     #TODO[panizza]: change this with an async method (http://python-rq.org)
     if email_validator(email):
