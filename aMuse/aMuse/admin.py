@@ -1,5 +1,5 @@
 from django.contrib import admin
-from basetyzer.models import Item, Exhibit, CustomUser
+from basetyzer.models import Item, Exhibit, CustomUser,Experience, Action
 from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 from sorl.thumbnail.admin import AdminImageMixin
@@ -66,6 +66,8 @@ class ItemAdmin(AdminImageMixin, admin.ModelAdmin):
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Exhibit, ExhibitAdmin)
 admin.site.register(Item, ItemAdmin)
+admin.site.register(Experience)
+admin.site.register(Action)
 
 admin.site.unregister(Group)
 admin.site.unregister(Site)
