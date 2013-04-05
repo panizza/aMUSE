@@ -70,9 +70,8 @@ def save_experience(request):
 ######################################
 ##### ONLY FOR DEBUG! DO NOT EDIT#####
 ######################################
-import django_rq
 from django.http import HttpResponse
 from utils.helpers import send_email
 def api_test_for_some_code(request):
     job=send_email.delay('panizza01@gmail.com', 'exterminate', 'dalek')
-    return HttpResponse(job.result)
+    return HttpResponse("<a href='/django-rq/'>rq statistics</a>")
