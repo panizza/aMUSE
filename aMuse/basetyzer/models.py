@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from datetime import date
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -18,13 +18,6 @@ class ExhibitionManager(models.Manager):
             exclude(date_begin__gt=date.today())
 
 
-class CustomUser(AbstractUser):
-    """
-    Extend the standard User's model
-    """
-    need_reset = models.BooleanField(default=False)
-
-
 class Exhibit(models.Model):
     """
     The main model. This contains pretty much everything
@@ -33,7 +26,7 @@ class Exhibit(models.Model):
     description = models.TextField()
     date_begin = models.DateField()
     date_end = models.DateField()
-    owner = models.ForeignKey(CustomUser)
+    owner = models.ForeignKey(User)
     image = thumbnail.ImageField(upload_to="images/exhibit/")
     objects = ExhibitionManager()
 
@@ -68,8 +61,8 @@ class Experience(models.Model):
     Storage for the user's experiences
     """
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(CustomUser)
-    confirmed = models.BooleanField(default=False)
+    user = models.ForeignKey(User)
+    public = models.BooleanField(default=False)
     hash_url = models.CharField(max_length=40, default='', )
 
     def __unicode__(self):

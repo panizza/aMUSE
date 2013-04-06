@@ -13,7 +13,7 @@ def save_experience_data(experience, my_experience, user, user_created):
     :rtype : application/json, int
     :param experience: JSON that contains all the actions
     :param my_experience: Experience's instance
-    :param user: CustomUser's instance
+    :param user: User's instance
     :param user_created: True/False. is CustomUser instance created now?
     """
     for exp in experience:
@@ -52,7 +52,7 @@ def generate_url_reset(user):
     """
     Generate a URL. The first part is a global setting, the second is
     created dinamically
-    :param user: a standard CustomUser instance
+    :param user: a standard User instance
     :return: string, the entire url
     """
     uid = int_to_base36(user.pk)
@@ -62,16 +62,16 @@ def generate_url_reset(user):
 
 def register_new_user(user, request):
     """
-    Register a new CustomUser
+    Register a new User
         1. Flag the user as inactive
         2. Create the link for the password creation
         3. Send the email
 
-    :param user: the CustomUser's instance
+    :param user: the User's instance
     """
-    # 1. Flag the CustomUser as inactive and need_reset = True
+    # 1. Flag the User as inactive and set unusable password
     user.is_active = False
-    user.need_reset = True
+    user.set_unusable_password()
     user.save()
 
     # 2. Create the link for the password creation

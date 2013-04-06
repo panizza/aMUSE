@@ -3,9 +3,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from ajaxutils.http import json
 from .helpers import save_experience_data
-from basetyzer.models import Item, Experience, Exhibit, CustomUser, SuperQRCode
+from basetyzer.models import Item, Experience, Exhibit, SuperQRCode
 from api.helpers import register_new_user
 from sorl.thumbnail import get_thumbnail
 
@@ -47,7 +48,7 @@ def save_experience(request):
 
             }, 400
         experience = data['exp']
-        user, user_created = CustomUser.objects.get_or_create(username=email,
+        user, user_created = User.objects.get_or_create(username=email,
                                                         email=email)
         my_experience = Experience.objects.create(user=user)
         toret, status_code = save_experience_data(experience, my_experience,
