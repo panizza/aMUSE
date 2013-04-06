@@ -133,9 +133,27 @@
             }
         }
 
+        function BeginEnd(val)
+        {
+            if(val=="imgBegin")
+            {
+                $().timelinr({
+                    startAt:1
+                });
+            }
+            else
+            {
+                var a_elements = dates.getElementsByTagName("a");
+                $().timelinr({
+                    startAt:a_elements.length
+                })
+            }
+        }
+
 
 
     </script>
+
 {% endblock %}
 
 {% block state %}
@@ -156,15 +174,15 @@
 
 <center>
 {% block container %}
-    <div class="container-fluid" style="margin-left: 7%;" >
+    <div class="container-fluid" style="margin-left: 10%;" >
                 <div class="span9">
                     <div class="hero-unit" style="width:100%">
                         <div id="inner_wrap">
                             <div id="timeline" style="background-color: #eeeeee; height: auto; margin-left: -60px;">
                                 <ul id="dates">
-                                    <li id="a"><a href="#1">1</a></li>
-                                    <li id="b"><a href="#2">2</a></li>
-                                    <li id="c"><a href="#3">3</a></li>
+                                    <li><a href="#1">1</a></li>
+                                    <li><a href="#2">2</a></li>
+                                    <li><a href="#3">3</a></li>
                                 </ul>
                                 <ul id="issues">
                                     <a href="#" id="next">+</a>
@@ -205,8 +223,10 @@
                                 </ul>
                                 <br>
                                 <center>
-                                    <form name='button' style="cursor: pointer;">
-                                        <img src="{% static "img/timeline/play.png" %}" width="50px" title="Play" name="imgPlayStop" onclick="PlayStop(this.title)" >
+                                    <form name='button' style="cursor: pointer; ">
+                                        <img src="{% static "img/timeline/begin.png" %}" width="50px" title="Go to Start" name="imgBegin" onclick="BeginEnd(this.name)" >
+                                        <img src="{% static "img/timeline/play.png" %}" width="60px" title="Play" name="imgPlayStop" onclick="PlayStop(this.title)" >
+                                        <img src="{% static "img/timeline/end.png" %}" width="50px" title="Go to End" name="imgEnd" onclick="BeginEnd(this.name)" >
                                     </form>
                                 </center>
                             </div><!-- div timeline -->
