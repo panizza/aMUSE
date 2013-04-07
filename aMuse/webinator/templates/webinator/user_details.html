@@ -87,7 +87,7 @@
         );
         $(".ui-icon-trash").click(function(){
             var pk=this.getAttribute("pk");
-            var result = $.get("action/"+pk+"/delete/",function(response){console.log(response);})
+            var result = $.get("experience/"+pk+"/delete/",function(response){console.log(response);})
                     .done(function(){
                         $("#"+pk).remove();
                     })
