@@ -85,7 +85,7 @@
                 // value: any HTML tag or #id, default to #prev
                 nextButton: '#next',
                 // value: any HTML tag or #id, default to #next
-                arrowKeys: 'false',
+                arrowKeys: 'true',
                 // value: true/false, default to false
                 startAt: 1,
                 // value: integer, default to 1 (first)
@@ -93,10 +93,48 @@
                 // value: true | false, default to false
                 autoPlayDirection: 'forward',
                 // value: forward | backward, default to forward
-                autoPlayPause: 2000
+                autoPlayPause: 5000
                 // value: integer (1000 = 1 seg), default to 2000 (2segs)< });
             });
         })
+
+    </script>
+    <script type="text/javascript" language="javascript">
+
+        function PlayStop(val)
+        {
+            var listArray = $('#dates li');
+            var selectedLI = listArray.index( listArray.find('.selected').parent() );
+
+            $().timelinr({
+                startAt:selectedLI+1
+            });
+
+            if(val=="Play")
+            {
+                document.button.imgPlayStop.title="Stop";
+                document.button.imgPlayStop.src="{% static "img/timeline/pause.png" %}";
+                $().timelinr({
+                    autoPlay: 'true',
+                    autoPlayDirection: 'forward',
+                    autoPlayPause: 5000,
+                    startAt:selectedLI+1
+                });
+            }
+            else if(val=="Stop")
+            {
+                document.button.imgPlayStop.title="Play";
+                document.button.imgPlayStop.src="{% static "img/timeline/play.png" %}";
+                $().timelinr({
+                    autoPlayDirection:null,
+                    startAt:selectedLI+1,
+                    autoPlayPause: 5000
+                });
+            }
+        }
+
+
+
     </script>
 {% endblock %}
 
@@ -124,12 +162,13 @@
                         <div id="inner_wrap">
                             <div id="timeline" style="background-color: #eeeeee; height: auto; margin-left: -60px;">
                                 <ul id="dates">
-                                    <li><a href="#1">1</a></li>
-                                    <li><a href="#2">2</a></li>
-                                    <li><a href="#3">3</a></li>
-                                    <li><a href="#4">4</a></li>
+                                    <li id="a"><a href="#1">1</a></li>
+                                    <li id="b"><a href="#2">2</a></li>
+                                    <li id="c"><a href="#3">3</a></li>
                                 </ul>
                                 <ul id="issues">
+                                    <a href="#" id="next">+</a>
+                                    <a href="#" id="prev" style="display: none;">-</a>
                                     <li id="1">
                                         <h1>TITOLO</h1>
                                         <img src="{% static "img/timeline/quadro.jpg" %}"/>
@@ -152,7 +191,24 @@
                                         </p>
                                     </li>
 
+                                    <li id="3">
+                                        <h1>TITOLO 2</h1>
+                                        <img src="{% static "img/timeline/quadro2.jpg" %}"/>
+                                        <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                            e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+
+                                        </p>
+                                    </li>
+
                                 </ul>
+                                <br>
+                                <center>
+                                    <form name='button' style="cursor: pointer;">
+                                        <img src="{% static "img/timeline/play.png" %}" width="50px" title="Play" name="imgPlayStop" onclick="PlayStop(this.title)" >
+                                    </form>
+                                </center>
                             </div><!-- div timeline -->
                         </div><!-- div inner wrap -->
                     </div><!-- hero unit -->

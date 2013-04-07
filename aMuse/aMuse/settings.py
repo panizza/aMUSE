@@ -167,7 +167,6 @@ LOGIN_URL = reverse_lazy(LOGIN_NAME)
 LOGIN_REDIRECT_URL = "/webinator/"
 
 
-AUTH_USER_MODEL = 'basetyzer.CustomUser'
 SITE_URL = ""
 
 

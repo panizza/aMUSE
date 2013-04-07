@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from basetyzer.models import Experience, CustomUser, SuperQRCode, Action
+from basetyzer.models import Experience, SuperQRCode, Action
 from django.contrib.auth import login
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.datastructures import MultiValueDictKeyError
@@ -24,19 +25,18 @@ def reset_password_new_user(request, uidb36, token):
     """
     try:
         uid_int = base36_to_int(uidb36)
-        user = CustomUser.objects.get(pk=uid_int)
-    except (ValueError, OverflowError, CustomUser.DoesNotExist):
+        user = User.objects.get(pk=uid_int)
+    except (ValueError, OverflowError, User.DoesNotExist):
         user = None
 
-    if user is not None and user.need_reset \
+    if user is not None and user.has_unusable_password() \
         and default_token_generator.check_token(user, token):
         validlink = True
         if request.method == "POST":
             form = SetPasswordForm(user, request.POST)
             if form.is_valid():
                 form.save()
-                user.need_reset = False
-                user.save()
+                #TODO[panizza]: serve davvero il comando sotto?
                 user.backend = 'django.contrib.auth.backends.ModelBackend'
                 login(request, user)
                 return HttpResponseRedirect(reverse('index'))
@@ -62,8 +62,8 @@ def index(request):
     return render(request, 'webinator/user_details.html', {
         'user': request.user,
         'message': '',
-        'visit_confirmed': visit.filter(confirmed=True),
-        'visit_not_confirmed': visit.filter(confirmed=False)
+        'visit_public': visit.filter(public=True),
+        'visit_not_public': visit.filter(public=False)
     })
 
 
@@ -108,7 +108,10 @@ def experience_preview(request):
     (no docs)
     :param request: the standard request given by Django
     """
+    #TODO[panizza]: vedi commenti
+    #se (utente e' loggato and esperienza e' sua) or (esperienza.is_public)
     return render(request, 'webinator/preview.html')
+    #else permission deniend 403
 
 
 @csrf_exempt
