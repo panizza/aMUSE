@@ -91,12 +91,12 @@
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header">My visits</li>
-                    {% for vis in visit_confirmed %}
+                    <li class="nav-header">Visit already published</li>
+                    {% for vis in visit_public %}
                         <li><a class="visit" pk={{ vis.pk }}>{{ vis.date }}</a></li>
                     {% endfor %}
-                    <li class="nav-header">Visits to be confirmed</li>
-                    {% for vis in visit_not_confirmed %}
+                    <li class="nav-header">Visits to be published</li>
+                    {% for vis in visit_not_public %}
                         <li><a href="#">{{ vis.date }}</a></li>
                     {% endfor %}
                     <li class="nav-header">Sidebar</li>
@@ -118,7 +118,9 @@
                 <div class="row">
                     <div id="gallery-content" class="ui-widget ui-helper-clearfix">
 
+
                     </div><!-- /Gallery content -->
+
                 </div><!-- /row -->
             </div><!-- /hero unit -->
         </div><!--/span-->
