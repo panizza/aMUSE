@@ -139,7 +139,7 @@ def edit_action(request, action_id):
         }, 500
     else:
         return {
-            "status": "saved",
+            "status": "updated",
             "error": ""
         }, 200
 
@@ -163,7 +163,31 @@ def delete_action(request, action_id):
         }, 404
     else:
         return {
-            "status": "saved",
-            "error": ""
+                   "status": "deleted",
+                   "error": ""
+        }, 200
+
+
+@csrf_exempt
+@ajax(require='GET', login_required=True)
+def delete_experience(request, experience_id):
+    """
+    Allow the user to delete an action
+    :param request: the standard request given by Django
+    :param experience_id: the experience instance
+    :return:
+    """
+    experience = get_object_or_404(Experience, pk=experience_id)
+    try:
+        experience.delete()
+    except:
+        return {
+                   "status": "error",
+                   "error": "Error while deleting the experience"
+        }, 404
+    else:
+        return {
+                   "status": "deleted",
+                   "error": ""
         }, 200
 
