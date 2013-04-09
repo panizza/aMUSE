@@ -117,7 +117,7 @@
                 $().timelinr({
                     autoPlay: 'true',
                     autoPlayDirection: 'forward',
-                    autoPlayPause: 5000,
+                    autoPlayPause: 8000,
                     startAt:selectedLI+1
                 });
             }
@@ -127,8 +127,7 @@
                 document.button.imgPlayStop.src="{% static "img/timeline/play.png" %}";
                 $().timelinr({
                     autoPlayDirection:null,
-                    startAt:selectedLI+1,
-                    autoPlayPause: 5000
+                    startAt:selectedLI+1
                 });
             }
         }
@@ -138,14 +137,16 @@
             if(val=="imgBegin")
             {
                 $().timelinr({
-                    startAt:1
+                    startAt:1,
+                    autoPlayDirection:null
                 });
             }
             else
             {
                 var a_elements = dates.getElementsByTagName("a");
                 $().timelinr({
-                    startAt:a_elements.length
+                    startAt:a_elements.length,
+                    autoPlayDirection:null
                 })
             }
         }
