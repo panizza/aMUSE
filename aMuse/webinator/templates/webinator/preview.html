@@ -91,9 +91,9 @@
                 // value: integer, default to 1 (first)
                 autoPlay: 'false',
                 // value: true | false, default to false
-                autoPlayDirection: 'forward',
+                autoPlayDirection: 'forward'
                 // value: forward | backward, default to forward
-                autoPlayPause: 5000
+                //autoPlayPause: 5000
                 // value: integer (1000 = 1 seg), default to 2000 (2segs)< });
             });
         })
@@ -101,7 +101,7 @@
     </script>
     <script type="text/javascript" language="javascript">
 
-        function PlayStop(val)
+        function PlayStop(val,id)
         {
             var listArray = $('#dates li');
             var selectedLI = listArray.index( listArray.find('.selected').parent() );
@@ -110,14 +110,23 @@
                 startAt:selectedLI+1
             });
 
+            if(id=="play1")
+            {
+                document.button.imgPlayStop.id = "play2";
+                $().timelinr({
+                    autoPlay: 'true',
+                    autoPlayPause: 5000,
+                    autoPlayDirection: 'forward'
+                });
+            }
+
             if(val=="Play")
             {
                 document.button.imgPlayStop.title="Stop";
                 document.button.imgPlayStop.src="{% static "img/timeline/pause.png" %}";
                 $().timelinr({
-                    autoPlay: 'true',
+                    autoPlayPause: 5000,
                     autoPlayDirection: 'forward',
-                    autoPlayPause: 8000,
                     startAt:selectedLI+1
                 });
             }
@@ -126,6 +135,7 @@
                 document.button.imgPlayStop.title="Play";
                 document.button.imgPlayStop.src="{% static "img/timeline/play.png" %}";
                 $().timelinr({
+                    autoPlayPause:null,
                     autoPlayDirection:null,
                     startAt:selectedLI+1
                 });
@@ -225,8 +235,8 @@
                                 <br>
                                 <center>
                                     <form name='button' style="cursor: pointer; ">
-                                        <img src="{% static "img/timeline/begin.png" %}" width="50px" title="Go to Start" name="imgBegin" onclick="BeginEnd(this.name)" >
-                                        <img src="{% static "img/timeline/play.png" %}" width="60px" title="Play" name="imgPlayStop" onclick="PlayStop(this.title)" >
+                                        <img src="{% static "img/timeline/begin.png" %}" width="50px"title="Go to Start" name="imgBegin" onclick="BeginEnd(this.name)" >
+                                        <img src="{% static "img/timeline/play.png" %}" width="60px" id="play1"  title="Play" name="imgPlayStop" onclick="PlayStop(this.title,this.id)" >
                                         <img src="{% static "img/timeline/end.png" %}" width="50px" title="Go to End" name="imgEnd" onclick="BeginEnd(this.name)" >
                                     </form>
                                 </center>
