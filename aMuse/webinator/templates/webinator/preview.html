@@ -124,6 +124,13 @@
             {
                 document.button.imgPlayStop.title="Stop";
                 document.button.imgPlayStop.src="{% static "img/timeline/pause.png" %}";
+                document.button.imgBegin.name = "imgBegin1";
+                document.button.imgBegin.title = null;
+                document.button.imgBegin.src="{% static "img/timeline/begin1.png" %}";
+                document.button.imgEnd.name = "imgEnd1";
+                document.button.imgEnd.title = null;
+                document.button.imgEnd.src="{% static "img/timeline/end1.png" %}";
+
                 $().timelinr({
                     autoPlayPause: 5000,
                     autoPlayDirection: 'forward',
@@ -134,6 +141,12 @@
             {
                 document.button.imgPlayStop.title="Play";
                 document.button.imgPlayStop.src="{% static "img/timeline/play.png" %}";
+                document.button.imgBegin.name = "imgBegin";
+                document.button.imgBegin.title = "Go to Start";
+                document.button.imgBegin.src="{% static "img/timeline/begin.png" %}";
+                document.button.imgEnd.name = "imgEnd";
+                document.button.imgEnd.title = "Go to End";
+                document.button.imgEnd.src="{% static "img/timeline/end.png" %}";
                 $().timelinr({
                     autoPlayPause:null,
                     autoPlayDirection:null,
@@ -151,7 +164,7 @@
                     autoPlayDirection:null
                 });
             }
-            else
+            else if(val=="imgEnd")
             {
                 var a_elements = dates.getElementsByTagName("a");
                 $().timelinr({
