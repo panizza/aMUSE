@@ -13,7 +13,8 @@ urlpatterns = patterns('webinator.views',
         url(r'^qr/$', 'qr_code_generator', name='qr_code_generator'),
 
         url(r'^action/(?P<action_id>\d+)/edit/$', 'edit_action', name='edit_action'),
-        url(r'^action/(?P<action_id>\d+)/delete/$', 'delete_action', name='deleteter_action'),
+        url(r'^action/(?P<action_id>\d+)/delete/$', 'delete_action', name='delete_action'),
+        url(r'^experience/(?P<experience_id>\d+)/delete/$', 'delete_experience', name='delete_experience'),
 
 
 

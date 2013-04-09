@@ -19,7 +19,7 @@ class CustomIndexDashboard(Dashboard):
         )
         sys_info = modules.ModelList(
             title=_('System Information'),
-            models=('basetyzer.models.CustomUser',)
+            models=('django.contrib.auth.models.User',)
         )
 
         self.children.append(modules.Group(
