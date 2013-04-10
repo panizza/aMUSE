@@ -109,3 +109,16 @@ $( "ul.gallery > li" ).click(function( event ) {
 
     return false;
 });
+$(".trash-action").click(function(){
+    var pk=this.getAttribute("pk");
+    var result = $.get("action/"+pk+"/delete/")
+        .done(function(){
+            $("#"+pk).remove();
+            $("#gallery-content").empty();
+            $("#visit_title").text("Choose a visit");
+
+        })
+        .fail(function(){alert("Fail");
+
+        });
+});

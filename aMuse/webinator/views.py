@@ -7,7 +7,7 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.http import base36_to_int
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse,Http404
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .helpers import create_qr
@@ -194,3 +194,8 @@ def delete_experience(request, experience_id):
                    "error": ""
         }, 200
 
+
+def view_error(request, error_id):
+    if error_id == "1":
+        return render(request, 'webinator/error.html', {'error': 'There was an error while deleting this experience','id':error_id})
+    raise Http404
