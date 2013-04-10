@@ -99,7 +99,10 @@ def action_list(request, experience_id):
     """
     exp = get_object_or_404(Experience, pk=experience_id)
     action = exp.action_set.all()
-    return render(request, 'webinator/imagelist.html', {'list': action, 'exp_id': experience_id})
+    return render(request, 'webinator/imagelist.html', {
+        'lista': action,
+        'exp_id': experience_id,
+    })
 
 
 @login_required

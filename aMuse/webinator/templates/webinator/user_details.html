@@ -81,7 +81,7 @@
 <script>
     $(function(){
         $(".visit").click(function(){
-                    var id= this.getAttribute("pk");
+                    var id= $(this).data("pk");
                     $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
                 }
         );
@@ -105,11 +105,11 @@
                 <ul class="nav nav-list">
                     <li class="nav-header">Visits to be published</li>
                     {% for vis in visit_not_public %}
-                        <li id={{ vis.pk }}><a class="visit"><span class="ui-icon ui-icon-trash" pk={{ vis.pk }}></span>{{ vis.date }}</a></li>
+                        <li><a data-pk="{{ vis.pk }}" class="visit"><span class="ui-icon ui-icon-trash"></span>{{ vis.date }}</a></li>
                     {% endfor %}
                     <li class="nav-header">Published visits</li>
                     {% for vis in visit_public %}
-                        <li><a class="visit" pk={{ vis.pk }}>{{ vis.date }}</a></li>
+                        <li><a class="visit" data-pk={{ vis.pk }}>{{ vis.date }}</a></li>
                     {% endfor %}
                 </ul>
             </div><!--/.well -->
