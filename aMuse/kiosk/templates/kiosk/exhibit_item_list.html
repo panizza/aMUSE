@@ -3,6 +3,20 @@
 {% load thumbnail %}
 {% load staticfiles %}
 
+{% block extrascript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.item').bind('click', function (e) {
+                e.preventDefault();
+                var url = "{% url 'get_item_info' '356a192b7913b04c54574d18c28d46e6395428ab' %}"
+                $.get(url, function(data) {
+                    $('<div class="modal hide fade">' + JSON.stringify(data) + '</div>').modal();
+                }).success(function() { $('input:text:visible:first').focus(); });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block extrastyle %}
     <style type="text/css">
         body {
@@ -38,15 +52,18 @@
     <h2>{{ exhibit.date_begin }} - {{ exhibit.date_end }}</h2></span>
     <p>{{ exhibit.description }}</p><hr>
 
-
+<div class="span4">&nbsp;</div>
     {% for item in item_list %}
+        <div class="span2 item" style="text-align: center" data-pk={{ item.pk }}>
         {% thumbnail item.photo "150x150" as im %}
             <img class="thumb" align="left" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
         {% endthumbnail %}
-        <p>Title: {{ item.title }}</p>
-        <p>Description: {{ item.description }}</p>
-        <p>Author: {{ item.author}}</p>
-        <p>Release Date: {{ item.release_date }}</p>
-        <hr>
+        <p><strong>{{ item.title }}</strong></p>
+        <p>Author: {{ item.author}}</p></div>
     {% endfor %}
+
+
+
+
 {% endblock %}
+

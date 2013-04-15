@@ -19,10 +19,12 @@ def get_item_info(request, hash_item):
     :param request: the standard request given by Django
     :param id_item: the pk of an item instance
     """
+    size = request.GET.get('size', 200)
+    size = "{0}x{1}".format(size, size)
     item = get_object_or_404(Item, tag=hash_item)
     item_json = model_to_dict(item, exclude=['exhibit', 'tag'])
     try:
-        thumbnail = get_thumbnail(item.photo, '200x200', format="PNG")
+        thumbnail = get_thumbnail(item.photo, size, format="PNG")
     except:
         thumbnail = item.photo
     else:
