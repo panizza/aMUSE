@@ -4,7 +4,7 @@ from django.contrib.auth.views import login, logout
 
 urlpatterns = patterns('webinator.views',
         url(r'^$', 'index', name='index'),
-        url(r'^experience/(?P<experience_id>\d+)$', 'action_list', name='action_list'),
+        url(r'^experience/(?P<experience_id>\d+)/$', 'action_list', name='action_list'),
         url(r'^login/', login,  name='login'),
         url(r'^logout/', logout, {'next_page': '/webinator/'}, name='logout'),
         url(r'^preview/', 'experience_preview', name='preview'),
@@ -15,7 +15,7 @@ urlpatterns = patterns('webinator.views',
         url(r'^action/(?P<action_id>\d+)/edit/$', 'edit_action', name='edit_action'),
         url(r'^action/(?P<action_id>\d+)/delete/$', 'delete_action', name='delete_action'),
         url(r'^experience/(?P<experience_id>\d+)/delete/$', 'delete_experience', name='delete_experience'),
-
+        url(r'^error/(?P<error_id>\d+)$', 'view_error', name='view_error'),
 
 
 )

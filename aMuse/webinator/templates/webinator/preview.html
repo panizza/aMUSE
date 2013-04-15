@@ -91,9 +91,9 @@
                 // value: integer, default to 1 (first)
                 autoPlay: 'false',
                 // value: true | false, default to false
-                autoPlayDirection: 'forward',
+                autoPlayDirection: 'forward'
                 // value: forward | backward, default to forward
-                autoPlayPause: 5000
+                //autoPlayPause: 5000
                 // value: integer (1000 = 1 seg), default to 2000 (2segs)< });
             });
         })
@@ -101,7 +101,7 @@
     </script>
     <script type="text/javascript" language="javascript">
 
-        function PlayStop(val)
+        function PlayStop(val,id)
         {
             var listArray = $('#dates li');
             var selectedLI = listArray.index( listArray.find('.selected').parent() );
@@ -110,14 +110,30 @@
                 startAt:selectedLI+1
             });
 
+            if(id=="play1")
+            {
+                document.button.imgPlayStop.id = "play2";
+                $().timelinr({
+                    autoPlay: 'true',
+                    autoPlayPause: 5000,
+                    autoPlayDirection: 'forward'
+                });
+            }
+
             if(val=="Play")
             {
                 document.button.imgPlayStop.title="Stop";
                 document.button.imgPlayStop.src="{% static "img/timeline/pause.png" %}";
+                document.button.imgBegin.name = "imgBegin1";
+                document.button.imgBegin.title = null;
+                document.button.imgBegin.src="{% static "img/timeline/begin1.png" %}";
+                document.button.imgEnd.name = "imgEnd1";
+                document.button.imgEnd.title = null;
+                document.button.imgEnd.src="{% static "img/timeline/end1.png" %}";
+
                 $().timelinr({
-                    autoPlay: 'true',
-                    autoPlayDirection: 'forward',
                     autoPlayPause: 5000,
+                    autoPlayDirection: 'forward',
                     startAt:selectedLI+1
                 });
             }
@@ -125,17 +141,43 @@
             {
                 document.button.imgPlayStop.title="Play";
                 document.button.imgPlayStop.src="{% static "img/timeline/play.png" %}";
+                document.button.imgBegin.name = "imgBegin";
+                document.button.imgBegin.title = "Go to Start";
+                document.button.imgBegin.src="{% static "img/timeline/begin.png" %}";
+                document.button.imgEnd.name = "imgEnd";
+                document.button.imgEnd.title = "Go to End";
+                document.button.imgEnd.src="{% static "img/timeline/end.png" %}";
                 $().timelinr({
+                    autoPlayPause:null,
                     autoPlayDirection:null,
-                    startAt:selectedLI+1,
-                    autoPlayPause: 5000
+                    startAt:selectedLI+1
                 });
+            }
+        }
+
+        function BeginEnd(val)
+        {
+            if(val=="imgBegin")
+            {
+                $().timelinr({
+                    startAt:1,
+                    autoPlayDirection:null
+                });
+            }
+            else if(val=="imgEnd")
+            {
+                var a_elements = dates.getElementsByTagName("a");
+                $().timelinr({
+                    startAt:a_elements.length,
+                    autoPlayDirection:null
+                })
             }
         }
 
 
 
     </script>
+
 {% endblock %}
 
 {% block state %}
@@ -155,66 +197,68 @@
 {% endblock %}
 
 <center>
-{% block container %}
-    <div class="container-fluid" style="margin-left: 7%;" >
-                <div class="span9">
-                    <div class="hero-unit" style="width:100%">
-                        <div id="inner_wrap">
-                            <div id="timeline" style="background-color: #eeeeee; height: auto; margin-left: -60px;">
-                                <ul id="dates">
-                                    <li id="a"><a href="#1">1</a></li>
-                                    <li id="b"><a href="#2">2</a></li>
-                                    <li id="c"><a href="#3">3</a></li>
-                                </ul>
-                                <ul id="issues">
-                                    <a href="#" id="next">+</a>
-                                    <a href="#" id="prev" style="display: none;">-</a>
-                                    <li id="1">
-                                        <h1>TITOLO</h1>
-                                        <img src="{% static "img/timeline/quadro.jpg" %}"/>
-                                        <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
-                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
-                                            e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
-                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+    {% block container %}
+        <div class="container-fluid" style="margin-left: 10%;" >
+            <div class="span9">
+                <div class="hero-unit" style="width:100%">
+                    <div id="inner_wrap">
+                        <div id="timeline" style="background-color: #eeeeee; height: auto; margin-left: -60px;">
+                            <ul id="dates">
+                                <li><a href="#1">1</a></li>
+                                <li><a href="#2">2</a></li>
+                                <li><a href="#3">3</a></li>
+                            </ul>
+                            <ul id="issues">
+                                <a href="#" id="next">+</a>
+                                <a href="#" id="prev" style="display: none;">-</a>
+                                <li id="1">
+                                    <h1>TITOLO</h1>
+                                    <img src="{% static "img/timeline/quadro.jpg" %}"/>
+                                    <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                        Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                        e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                        Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
 
-                                        </p>
-                                    </li>
+                                    </p>
+                                </li>
 
-                                    <li id="2">
-                                        <h1>TITOLO 1</h1>
-                                        <img src="{% static "img/timeline/quadro1.jpg" %}"/>
-                                        <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
-                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
-                                            e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
-                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                <li id="2">
+                                    <h1>TITOLO 1</h1>
+                                    <img src="{% static "img/timeline/quadro1.jpg" %}"/>
+                                    <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                        Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                        e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                        Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
 
-                                        </p>
-                                    </li>
+                                    </p>
+                                </li>
 
-                                    <li id="3">
-                                        <h1>TITOLO 2</h1>
-                                        <img src="{% static "img/timeline/quadro2.jpg" %}"/>
-                                        <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
-                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
-                                            e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
-                                            Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                <li id="3">
+                                    <h1>TITOLO 2</h1>
+                                    <img src="{% static "img/timeline/quadro2.jpg" %}"/>
+                                    <p> Le voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                        Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
+                                        e voci in vetrina sono voci che i wikipediani ritengono particolarmente complete, corrette ed accurate nonché piacevoli da leggere.
+                                        Per segnalare una voce da aggiungere alla lista o da eliminare da questa pagina indicalo in voci segnalate, dove sarà giudicata per stile, prosa, esaustività e neutralità.D
 
-                                        </p>
-                                    </li>
+                                    </p>
+                                </li>
 
-                                </ul>
-                                <br>
-                                <center>
-                                    <form name='button' style="cursor: pointer;">
-                                        <img src="{% static "img/timeline/play.png" %}" width="50px" title="Play" name="imgPlayStop" onclick="PlayStop(this.title)" >
-                                    </form>
-                                </center>
-                            </div><!-- div timeline -->
-                        </div><!-- div inner wrap -->
-                    </div><!-- hero unit -->
-                </div><!--/span-->
-    </div><!--/row-->
+                            </ul>
+                            <br>
+                            <center>
+                                <form name='button' style="cursor: pointer; ">
+                                    <img src="{% static "img/timeline/begin.png" %}" width="50px"title="Go to Start" name="imgBegin" onclick="BeginEnd(this.name)" >
+                                    <img src="{% static "img/timeline/play.png" %}" width="60px" id="play1"  title="Play" name="imgPlayStop" onclick="PlayStop(this.title,this.id)" >
+                                    <img src="{% static "img/timeline/end.png" %}" width="50px" title="Go to End" name="imgEnd" onclick="BeginEnd(this.name)" >
+                                </form>
+                            </center>
+                        </div><!-- div timeline -->
+                    </div><!-- div inner wrap -->
+                </div><!-- hero unit -->
+            </div><!--/span-->
+        </div><!--/row-->
 
 
-{%  endblock %}
-</center>
+    {%  endblock %}
+</center> 
