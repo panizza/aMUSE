@@ -8,9 +8,9 @@
         $(document).ready(function() {
             $('.item').bind('click', function (e) {
                 e.preventDefault();
-                var url = "{% url 'get_item_info' '356a192b7913b04c54574d18c28d46e6395428ab' %}"
+                var url = "{% url 'item_info' '123' %}".replace('123', $(this).attr('data-pk'))
                 $.get(url, function(data) {
-                    $('<div class="modal hide fade">' + JSON.stringify(data) + '</div>').modal();
+                    $('<div class="modal hide fade">' + data + '</div>').modal();
                 }).success(function() { $('input:text:visible:first').focus(); });
             });
         });

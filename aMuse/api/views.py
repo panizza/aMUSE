@@ -19,7 +19,7 @@ def get_item_info(request, hash_item):
     :param request: the standard request given by Django
     :param id_item: the pk of an item instance
     """
-    size = request.GET.get('size', 200)
+    size = request.GET.get('size', 470)
     size = "{0}x{1}".format(size, size)
     item = get_object_or_404(Item, tag=hash_item)
     item_json = model_to_dict(item, exclude=['exhibit', 'tag'])
