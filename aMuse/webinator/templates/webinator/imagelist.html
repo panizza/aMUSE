@@ -1,19 +1,25 @@
 {%  load staticfiles %}
 {% load url from future %}
+{% load thumbnail %}
+
 <script src="{% static "js/image_viewer.js" %}" type="text/javascript"/>
 
 <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
     {% for obj in lista %}
-        <li class="ui-widget-content ui-corner-tr">
-            <h5 class="ui-widget-header">{{ obj.pk }} </h5>
-
+        <li class="ui-widget-content ui-corner-tr" data-pk="{{ obj.pk }}">
             {% if obj.photo != None %}
-                <img src="{{ MEDIA_URL }}{{ obj.photo }}" alt="{{ obj.comment }}" width="96" height="72" />
+                <script type="text/javascript">
+                    console.log(JSON.stringify({{ obj }}));
+                </script>
+
+                {% thumbnail obj.photo "96x96" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
             {% else %}
                 <p>{{ obj.comment }}</p>
             {% endif%}
 
-            <a href="{{ MEDIA_URL }}{{ obj.photo }}" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+            <a href="{{ obj.photo.url }}" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
             <a title="Delete this image" class="ui-icon ui-icon-trash trash-action">Delete image</a>
         </li>
     {% endfor %}

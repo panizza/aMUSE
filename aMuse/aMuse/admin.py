@@ -1,5 +1,5 @@
 from django.contrib import admin
-from basetyzer.models import Item, Exhibit, Experience, Action
+from basetyzer.models import Item, Exhibit, Experience, Action, Photo
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
 from sorl.thumbnail.admin import AdminImageMixin
@@ -72,6 +72,7 @@ admin.site.register(Exhibit, ExhibitAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Experience)
 admin.site.register(Action)
+admin.site.register(Photo)
 
 #$#CHEAT: disattivo la visualizzazione normale di user
 admin.site.unregister(User)
