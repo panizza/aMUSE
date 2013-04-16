@@ -1,36 +1,21 @@
-{% load staticfiles %}
 {% load thumbnail %}
+        <div class="modal-header">
+            <h3>Dio e' morto</h3>
+        </div>
 
-<html>
-    <head>
-        <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
-        <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-        <script src="{% static "js/jquery-1.9.1.js" %}"></script>
-        <script src="{% static "js/bootstrap.js" %}" ></script>
-        <style type="text/css">
-            .modal {
-                width: 70%;
-
-            .modal-body {
-                overflow-y: scroll;
-            }
-                }
-        </style>
-    </head>
-
-
-    <body>
-        <div class="container">
-            <div class="row-fluid text-center">
-                <div class="span8">Dio e' morto</div>
-            </div>
+        <div class="modal-body">
             <div class="row-fluid">
-                <div class="span8">
+                <span>
                     {% thumbnail item.photo "300x300" as im %}
                         <img src="{{ im.url }}" />
                     {% endthumbnail %}
-                {{ item.description }}</div>
+                    <p>Author: {{ item.author }}</p>
+                    <p>Release Date: {{ item.release_date }},</p>
+                                </span>
+
+                    <p>{{ item.description }}</p>
             </div>
         </div>
-    </body>
-</html>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
