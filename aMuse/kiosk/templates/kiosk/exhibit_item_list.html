@@ -2,7 +2,7 @@
 {% load url from future %}
 {% load thumbnail %}
 {% load staticfiles %}
-
+{% block title %}Kiosk{% endblock %}
 {% block extrascript %}
     <script type="text/javascript">
         $(document).ready(function() {
@@ -10,7 +10,10 @@
                 e.preventDefault();
                 var url = "{% url 'item_info' '123' %}".replace('123', $(this).attr('data-pk'))
                 $.get(url, function(data) {
-                    $('<div class="modal hide fade">' + data + '</div>').modal();
+                    $('<div class="modal hide fade">' + data + '</div>').modal({
+                        backdrop: true,
+                        keyboard: true
+                    }).css('width', '70%').css('left', '15%').css('margin', 'auto auto auto auto').css('font-size', '20px'). css('line-height', '23px');
                 }).success(function() { $('input:text:visible:first').focus(); });
             });
         });
@@ -19,6 +22,10 @@
 
 {% block extrastyle %}
     <style type="text/css">
+        p {
+            font-size: 1.1em;
+            line-height: 1.5em;
+        }
         body {
             padding-top: 60px;
             padding-bottom: 40px;
@@ -45,7 +52,7 @@
 {% endblock %}
 
 {% block container %}
-    {% thumbnail exhibit.image "200x200" as im %}
+    {% thumbnail exhibit.image "300x300" as im %}
         <img class="thumb" align="left" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
     {% endthumbnail %}
     <span><h1>{{ exhibit.name }}</h1>
@@ -54,12 +61,12 @@
 
 <div class="span4">&nbsp;</div>
     {% for item in item_list %}
-        <div class="span2 item" style="text-align: center" data-pk={{ item.pk }}>
+        <div class="span2 item" style="cursor: pointer; text-align: center" data-pk={{ item.pk }}>
         {% thumbnail item.photo "150x150" as im %}
             <img class="thumb" align="left" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
         {% endthumbnail %}
         <p><strong>{{ item.title }}</strong></p>
-        <p>Author: {{ item.author}}</p></div>
+        </div>
     {% endfor %}
 
 
