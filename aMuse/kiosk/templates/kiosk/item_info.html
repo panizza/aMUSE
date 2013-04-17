@@ -1,0 +1,21 @@
+{% load thumbnail %}
+        <div class="modal-header">
+            <h3>Dio e' morto</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="row-fluid">
+                <span>
+                    {% thumbnail item.photo "300x300" as im %}
+                        <img src="{{ im.url }}" />
+                    {% endthumbnail %}
+                    <p>Author: {{ item.author }}</p>
+                    <p>Release Date: {{ item.release_date }},</p>
+                                </span>
+
+                    <p>{{ item.description }}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>

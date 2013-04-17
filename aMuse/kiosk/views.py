@@ -22,3 +22,9 @@ def exhibit_item_list(request, id_exhibition):
         'item_list': items,
         'exhibit': exhibition
     })
+
+def item_info(request, id_item):
+    item = get_object_or_404(Item, pk=id_item)
+    return render(request, 'kiosk/item_info.html', {
+        'item': item,
+    })
