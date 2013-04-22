@@ -114,22 +114,14 @@ INSTALLED_APPS = (
     'grappelli.dashboard',
     'grappelli',
     'django.contrib.admin',
+    'south',
     'django_extensions',
     'sorl.thumbnail',
-
-)
-#MY APPS
-INSTALLED_APPS += (
     'aMuse',
     'api',
     'basetyzer',
     'webinator',
     'kiosk'
-)
-
-#DEV APPS
-INSTALLED_APPS += (
-    'south',
 )
 
 # A sample logging configuration. The only tangible logging

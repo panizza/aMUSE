@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from basetyzer.models import Experience, SuperQRCode, Action
+from basetyzer.models import Experience, SuperQRCode, Action, Comment
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
@@ -136,7 +136,10 @@ def edit_action(request, action_id):
             "status": "error",
             "error": "Comment parameter not found"
         }, 404
-    action.comment.content = text_comment
+    if action.comment:
+        action.comment.content = text_comment
+    else:
+        action.comment = Comment()
     try:
         action.comment.save()
     except:

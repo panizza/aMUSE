@@ -102,9 +102,9 @@ class Action(models.Model):
     The Action model is the storage for the real experiences information
     """
     date_performed = models.DateTimeField()
-    scan = models.ForeignKey(Scan, null=True, default=None)
-    comment = models.ForeignKey(Comment, null=True, default=None)
-    photo = models.ForeignKey(Photo, null=True, default=None)
+    scan = models.ForeignKey(Scan, null=True, blank=True)
+    comment = models.ForeignKey(Comment, null=True, blank=True)
+    photo = models.ForeignKey(Photo, null=True, blank=True)
     experience = models.ForeignKey(Experience)
 
     def __unicode__(self):
