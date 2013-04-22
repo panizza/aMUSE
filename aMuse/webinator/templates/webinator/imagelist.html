@@ -21,11 +21,14 @@
                 {% thumbnail obj.photo "150x150" as im %}
                     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                 {% endthumbnail %}
-            {% else %}
-                <p>{{ obj.comment }}</p>
             {% endif%}
+                <p>{{ obj.comment }}</p>
+            {% if obj.scan != None %}
+                <a href="{{ obj.photo.url }}" title="View larger image" class="ui-icon ui-icon-zoomin open-modal">View larger</a>
+            {% else %}
+                <a href="{{ obj.photo.url }}" title="View larger image" class="ui-icon ui-icon-pencil open-modal">Edit this item</a>
 
-            <a href="{{ obj.photo.url }}" title="View larger image" class="ui-icon ui-icon-zoomin open-modal">View larger</a>
+            {% endif %}
             <a title="Delete this image" class="ui-icon ui-icon-trash trash-action">Delete image</a>
         </li>
     {% endfor %}
