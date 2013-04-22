@@ -5,11 +5,12 @@
 {% endblock %}
 {% block extrastyle %}
     <link href="{% static "css/impress-demo.css" %}" rel="stylesheet" />
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
 
     <style type="text/css">
 
     h1{
-        font-size:70px;
+        font-size:50px;
         text-align: center;
     }
     p{
@@ -82,10 +83,12 @@
     </div>
 
     <div id="tiny" class="step" data-x="2025" data-y="2325" data-z="-3000" data-rotate="300" data-scale="1">
-        <h2>Created by <b>aTeam</b></h2>
+        <h2>Created by<strong> aTeam</strong></h2>
         <img src="{% static "img/timeline/logo.png" %}" style="width: 400px"/>
         <p style="color: red">In attesa del logo ultimato!</p>
-        <input type="button" value="Home" style="font-size: 30px;background-color: orange" onclick="window.location.href='localhost:8000/webinator/'">
+        <button class="btn btn-large btn-primary btn-warning" onclick="window.location.href='localhost:8000/webinator/'">Back to Home</button>
+
+
     </div>
 
 
