@@ -127,3 +127,32 @@ class ViewError(TestCase):
         response = self.client.get(reverse('view_error', kwargs={'error_id': '0'}))
         self.assertEquals(response.status_code, 404)
 
+
+class ExperiencePreview(TestCase):
+    """ Here we have to test the experience_preview view (found at webinator/views.py)
+        1. is there the user?
+        2. is there the experience?
+        3. the 'if' works? (test it in all the possible cases)
+    """
+
+class ActionList(TestCase):
+    """ Here we have to test the action_list view (found at webinator/views.py)
+        1. is there the experience?
+    """
+
+
+class QRCodeGenerator(TestCase):
+    """ Here we have to test the qr_code_generator view (found at webinator/views.py)
+        TODO[panizza]: questa la faccio io, e' un casino da spiegare e forse sara' da cambiare
+    """
+
+
+class Index(TestCase):
+    """ Here we have to test the index view (found at webinator/views.py)
+        1. check only if we have status_code == 200
+    """
+
+
+class ResetPasswordNewUser(TestCase):
+    """ Here we have to test the reset_password_new_user view (found at webinator/views.py)
+    """
