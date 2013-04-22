@@ -7,7 +7,7 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.http import base36_to_int
-from django.http import HttpResponseRedirect, HttpResponse, Http404, Http403
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .helpers import create_qr
@@ -112,13 +112,13 @@ def experience_preview(request, uidb36, token):
     """
     uid_int = base36_to_int(uidb36)
     user = get_object_or_404(User, pk=uid_int)
-    exp = user.experience_set.get(url="{0}-{1}".format(uidb36, token))
+    exp = user.experience_set.get(hash_url="{0}-{1}".format(uidb36, token))
     if exp and ((request.user.is_authenticated() and exp.user == request.user) or (exp.public)):
         return render(request, 'webinator/preview.html', {
             'action_list': exp.action_set.all()
         })
     else:
-        return Http403()
+        return HttpResponseForbidden()
 
 
 @csrf_exempt
