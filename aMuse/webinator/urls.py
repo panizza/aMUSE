@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
 
 
+
 urlpatterns = patterns('webinator.views',
         url(r'^$', 'index', name='index'),
         url(r'^experience/(?P<experience_id>\d+)/$', 'action_list', name='action_list'),
@@ -16,6 +17,7 @@ urlpatterns = patterns('webinator.views',
         url(r'^action/(?P<action_id>\d+)/delete/$', 'delete_action', name='delete_action'),
         url(r'^experience/(?P<experience_id>\d+)/delete/$', 'delete_experience', name='delete_experience'),
         url(r'^error/(?P<error_id>\d+)$', 'view_error', name='view_error'),
+
 
 
 )
