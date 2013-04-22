@@ -3,7 +3,7 @@ from basetyzer.models import Exhibit
 import json as j
 
 class ExhibitionTest(TestCase):
-    fixtures = ['test.json']
+    fixtures = ['percussion.json', 'with_experience.json']
     def setUp(self):
         self.client = Client()
 

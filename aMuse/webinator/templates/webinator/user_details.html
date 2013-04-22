@@ -29,9 +29,9 @@
         #trash-title{
             background-color: #ffffff;
         }
-        #gallery { float: left; width: 65%; min-height: 12em; }
+        #gallery { float: left; width: 100%; min-height: 12em; }
         .gallery.custom-state-active { background: #eee; }
-        .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+        .gallery li { float: left; width: 150px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
         .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
         .gallery li a { float: right; }
         .gallery li a.ui-icon-zoomin { float: left; }
@@ -81,19 +81,23 @@
 <script>
     $(function(){
         $(".visit").click(function(){
-                    var id= $(this).data("pk");
+                    var id= $(this).closest("li").data("pk");
                     $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
                 }
         );
         $(".ui-icon-trash").click(function(){
-            var pk=this.getAttribute("pk");
+            li = $(this).closest("li");
+            var pk=li.data("pk");
+            console.log(pk);
+
+
             var result = $.get("experience/"+pk+"/delete/",function(response){console.log(response);})
-                    .done(function(){
-                        $("#"+pk).remove();
-                    })
-                    .fail(function(){alert("Fail");
-                        alert("Something went wrong...");
-                    });
+                        .fail(function(){alert("Fail");
+                            alert("Oooops it looks like something went wrong!");
+                        })
+                        .success(function(){
+                            li.remove();
+                        });
         });
     });
 </script>
@@ -105,7 +109,7 @@
                 <ul class="nav nav-list">
                     <li class="nav-header">Visits to be published</li>
                     {% for vis in visit_not_public %}
-                        <li><a data-pk="{{ vis.pk }}" class="visit"><span class="ui-icon ui-icon-trash"></span>{{ vis.date }}</a></li>
+                        <li data-pk="{{ vis.pk }}"><a class="visit"><span class="ui-icon ui-icon-trash"></span>{{ vis.date }}</a></li>
                     {% endfor %}
                     <li class="nav-header">Published visits</li>
                     {% for vis in visit_public %}

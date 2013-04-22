@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from basetyzer.models import Experience, SuperQRCode, Action
+from basetyzer.models import Experience, SuperQRCode, Action, Comment
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.http import base36_to_int
-from django.http import HttpResponseRedirect, HttpResponse,Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .helpers import create_qr
@@ -105,16 +105,20 @@ def action_list(request, experience_id):
     })
 
 
-@login_required
-def experience_preview(request):
+def experience_preview(request, uidb36, token):
     """
     (no docs)
     :param request: the standard request given by Django
     """
-    #TODO[panizza]: vedi commenti
-    #se (utente e' loggato and esperienza e' sua) or (esperienza.is_public)
-    return render(request, 'webinator/preview.html')
-    #else permission deniend 403
+    uid_int = base36_to_int(uidb36)
+    user = get_object_or_404(User, pk=uid_int)
+    exp = user.experience_set.get(hash_url="{0}-{1}".format(uidb36, token))
+    if exp and ((request.user.is_authenticated() and exp.user == request.user) or (exp.public)):
+        return render(request, 'webinator/preview.html', {
+            'action_list': exp.action_set.all()
+        })
+    else:
+        return HttpResponseForbidden()
 
 
 @csrf_exempt
@@ -132,7 +136,10 @@ def edit_action(request, action_id):
             "status": "error",
             "error": "Comment parameter not found"
         }, 404
-    action.comment.content = text_comment
+    if action.comment:
+        action.comment.content = text_comment
+    else:
+        action.comment = Comment()
     try:
         action.comment.save()
     except:
