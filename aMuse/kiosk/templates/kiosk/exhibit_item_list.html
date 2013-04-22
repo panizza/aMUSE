@@ -8,7 +8,7 @@
         $(document).ready(function() {
             $('.item').bind('click', function (e) {
                 e.preventDefault();
-                var url = "{% url 'item_info' '123' %}".replace('123', $(this).attr('data-pk'))
+                var url = "{% url 'item_info' '123' %}".replace('123', $(this).data('pk'))
                 $.get(url, function(data) {
                     $('<div class="modal hide fade">' + data + '</div>').modal({
                         backdrop: true,

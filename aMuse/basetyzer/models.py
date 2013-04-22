@@ -5,6 +5,9 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from hashlib import sha1
 from sorl import thumbnail
+from hashlib import sha1
+from django.utils.http import int_to_base36
+
 
 class ExhibitionManager(models.Manager):
     """
@@ -63,7 +66,7 @@ class Experience(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
     public = models.BooleanField(default=False)
-    hash_url = models.CharField(max_length=40, default='', )
+    hash_url = models.CharField(max_length=40, blank=True, null=True)
 
     def __unicode__(self):
         return "%s - %s" % (self.user.username,
@@ -71,10 +74,6 @@ class Experience(models.Model):
 
     class Meta:
         ordering = ['date']
-
-    def hashit(self):
-        from hashlib import sha1
-        return sha1(self.pk).hexdigest()
 
 
 class Comment(models.Model):
@@ -137,3 +136,12 @@ def item_post_save(sender, **kwargs):
         hash = sha1(str(item.pk)).hexdigest()
         item.tag = hash
         item.save()
+
+
+@receiver(post_save, sender=Experience)
+def experience_post_save(sender, **kwargs):
+    experience = kwargs['instance']
+    if not experience.hash_url:
+        hash_url = "%s-%s" % (int_to_base36(experience.user.pk), sha1(str(experience.pk)).hexdigest())
+        experience.hash_url = hash_url
+        experience.save()
