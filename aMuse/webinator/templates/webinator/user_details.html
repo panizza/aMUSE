@@ -81,21 +81,23 @@
 <script>
     $(function(){
         $(".visit").click(function(){
-                    var id= $(this).data("pk");
+                    var id= $(this).closest("li").data("pk");
                     $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
                 }
         );
         $(".ui-icon-trash").click(function(){
-            var pk=$(this).closest("li").data("pk");
+            li = $(this).closest("li");
+            var pk=li.data("pk");
             console.log(pk);
 
+
             var result = $.get("experience/"+pk+"/delete/",function(response){console.log(response);})
-                    .done(function(){
-                        $(this).closest("li").remove();
-                    })
-                    .fail(function(){alert("Fail");
-                        alert("Something went wrong...");
-                    });
+                        .fail(function(){alert("Fail");
+                            alert("Oooops it looks like something went wrong!");
+                        })
+                        .success(function(){
+                            li.remove();
+                        });
         });
     });
 </script>
