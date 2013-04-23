@@ -63,10 +63,14 @@ class ItemAdmin(AdminImageMixin, admin.ModelAdmin):
     )
     filter_horizontal = ['exhibit',]
     list_filter = ['exhibit', 'author']
-    list_display = ('title', 'description', 'author' )
+    list_display = ('title', 'description', 'author', 'qr', )
     search_fields = ['title', 'author']
     readonly_fields = ('tag',)
 
+    def qr(self, item):
+        return "<a href='http://chart.googleapis.com/chart?cht=qr&chs=500x500&chl="+item.tag+"'>Press me!</a>"
+    qr.short_description = "QRCode"
+    qr.allow_tags = True
 
 admin.site.register(Exhibit, ExhibitAdmin)
 admin.site.register(Item, ItemAdmin)
