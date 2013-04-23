@@ -1,0 +1,26 @@
+{% load thumbnail %}
+    <script>
+        $(".save").click(function(){
+            var pk = $(this).data("pk");
+            console.log(pk);
+            var url = "{% url 'edit_action' '123' %}".replace('123', pk);
+            $.post(url,{comment: $(".comment").text()});
+        });
+    </script>
+
+    <div class="modal-header" style="text-align: center; background: #f5f5f5">
+    </div>
+    <div class="modal-body">
+        <div class="row-fluid">
+            {% thumbnail item.photo "400x400" as im %}
+                <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
+            {% endthumbnail %}
+        <textarea class="comment" >
+            {{ item.comment }}
+        </textarea>
+        </div>
+    </div>
+    <div class="modal-footer" st>
+        <button id="save_btn" data-pk="{{ item.pk }}" class="btn btn-large  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
+        <button class="btn btn-large  btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
