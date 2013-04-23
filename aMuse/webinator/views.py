@@ -206,3 +206,16 @@ def view_error(request, error_id):
     if error_id == "1":
         return render(request, 'webinator/error.html', {'error': 'There was an error while deleting this experience','id':error_id})
     raise Http404
+
+
+def action_info(request, action_id):
+    """
+
+    :param request: the standard request
+    :param action_id: id of the action to retrieve
+    :return:
+    """
+    action = get_object_or_404(Action, pk=action_id)
+    return render(request, 'webinator/action_edit.html', {
+        'item': action,
+    })
