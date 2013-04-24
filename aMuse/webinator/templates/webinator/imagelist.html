@@ -4,17 +4,8 @@
 
 <script src="{% static "js/image_viewer.js" %}" type="text/javascript"/>
 <script>
-    $(".open-modal-scan").click(function(){
-        var pk= $(this).data("pk");
-        console.log(pk);
-        var url = "{% url 'item_info' '123' %}".replace('123', pk)
-        $.get(url, function(data) {
-            $('<div class="modal hide fade">' + data + '</div>').modal();
-        }).success(function() { $('input:text:visible:first').focus();
-                });
-    });
 
-    $(".open-modal-item").click(function(){
+    $(".open-modal").click(function(){
         var pk= $(this).data("pk");
         console.log(pk);
         var url = "{% url 'action_info' '123' %}".replace('123', pk)
@@ -34,10 +25,10 @@
             {% endif%}
                 <p>{{ obj.comment }}</p>
             {% if obj.scan != None %}
-                <a href="{{ obj.photo.url }}" title="View larger image" class="ui-icon ui-icon-zoomin open-modal-scan"
-                   data-pk="{{ obj.scan.content.pk }}">View larger</a>
+                <a href="{{ obj.photo.url }}" title="View larger image" class="ui-icon ui-icon-zoomin open-modal"
+                   data-pk="{{ obj.pk }}">View larger</a>
             {% else %}
-                <a href="{{ obj.photo.url }}" data-pk="{{ obj.pk }}" title="Edit item" class="ui-icon ui-icon-pencil open-modal-item">Edit this item</a>
+                <a href="{{ obj.photo.url }}" data-pk="{{ obj.pk }}" title="Edit item" class="ui-icon ui-icon-pencil open-modal">Edit this item</a>
 
             {% endif %}
             <a title="Delete this image" class="ui-icon ui-icon-trash trash-action">Delete</a>

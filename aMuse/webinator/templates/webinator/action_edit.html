@@ -1,26 +1,53 @@
 {% load thumbnail %}
     <script>
+        $(".description_tag").click(function(){
+            var m_pk = $(this).data("pk");
+            console.log("mpk: "+m_pk);
+           var url = "{% url 'item_info' '123' %}".replace('123', m_pk);
+           $("#description").load(url);
+
+        });
         $(".save").click(function(){
             var pk = $(this).data("pk");
-            console.log(pk);
             var url = "{% url 'edit_action' '123' %}".replace('123', pk);
             $.post(url,{comment: $(".comment").text()});
         });
     </script>
 
-    <div class="modal-header" style="text-align: center; background: #f5f5f5">
+    <div class="modal-header document" style="text-align: center; background: #f5f5f5" >
+        <h3 id="title"></h3>
     </div>
     <div class="modal-body">
-        <div class="row-fluid">
-            {% thumbnail item.photo "400x400" as im %}
-                <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
-            {% endthumbnail %}
-        <textarea class="comment" >
-            {{ item.comment }}
-        </textarea>
-        </div>
+        <div class="tabbable tabs-left">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#photo" data-toggle="tab">Photo</a>
+                </li>
+                {% if item.scan %}
+                <li class="description_tag" data-pk="{{ item.scan.content.pk }}" >
+                   <a href="#description" data-toggle="tab">Description</a>
+                </li>
+                {% endif %}
+            </ul>
+            <div id="photo" class="tab-content">
+                <div class="tab-pane active">
+                    <div class="row-fluid">
+                        {% thumbnail item.photo "300x300" as im %}
+                            <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
+                        {% endthumbnail %}
+                            <textarea class="comment" width="300" >
+                                {{ item.comment }}
+                            </textarea>
+                     </div> <!-- /row fluid -->
+
+                    <button id="save_btn" data-pk="{{ item.pk }}" class="btn btn-large  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
+                    <button class="btn btn-large  btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+                <div id="description" class="tab-pane">
+
+                </div>
+            </div>
+        </div> <!-- /tabbable -->
+
     </div>
-    <div class="modal-footer" st>
-        <button id="save_btn" data-pk="{{ item.pk }}" class="btn btn-large  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
-        <button class="btn btn-large  btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
+
