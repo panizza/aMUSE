@@ -63,7 +63,7 @@
     {% for item in item_list %}
         <div class="span2 item" style="cursor: pointer; text-align: center" data-pk={{ item.pk }}>
         {% thumbnail item.photo "150x150" as im %}
-            <img class="thumb" align="left" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
         {% endthumbnail %}
         <p><strong>{{ item.title }}</strong></p>
         </div>

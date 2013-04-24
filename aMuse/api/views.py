@@ -27,8 +27,7 @@ def get_item_info(request, hash_item):
         thumbnail = get_thumbnail(item.photo, size, format="PNG")
     except:
         thumbnail = item.photo
-    else:
-        item_json['photo'] = thumbnail.url
+    item_json['photo'] = thumbnail.url
     return item_json, 200
 
 

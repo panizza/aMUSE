@@ -66,7 +66,7 @@ class Experience(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
     public = models.BooleanField(default=False)
-    hash_url = models.CharField(max_length=40, blank=True, null=True)
+    hash_url = models.CharField(max_length=50, blank=True, null=True)
 
     def __unicode__(self):
         return "%s - %s" % (self.user.username,
