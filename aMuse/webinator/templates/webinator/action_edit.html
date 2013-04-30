@@ -3,7 +3,7 @@
         $(".description_tag").click(function(){
             var m_pk = $(this).data("pk");
             console.log("mpk: "+m_pk);
-           var url = "{% url 'item_info' '123' %}".replace('123', m_pk);
+           var url = "{% url 'scan_info' '123' %}".replace('123', m_pk);
            $("#description").load(url);
 
         });
@@ -11,6 +11,10 @@
             var pk = $(this).data("pk");
             var url = "{% url 'edit_action' '123' %}".replace('123', pk);
             $.post(url,{comment: $(".comment").text()});
+            $(".modal").close();
+        });
+        $(".close").click(function(){
+            $(".modal").close();
         });
     </script>
 
@@ -41,7 +45,7 @@
                      </div> <!-- /row fluid -->
 
                     <button id="save_btn" data-pk="{{ item.pk }}" class="btn btn-large  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
-                    <button class="btn btn-large  btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-large  btn-warning close" data-dismiss="modal" aria-hidden="true">Close</button>
                 </div>
                 <div id="description" class="tab-pane">
 

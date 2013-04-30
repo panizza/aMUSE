@@ -10,8 +10,10 @@
         console.log(pk);
         var url = "{% url 'action_info' '123' %}".replace('123', pk)
         $.get(url, function(data) {
-            $('<div class="modal hide fade">' + data + '</div>').modal();
+            $('<div class="modal hide fade my_modal" style="width:600px">' + data + '</div>').modal();
         }).success(function() { $('input:text:visible:first').focus();
+                            $(".my_modal").remove();
+
                 });
     });
 </script>

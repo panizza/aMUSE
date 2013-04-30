@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from basetyzer.models import Experience, SuperQRCode, Action, Comment
+from basetyzer.models import Experience, SuperQRCode, Action,Item
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
@@ -219,3 +219,13 @@ def action_info(request, action_id):
     return render(request, 'webinator/action_edit.html', {
         'item': action,
     })
+def scan_info(request,scan_id):
+    """
+
+    :param request: standard request
+    :param scan_id: scan id
+    :return:
+    """
+
+    scan = get_object_or_404(Item, pk=scan_id)
+    return render(request,'webinator/item_info.html',{'item' : scan,})
