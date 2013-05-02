@@ -18,5 +18,6 @@ urlpatterns = patterns('webinator.views',
         url(r'^action/(?P<action_id>\d+)/info/$', 'action_info', name='action_info'),
         url(r'^scan/(?P<scan_id>\d+)/info/$', 'scan_info', name='scan_info'),
         url(r'^experience/(?P<experience_id>\d+)/delete/$', 'delete_experience', name='delete_experience'),
+        url(r'^experience/(?P<experience_id>\d+)/add/$', 'add_new_action', name='add_new_action'),
         url(r'^error/(?P<error_id>\d+)$', 'view_error', name='view_error'),
 )

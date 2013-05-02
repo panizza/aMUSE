@@ -14,6 +14,7 @@ from .helpers import create_qr
 from datetime import datetime, timedelta, date
 from django.shortcuts import get_object_or_404
 from ajaxutils.decorators import ajax
+from forms import UploadImageForm
 
 
 def reset_password_new_user(request, uidb36, token):
@@ -205,12 +206,15 @@ def delete_experience(request, experience_id):
 def view_error(request, error_id):
     if error_id == "1":
         return render(request, 'webinator/error.html', {'error': 'There was an error while deleting this experience','id':error_id})
+    elif error_id == "2":
+        return render(request, 'webinator/error.html', {'error': 'There was an error while uploading the file!','id':error_id})
+
     raise Http404
 
 
 def action_info(request, action_id):
     """
-
+    Gets the information about an action
     :param request: the standard request
     :param action_id: id of the action to retrieve
     :return:
@@ -221,7 +225,7 @@ def action_info(request, action_id):
     })
 def scan_info(request,scan_id):
     """
-
+    Gets the information about the scanned item
     :param request: standard request
     :param scan_id: scan id
     :return:
@@ -229,3 +233,26 @@ def scan_info(request,scan_id):
 
     scan = get_object_or_404(Item, pk=scan_id)
     return render(request,'webinator/item_info.html',{'item' : scan,})
+
+@login_required
+def add_new_action(request, experience_id):
+    """
+    Handle the file upload for a new action
+    :param request:
+    :param exp_id: The experience id linked to the action
+    :return:
+    """
+    if request.method == "POST":
+        form = UploadImageForm(request.POST, request.FILES)
+        # import pdb;pdb.set_trace()
+        if form.is_valid():
+            #TODO handle file upload and add action to database
+            exp = get_object_or_404(Experience, experience_id)
+            form.save(exp)
+            return HttpResponseRedirect(reverse('action_list', exp.id))
+
+        else:
+            return render(request, 'webinator/error.html', {'error_id': "2"})
+    else:
+        return render(request,'webinator/new_action.html',{'form':UploadImageForm()})
+
