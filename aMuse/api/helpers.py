@@ -60,6 +60,7 @@ def generate_url_reset(user):
     url = reverse('reset_password_new_user', args=[uid, token])
     return SITE_URL + url
 
+
 def register_new_user(user, request):
     """
     Register a new User

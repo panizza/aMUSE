@@ -14,7 +14,7 @@ from .helpers import create_qr
 from datetime import datetime, timedelta, date
 from django.shortcuts import get_object_or_404
 from ajaxutils.decorators import ajax
-from forms import UploadImageForm
+from forms import UploadImageForm, UploadCommentForm
 
 
 def reset_password_new_user(request, uidb36, token):
@@ -242,17 +242,28 @@ def add_new_action(request, experience_id):
     :param exp_id: The experience id linked to the action
     :return:
     """
+    user = get_object_or_404(User, id=request.user.id)
+    exp = get_object_or_404(Experience, id=experience_id)
+    action = Action(experience=exp, date_performed=datetime.now().strftime("%Y-%m-%d %H:%M"))
     if request.method == "POST":
-        form = UploadImageForm(request.POST, request.FILES)
-        # import pdb;pdb.set_trace()
-        if form.is_valid():
-            #TODO handle file upload and add action to database
-            exp = get_object_or_404(Experience, experience_id)
-            form.save(exp)
-            return HttpResponseRedirect(reverse('action_list', exp.id))
-
-        else:
+        image_form = UploadImageForm(request.POST, request.FILES)
+        comment_form = UploadCommentForm(request.POST)
+        if not image_form.is_valid() and not comment_form.is_valid():
             return render(request, 'webinator/error.html', {'error_id': "2"})
+        if image_form.is_valid():
+            image = image_form.save()
+            action.photo = image
+        if comment_form.is_valid():
+            comment = comment_form.save()
+            action.comment = comment
+
+        action.save()
+        return HttpResponseRedirect(reverse('action_list', args=[experience_id]))
+
     else:
-        return render(request,'webinator/new_action.html',{'form':UploadImageForm()})
+        return render(request, 'webinator/new_action.html', {
+            'image_form': UploadImageForm(),
+            'comment_form': UploadCommentForm()
+        }
+        )
 
