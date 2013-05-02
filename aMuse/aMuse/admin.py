@@ -1,5 +1,5 @@
 from django.contrib import admin
-from basetyzer.models import Item, Exhibit, Experience, Action, Photo
+from basetyzer.models import Item, Exhibit, Experience, Action, Photo, Comment
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
 from sorl.thumbnail.admin import AdminImageMixin

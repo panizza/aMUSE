@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from basetyzer.models import Experience, SuperQRCode, Action,Item
+from basetyzer.models import Experience, SuperQRCode, Action, Item, Comment
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
@@ -132,6 +132,8 @@ def edit_action(request, action_id):
     """
     action = get_object_or_404(Action, pk=action_id)
     text_comment = request.POST.get('comment', None)
+    #import pdb;pdb.set_trace()
+    print text_comment
     if not text_comment:
         return {
             "status": "error",

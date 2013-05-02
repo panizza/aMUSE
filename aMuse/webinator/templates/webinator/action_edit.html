@@ -10,12 +10,20 @@
         $(".save").click(function(){
             var pk = $(this).data("pk");
             var url = "{% url 'edit_action' '123' %}".replace('123', pk);
-            $.post(url,{comment: $(".comment").text()});
+            $.post(url,{comment: $(".comment").val()});
+            console.log(a=this)
             $(".modal").close();
         });
         $(".close").click(function(){
             $(".modal").close();
         });
+
+        $('#gallery>li').each(function() {
+            if ($(this).data('pk') == 3) {
+                //non funziona #TODO[mirko]
+                $(this).find('p')/.text = 'ciao'
+            }
+        })
     </script>
 
     <div class="modal-header document" style="text-align: center; background: #f5f5f5" >
@@ -39,9 +47,7 @@
                         {% thumbnail item.photo "300x300" as im %}
                             <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
                         {% endthumbnail %}
-                            <textarea class="comment" width="300" >
-                                {{ item.comment }}
-                            </textarea>
+                            <textarea style="text-align: left; width: 300px" class="comment" rows="3">{{ item.comment.content }}</textarea>
                      </div> <!-- /row fluid -->
 
                     <button id="save_btn" data-pk="{{ item.pk }}" class="btn btn-large  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
