@@ -10,12 +10,17 @@
         console.log(pk);
         var url = "{% url 'action_info' '123' %}".replace('123', pk)
         $.get(url, function(data) {
-            $('<div class="modal hide fade my_modal" style="width:600px">' + data + '</div>').modal();
+            $('<div class="modal hide fade my_modal" style="width:600px">' + data + '</div>').modal()
+                    .on('hide',function(){
+                        id = $("#gallery-content").data("pk");
+                        $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
+                        $(this).remove();
+                    })
+            ;
         }).success(function() { $('input:text:visible:first').focus();
-                            $(".my_modal").remove();
-
                 });
     });
+
 </script>
 <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
     {% for obj in lista %}

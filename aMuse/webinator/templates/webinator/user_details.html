@@ -82,6 +82,7 @@
     $(function(){
         $(".visit").click(function(){
                     var id= $(this).closest("li").data("pk");
+                    $("#gallery-content").data("pk",id);
                     $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
                 }
         );
