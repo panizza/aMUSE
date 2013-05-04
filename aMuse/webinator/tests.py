@@ -134,11 +134,44 @@ class ExperiencePreview(TestCase):
         2. is there the experience?
         3. the 'if' works? (test it in all the possible cases)
     """
+    ########################################## da completare ##############################################
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+
+
+    def test_unexisting_experience(self):
+        self.client.login(username='admin', password='admin')
+        #cosa sono  (uidb36, token)??????????????????#
+        response = self.client.get(reverse('experience_preview', kwargs={'uidb36': '??????'}))
+        self.assertEquals(response.status_code, 403)
+
+    def test_without_user(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get('preview')
+
+        self.assertEquals(response.status_code, 403)
+
+    ########################################################################################################
 
 class ActionList(TestCase):
     """ Here we have to test the action_list view (found at webinator/views.py)
         1. is there the experience?
     """
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+
+    def test_unexisting_experience(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(reverse('action_list', kwargs={'experience_id': '8'}))
+        self.assertEquals(response.status_code, 404)
+
+    def test_existing_experience(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(reverse('action_list', kwargs={'experience_id': '1'}))
+        self.assertEquals(response.status_code, 200)
+        # !?!ritorna 404 anche in caso di visita esistente!?!
 
 
 class QRCodeGenerator(TestCase):
@@ -151,6 +184,14 @@ class Index(TestCase):
     """ Here we have to test the index view (found at webinator/views.py)
         1. check only if we have status_code == 200
     """
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+
+    def test_it_works(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(reverse('index'))
+        self.assertEquals(response.status_code, 200)
 
 
 class ResetPasswordNewUser(TestCase):
