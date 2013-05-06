@@ -19,6 +19,9 @@ def get_item_info(request, hash_item):
     :param request: the standard request given by Django
     :param id_item: the pk of an item instance
     """
+
+
+
     size = request.GET.get('size', 470)
     size = "{0}x{1}".format(size, size)
     item = get_object_or_404(Item, tag=hash_item)
@@ -39,6 +42,7 @@ def save_experience(request):
     :rtype : application/json
     :param request: the standard request given by Django
     """
+
     data = json.loads(request.body)
     if request.META['CONTENT_TYPE'] == "application/json" and data.get('email') and data.get('confirm') and data.get('exp'):
         email = data['email']
