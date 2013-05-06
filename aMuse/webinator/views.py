@@ -103,6 +103,7 @@ def action_list(request, experience_id):
     return render(request, 'webinator/imagelist.html', {
         'lista': action,
         'exp_id': experience_id,
+        'public': exp.public,
     })
 
 

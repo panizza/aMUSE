@@ -93,8 +93,8 @@
 
 
             var result = $.get("experience/"+pk+"/delete/",function(response){console.log(response);})
-                        .fail(function(){alert("Fail");
-                            alert("Oooops it looks like something went wrong!");
+                        .fail(function(){
+                            $("#gallery-content").load("{% url 'view_error' '1' %}");
                         })
                         .success(function(){
                             li.remove();

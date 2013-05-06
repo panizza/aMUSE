@@ -1,9 +1,10 @@
 {% load thumbnail %}
     <script>
-        $(".description_tag").click(function(){
-            var m_pk = $(this).data("pk");
-           var url = "{% url 'scan_info' '123' %}".replace('123', m_pk);
-           $("#description").load(url);
+
+       $(".description_tag").click(function(){
+       var m_pk = $(this).data("pk");
+       var url = "{% url 'scan_info' '123' %}".replace('123', m_pk);
+       $("#description").load(url);
 
         });
         $(".save").click(function(){
@@ -11,10 +12,11 @@
             var url = "{% url 'edit_action' '123' %}".replace('123', pk);
             $.post(url,{comment: $(".comment").val()});
         });
-        /**$(".close").click(function(){
-            $(".modal").close();
-        });**/
-
+        $("#myTab a").click(function(e){
+            e.preventDefault();
+            console.log($(this))
+            $(this).tab('show');
+        })
 
     </script>
 
@@ -23,33 +25,34 @@
     </div>
     <div class="modal-body">
         <div class="tabbable tabs-left">
-            <ul class="nav nav-tabs">
-                <li class="active">
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="tab active">
                     <a href="#photo" data-toggle="tab">Photo</a>
                 </li>
                 {% if item.scan %}
-                <li class="description_tag" data-pk="{{ item.scan.content.pk }}" >
+                <li class=" tab description_tag" data-pk="{{ item.scan.content.pk }}" >
                    <a href="#description" data-toggle="tab">Description</a>
                 </li>
                 {% endif %}
             </ul>
             <div id="photo" class="tab-content">
                 <div class="tab-pane active">
-                    <div class="row-fluid">
+                    <div class="row-fluid test">
                         {% thumbnail item.photo "300x300" as im %}
                             <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
                         {% endthumbnail %}
                             <textarea style="text-align: left; width: 300px" class="comment" rows="3">{{ item.comment.content }}</textarea>
                      </div> <!-- /row fluid -->
-
                     <button id="save_btn" data-pk="{{ item.pk }}" class="btn btn-large  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
-                    <button class="btn btn-large  btn-warning close" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-large btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
+
+
                 </div>
                 <div id="description" class="tab-pane">
 
                 </div>
+
             </div>
         </div> <!-- /tabbable -->
-
     </div>
 
