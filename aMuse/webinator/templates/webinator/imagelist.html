@@ -22,11 +22,11 @@
     });
     $(".add-action").click(function(e){
         e.preventDefault();
-        var pk = $(this).data("pk");
-        $("#gallery-content").load("{% url 'add_new_action' 123 %}".replace(123,pk));
-
-
-    })
+        //var pk = $(this).data("pk");
+        $("#gallery-content").load("{% url 'add_new_action' exp_id %}", function(){
+            $('#gallery-content>form').attr("action", "{% url 'add_new_action' exp_id %}");
+        });
+    });
 
 </script>
 <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
@@ -52,5 +52,6 @@
 </ul>
 {% if not public %}
     <button class="btn btn-large btn-info add-action"  aria-hidden="true" data-pk="{{ exp_id }}">Add new action</button>
+
 {% endif %}
 

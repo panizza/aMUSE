@@ -1,4 +1,4 @@
-<form method="POST" action="" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ image_form.as_p }}
     {{ comment_form.as_p }}
