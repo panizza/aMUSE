@@ -4,8 +4,20 @@
     <meta http-equiv="cache-control" content="no-cache">
 {% endblock %}
 
+{% block extrastyle %}
+    <style type="text/css">
+    body {
+        padding-top: 60px;
+    }
+    </style>
+{% endblock %}
+
 {% block container %}
-    <div class="container-fluid-login pagination">
+    <div class="container-fluid pagination">
+        <center>
+            <h2>Non dimenticarti di inviare la tua esperienza:</h2>
+            <h2>Scansiona il QR!</h2>
             <img src="http://chart.googleapis.com/chart?cht=qr&chs={{ size }}x{{ size }}&chl={{ text }}" />
-    </div>
+        </center>
+        </div>
 {% endblock %}

@@ -23,6 +23,7 @@ def exhibit_item_list(request, id_exhibition):
         'exhibit': exhibition
     })
 
+@ajax(require="GET")
 def item_info(request, id_item):
     item = get_object_or_404(Item, pk=id_item)
     return render(request, 'kiosk/item_info.html', {

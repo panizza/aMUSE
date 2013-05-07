@@ -3,45 +3,16 @@ from basetyzer.models import Exhibit
 from django.core.urlresolvers import reverse
 import json as j
 
-
-class ExhibitionTest(TestCase):
-    fixtures = ['percussion.json', 'with_experience.json']
-
-    def setUp(self):
-        self.client = Client()
-
-    def test_exhibitions_list(self):
-        response = self.client.get('/api/e/')
-        self.assertEqual(response.status_code, 200)
-        json = j.loads(response.content)
-        self.assertEqual(len(json['data']), 2)
-
-    def test_exhibition_info(self):
-        response = self.client.get('/api/e/54326435842647/')
-        self.assertEqual(response.status_code, 404)
-        response = self.client.get('/api/e/1/')
-        self.assertEqual(response.status_code, 200)
-
-
 class ItemTest(TestCase):
-    fixtures = ['percussion_new_db.json', 'all_data.json']
+    fixtures = ['all_data.json']
 
     def setUp(self):
         self.client = Client()
-
-    def test_item_list(self):
-        response = self.client.get('/api/e/43265435756867/i/')
-        self.assertEqual(response.status_code, 404)
-        response = self.client.get('/api/e/1/i/')
-        self.assertEqual(response.status_code, 200)
-        json = j.loads(response.content)
-        self.assertTrue(json.get('data'))
-
 
     def test_get_item_info(self):
-        response = self.client.get('/api/i/43265435756867/')
+        response = self.client.get(reverse('get_item_info', kwargs={'hash_item': '356a452b7913b04c54574d18c28d46e6395428ab'}))
         self.assertEqual(response.status_code, 404)
-        response = self.client.get('/api/i/356a192b7913b04c54574d18c28d46e6395428ab/')
+        response = self.client.get(reverse('get_item_info', kwargs={'hash_item': '356a192b7913b04c54574d18c28d46e6395428ab'}))
         self.assertEqual(response.status_code, 200)
 
 
@@ -100,6 +71,6 @@ class ExperienceTest(TestCase):
 
         exp_json = j.dumps(exp_dict)
 
-        response = self.client.post('/api/exp/s/', exp_json, content_type='application/json')
+        response = self.client.post(reverse('save_experience'),data=exp_json, content_type='application/json')
 
         self.assertEqual(response.status_code, 400)

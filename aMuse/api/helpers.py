@@ -61,7 +61,7 @@ def generate_url_reset(user):
     return SITE_URL + url
 
 
-def register_new_user(user, request):
+def register_new_user(user):
     """
     Register a new User
         1. Flag the user as inactive
@@ -70,12 +70,10 @@ def register_new_user(user, request):
 
     :param user: the User's instance
     """
-    # 1. Flag the User as inactive and set unusable password
     user.is_active = False
     user.set_unusable_password()
     user.save()
 
-    # 2. Create the link for the password creation
     url = generate_url_reset(user)
-    return url
-    # TODO[panizza] 3. send email
+    #TODO: mettere un body decente per l'email
+    send_email(user.email, url, 'aMUX Registration Confirm')
