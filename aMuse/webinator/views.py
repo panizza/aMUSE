@@ -115,6 +115,7 @@ def experience_preview(request, uidb36, token):
     uid_int = base36_to_int(uidb36)
     user = get_object_or_404(User, pk=uid_int)
     exp = user.experience_set.get(hash_url="{0}-{1}".format(uidb36, token))
+    #TODO[panizza]: controllare if, non funziona
     if exp and ((request.user.is_authenticated() and exp.user == request.user) or (exp.public)):
         return render(request, 'webinator/preview.html', {
             'action_list': exp.action_set.all()
