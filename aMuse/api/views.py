@@ -20,8 +20,6 @@ def get_item_info(request, hash_item):
     :param id_item: the pk of an item instance
     """
 
-
-
     size = request.GET.get('size', 470)
     size = "{0}x{1}".format(size, size)
     item = get_object_or_404(Item, tag=hash_item)
@@ -60,7 +58,7 @@ def save_experience(request):
                                                   user, user_created)
         if user_created:
             if status_code == 200:
-                url = register_new_user(user, request)
+                url = register_new_user(user)
             else:
                 user.delete()
         return toret, status_code
