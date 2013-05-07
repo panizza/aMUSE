@@ -261,7 +261,8 @@ def add_new_action(request, experience_id):
             action.comment = comment
 
         action.save()
-        return HttpResponseRedirect(reverse('action_list', args=[experience_id]))
+        #return HttpResponseRedirect(reverse('action_list', args=[experience_id]))
+        return HttpResponseRedirect(reverse('index'))
 
     else:
         return render(request, 'webinator/new_action.html', {

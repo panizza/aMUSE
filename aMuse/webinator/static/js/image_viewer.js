@@ -109,14 +109,4 @@ $( "ul.gallery > li" ).click(function( event ) {
 
     return false;
 });
-$(".trash-action").click(function(){
-    var pk= $(this).closest("li").data("pk");
-    console.log(pk);
-    var result = $.get("action/"+pk+"/delete/")
-        .done(function(){
-            $("#"+pk).remove();
-        })
-        .fail(function(){alert("Fail");
 
-        });
-});

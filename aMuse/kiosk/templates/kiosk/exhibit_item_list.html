@@ -59,7 +59,6 @@
     <h2>{{ exhibit.date_begin }} - {{ exhibit.date_end }}</h2></span>
     <p>{{ exhibit.description }}</p><hr>
 
-<div class="span4">&nbsp;</div>
     {% for item in item_list %}
         <div class="span2 item" style="cursor: pointer; text-align: center" data-pk={{ item.pk }}>
         {% thumbnail item.photo "150x150" as im %}

@@ -42,6 +42,7 @@
         #trash h4 .ui-icon { float: left; }
         #trash .gallery h5 { display: none; }
         a .ui-icon { float: left; }
+        .content-container {padding: 30px}
 
     </style>
 {% endblock %}
@@ -114,20 +115,17 @@
                     {% endfor %}
                     <li class="nav-header">Published visits</li>
                     {% for vis in visit_public %}
-                        <li><a class="visit" data-pk={{ vis.pk }}>{{ vis.date }}</a></li>
+                        <li><a class="visit-closed" data-pk={{ vis.pk }}>{{ vis.date }}</a></li>
                     {% endfor %}
                 </ul>
             </div><!--/.well -->
-            <div id="trash" class="ui-widget-content ui-state-default">
-                <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash"></span> Modified Items</h4>
-            </div>
         </div>
         <script>
 
         </script>
         <div class="span9">
             <h1 id="visit_title">No visit selected</h1>
-            <div class="hero-unit">
+            <div class="hero-unit content-container">
                 <div class="row">
                     <div id="gallery-content" class="ui-widget ui-helper-clearfix">
 

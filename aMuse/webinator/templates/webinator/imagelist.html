@@ -4,7 +4,6 @@
 
 <script src="{% static "js/image_viewer.js" %}" type="text/javascript"/>
 <script>
-
     $(".open-modal").click(function(){
         var pk= $(this).data("pk");
         console.log(pk);
@@ -27,11 +26,29 @@
             $('#gallery-content>form').attr("action", "{% url 'add_new_action' exp_id %}");
         });
     });
+    $(".trash-action").click(function(){
+    var pk= $(this).closest("div").data("pk");
+    var trash = $(this);
+
+    var result = $.get("action/"+pk+"/delete/")
+        .done(function(){
+            trash.closest("div").remove();
+        })
+        .fail(function(){
+            $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123,"1"));
+        });
+});
 
 </script>
-<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+<style type="text/css">
+    .items { float: left; width: 150px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center;font-size: 11pt;line-height: 14px }
+    .items  a { float: right; }
+    .items  a.ui-icon-zoomin { float: left; }
+    .items  a.ui-icon-pencil {float: left; }
+
+</style>
     {% for obj in lista %}
-        <li class="ui-widget-content ui-corner-tr" data-pk="{{ obj.pk }}">
+        <div class="span2 ui-widget-content items" data-pk="{{ obj.pk }}">
             {% if obj.photo != None %}
                 {% thumbnail obj.photo "150x150" as im %}
                     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
@@ -46,12 +63,14 @@
 
             {% endif %}
             <a title="Delete this image" class="ui-icon ui-icon-trash trash-action">Delete</a>
-        </li>
+
+        </div><!-- span2 -->
     {% endfor %}
 
-</ul>
-{% if not public %}
-    <button class="btn btn-large btn-info add-action"  aria-hidden="true" data-pk="{{ exp_id }}">Add new action</button>
 
+{% if not public %}
+   <div class="row">
+        <button class="btn btn-large btn-info add-action"  aria-hidden="true" data-pk="{{ exp_id }}">Add new action</button>
+   </div><!-- row -->
 {% endif %}
 
