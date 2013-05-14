@@ -9,6 +9,7 @@ from django.utils.http import base36_to_int
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 from .helpers import create_qr
 from datetime import datetime, timedelta, date
 from django.shortcuts import get_object_or_404
@@ -54,11 +55,7 @@ def reset_password_new_user(request, uidb36, token):
 
 @login_required()
 def index(request):
-    """
-    The main view. This view render a template with all the available
-    experiences
-    :param request: the standard request given by Django
-    """
+
     visit = Experience.objects.filter(user=request.user)
     return render(request, 'webinator/user_details.html', {
         'user': request.user,
@@ -100,7 +97,7 @@ def action_list(request, experience_id):
     """
     exp = get_object_or_404(Experience, pk=experience_id)
     action = exp.action_set.all()
-    return render(request, 'webinator/imagelist.html', {
+    return render(request, 'webinator/actionlist.html', {
         'lista': action,
         'exp_id': experience_id,
         'public': exp.public,
@@ -223,6 +220,7 @@ def action_info(request, action_id):
     :param action_id: id of the action to retrieve
     :return:
     """
+
     action = get_object_or_404(Action, pk=action_id)
     return render(request, 'webinator/action_edit.html', {
         'item': action,
@@ -272,3 +270,18 @@ def add_new_action(request, experience_id):
         }
         )
 
+@ajax(require='GET', login_required=True)
+def publish_experience(request, experience_id):
+
+    exp = get_object_or_404(Experience, pk=experience_id)
+    exp.public = True
+    exp.save()
+
+    return HttpResponseRedirect(reverse('index'))
+
+@login_required
+def preview_experience(request, experience_id):
+
+    exp = get_object_or_404(Experience, pk=experience_id)
+
+    return render(request, 'webinator/preview_link.html', {'exp': exp, 'site_url': settings.SITE_URL})
