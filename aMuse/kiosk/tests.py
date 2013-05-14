@@ -56,3 +56,18 @@ class ItemInfoTest(TestCase):
     def test_right_request(self):
         response = self.client.get(reverse('item_info', kwargs={'id_item': '1'}))
         self.assertEquals(response.status_code, 200)
+
+
+class ExhibitionListTest(TestCase):
+    """ no docs
+    """
+    def setUp(self):
+        self.client = Client()
+
+    def test_wrong_method(self):
+        response = self.client.post(reverse('exhibition_list'), data={})
+        self.assertEquals(response.status_code, 405)
+
+    def test_right_request(self):
+        response = self.client.get(reverse('exhibition_list'))
+        self.assertEquals(response.status_code, 200)
