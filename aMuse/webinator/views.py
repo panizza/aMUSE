@@ -112,7 +112,7 @@ def story_preview(request, uidb36, token):
     uid_int = base36_to_int(uidb36)
     user = get_object_or_404(User, pk=uid_int)
     exp = user.experience_set.get(hash_url="{0}-{1}".format(uidb36, token))
-    #TODO[panizza]: controllare if, non funziona
+    #TODO[lotto]: controllare if, non funziona
     if exp and ((request.user.is_authenticated() and exp.user == request.user) or (exp.public)):
         return render(request, 'webinator/photobook.html', {
             'action_list': exp.action_set.all(),
@@ -133,7 +133,6 @@ def edit_action(request, action_id):
     action = get_object_or_404(Action, pk=action_id)
     text_comment = request.POST.get('comment', None)
     #import pdb;pdb.set_trace()
-    print text_comment
     if not text_comment:
         return {
             "status": "error",
@@ -281,7 +280,7 @@ def publish_experience(request, experience_id):
     return HttpResponseRedirect(reverse('index'))
 
 
-#@login_required
+@login_required
 def preview_experience(request, experience_id):
     exp = get_object_or_404(Experience, pk=experience_id)
     return render(request, 'webinator/preview_link.html', {'exp': exp, 'site_url': settings.SITE_URL})

@@ -1,6 +1,6 @@
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" style="font-size:14px" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ image_form.as_p }}
-    {{ comment_form.as_p }}
-    <input type="submit" value="submit" />
+    Photo:<br> {{ image_form.content }}<br><br>
+    Text: <br>{{ comment_form.content }}<br>
+    <input class="btn btn-primary"  type="submit" value="Save" />
 </form>

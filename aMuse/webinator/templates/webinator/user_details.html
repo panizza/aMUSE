@@ -88,6 +88,10 @@
                     $("#preview").attr("href",url);
                 }
         );
+        $('.visit-closed').click(function(){
+            var pk = $(this).parent().data('pk');
+            $("#gallery-content").load("{% url 'preview_experience' 4269 %}".replace(4269,pk));
+        });
         $(".ui-icon-trash").click(function(){
             li = $(this).closest("li");
             var pk=li.data("pk");
@@ -104,20 +108,18 @@
         });
         $("#add-action").click(function(e){
             e.preventDefault();
-
             $(".active").removeClass("active");
             $(this).closest("li").addClass("active");
             var pk = $("#gallery-content").data("pk");
-
-            if(pk == null)
-            {
-                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
-                return;
+            if(pk) {
+                var url = "{% url 'add_new_action' 123 %}".replace(123,pk);
+                $("#gallery-content").load(url, function() {
+                    $('#gallery-content>form').attr("action", url);
+                });
             }
-            var url = "{% url 'add_new_action' 123 %}".replace(123,pk);
-            $("#gallery-content").load(url, function(){
-                $('#gallery-content>form').attr("action", url);
-            });
+            else {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+            }
         });
 
         $("#actions").click(function(e){
@@ -126,16 +128,13 @@
             $(this).closest("li").addClass("active");
             var pk = $("#gallery-content").data("pk");
 
-            if(pk == null)
-            {
-                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
-                return;
+            if(pk) {
+                var url = "{% url 'action_list' 123 %}".replace(123,pk);
+                $("#gallery-content").load(url);
             }
-
-            var url = "{% url 'action_list' 123 %}".replace(123,pk);
-            $("#gallery-content").load(url);
-
-
+            else {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+            }
         });
         $("#publish").click(function(e){
             e.preventDefault();
@@ -144,11 +143,12 @@
             var pk = $("#gallery-content").data("pk");
 
             if(pk) {
-                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
-            }
-            else {
                 var url ="{% url 'confirm_publish' 123 %}".replace(123,pk);
                 $("#gallery-content").load(url);
+                $(".hero-unit").attr('style','backgroud-color:#000')
+            }
+            else {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
             }
         });
         $("#preview").click(function(e){
@@ -157,12 +157,11 @@
             $(this).closest("li").addClass("active");
             var pk = $("#gallery-content").data("pk");
 
-            if(pk == null) {
-                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+            if(pk) {
+                var url ="{% url 'preview_experience' 123 %}".replace(123,pk);
             }
             else {
-                var url ="{% url 'preview_experience' 123 %}".replace(123,pk);
-                //$.post(url);
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
             }
         });
 
@@ -180,7 +179,7 @@
                     {% endfor %}
                     <li class="nav-header">Published visits</li>
                     {% for vis in visit_public %}
-                        <li><a class="visit-closed" data-pk={{ vis.pk }}>{{ vis.date }}</a></li>
+                        <li data-pk="{{ vis.pk }}"><a class="visit-closed"><span class="icon-globe"></span>{{ vis.date }}</a></li>
                     {% endfor %}
                 </ul>
             </div><!--/.well -->
