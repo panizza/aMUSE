@@ -5,9 +5,9 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from hashlib import sha1
 from sorl import thumbnail
-from hashlib import sha1
+from django.core.validators import MinValueValidator
 from django.utils.http import int_to_base36
-
+from hashlib import sha1
 
 class ExhibitionManager(models.Manager):
     """
@@ -31,6 +31,7 @@ class Exhibit(models.Model):
     date_end = models.DateField()
     owner = models.ForeignKey(User)
     image = thumbnail.ImageField(upload_to="images/exhibit/")
+    scan_limit = models.IntegerField(validators=[MinValueValidator(10)], default=10)
     objects = ExhibitionManager()
 
     def __unicode__(self):

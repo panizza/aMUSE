@@ -28,7 +28,7 @@ class ExtraUserAdmin(UserAdmin):
 class ExhibitAdmin(AdminImageMixin, admin.ModelAdmin):
     fieldsets = (
         (
-            'Exhibition', dict(fields=['name', 'description', 'image'])
+            'Exhibition', dict(fields=['name', 'description', 'image', 'scan_limit'])
         ),
         (
             'Dates', dict(fields=['date_begin', 'date_end'])
@@ -38,7 +38,7 @@ class ExhibitAdmin(AdminImageMixin, admin.ModelAdmin):
         ),
     )
     list_filter = ['name']
-    list_display = ('name', 'my_description', 'date_begin', 'date_end', 'is_visitable', )
+    list_display = ('name', 'my_description', 'date_begin', 'date_end', 'is_visitable', 'scan_limit',)
     search_fields = ['name']
 
     def my_description(self, exhibit):

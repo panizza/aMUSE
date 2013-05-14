@@ -75,3 +75,8 @@ def save_experience(request):
 @login_required
 def api_test_for_some_code(request):
     pass
+
+@ajax(require="GET")
+def exhibition_list(self):
+    exhibitions = Exhibit.objects.available()
+    return exhibitions.values, 200
