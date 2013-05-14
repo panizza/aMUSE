@@ -7,5 +7,5 @@ local_settings.py
 media/
 .DS_Store
 .sqlite
-.db
+*.db
 static_all/
