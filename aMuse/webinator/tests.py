@@ -8,11 +8,11 @@ from django.utils import unittest
 class ExperienceDelete(TestCase):
     """ (no docs)
     """
-    fixtures = ['test_only.json']
+    fixtures = ['all_data.json']
 
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+        self.user = User.objects.filter(username='admin')
 
     def test_unauthorized(self):
         response = self.client.get(reverse('delete_experience', kwargs={'experience_id': '1'}))
@@ -39,11 +39,11 @@ class ExperienceDelete(TestCase):
 class ActionDelete(TestCase):
     """ (no docs)
     """
-    fixtures = ['test_only.json']
+    fixtures = ['all_data.json']
 
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+        self.user = User.objects.filter(username='admin')
 
     def test_unauthorized(self):
         response = self.client.get(reverse('delete_action', kwargs={'action_id': '1'}))
@@ -70,11 +70,11 @@ class ActionDelete(TestCase):
 class ActionEdit(TestCase):
     """ (no docs)
     """
-    fixtures = ['test_only.json']
+    fixtures = ['all_data.json']
 
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+        self.user = User.objects.filter(username='admin')
 
     def test_unauthorized(self):
         response = self.client.post(reverse('edit_action', kwargs={'action_id': '1'}), data={
@@ -139,7 +139,7 @@ class ExperiencePreview(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+        self.user = User.objects.filter(username='admin')
 
     def test_unexisting_experience(self):
         self.client.login(username='admin', password='admin')
@@ -187,7 +187,7 @@ class Index(TestCase):
     """
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_superuser(username='admin', password='admin', email='admin@example.com')
+        self.user = User.objects.filter(username='admin')
 
     def test_it_works(self):
         self.client.login(username='admin', password='admin')

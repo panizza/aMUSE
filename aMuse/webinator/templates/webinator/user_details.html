@@ -48,13 +48,6 @@
 {% endblock %}
 {% block extrascript %}
     <script src="{% static "js/jquery.timelinr-0.9.52.js" %}" ></script>
-    <script>
-        $(function(){
-           $(".visit").click(function(){
-                $("#visit_title").text(this.text);
-           });
-        });
-    </script>
 {% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -81,10 +74,18 @@
 
 <script>
     $(function(){
+        $(document).ready(function(){
+                $("#exp_menu").hide();
+        });
         $(".visit").click(function(){
-                    var id= $(this).closest("li").data("pk");
+                   var id= $(this).closest("li").data("pk");
+                    $("#visit_title").text(this.text);
+                    $("#exp_menu").show();
                     $("#gallery-content").data("pk",id);
                     $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
+
+                    var url = "{% url 'preview_experience' 123 %}".replace(123,id);
+                    $("#preview").attr("href",url);
                 }
         );
         $(".ui-icon-trash").click(function(){
@@ -103,20 +104,66 @@
         });
         $("#add-action").click(function(e){
             e.preventDefault();
-            $(this).toggleClass("active");
+
+            $(".active").removeClass("active");
+            $(this).closest("li").addClass("active");
             var pk = $("#gallery-content").data("pk");
+
+            if(pk == null)
+            {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+                return;
+            }
             var url = "{% url 'add_new_action' 123 %}".replace(123,pk);
             $("#gallery-content").load(url, function(){
                 $('#gallery-content>form').attr("action", url);
             });
         });
+
+        $("#actions").click(function(e){
+            e.preventDefault();
+            $(".active").removeClass("active");
+            $(this).closest("li").addClass("active");
+            var pk = $("#gallery-content").data("pk");
+
+            if(pk == null)
+            {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+                return;
+            }
+
+            var url = "{% url 'action_list' 123 %}".replace(123,pk);
+            $("#gallery-content").load(url);
+
+
+        });
         $("#publish").click(function(e){
             e.preventDefault();
-            $(this).toggleClass("active");
+            $(".active").removeClass("active");
+            $(this).closest("li").addClass("active");
             var pk = $("#gallery-content").data("pk");
-            var url = "{% url 'preview_experience' 123 %}".replace(123,pk);
-            $("#gallery-content").load(url, function(){
-            });
+
+            if(pk) {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+            }
+            else {
+                var url ="{% url 'confirm_publish' 123 %}".replace(123,pk);
+                $("#gallery-content").load(url);
+            }
+        });
+        $("#preview").click(function(e){
+            e.preventDefault();
+            $(".active").removeClass("active");
+            $(this).closest("li").addClass("active");
+            var pk = $("#gallery-content").data("pk");
+
+            if(pk == null) {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+            }
+            else {
+                var url ="{% url 'preview_experience' 123 %}".replace(123,pk);
+                //$.post(url);
+            }
         });
 
     });
@@ -143,15 +190,15 @@
         </script>
         <div class="span9">
             <div class="masthead">
-               <div class="masthead">
-                    <ul class="nav nav-pills pull-right">
+                    <ul id="exp_menu" class="nav nav-pills pull-right">
                         <li class="active"><a id="actions" href="#">Actions</a></li>
                         <li><a id="add-action" href="#">Add</a></li>
                         <li><a id="publish" href="#">Publish</a></li>
+                        <li><a id="preview" href="#">Preview</a></li>
                      </ul>
                 <h3 id="visit_title" class="muted">No visit selected</h3>
                 <hr>
-            </div>
+
 
             </div>
 
