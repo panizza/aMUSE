@@ -26,17 +26,17 @@
     <div class="modal-body">
         <div class="tabbable tabs-left">
             <ul id="myTab" class="nav nav-tabs">
-                <li class="tab active">
-                    <a href="#photo" data-toggle="tab">Photo</a>
+                <li class="active">
+                    <a href="#photo">Photo</a>
                 </li>
                 {% if item.scan %}
-                <li class=" tab description_tag" data-pk="{{ item.scan.content.pk }}" >
-                   <a href="#description" data-toggle="tab">Description</a>
+                <li class="description_tag" data-pk="{{ item.scan.content.pk }}" >
+                   <a href="#description">Description</a>
                 </li>
                 {% endif %}
             </ul>
-            <div id="photo" class="tab-content">
-                <div class="tab-pane active">
+            <div  class="tab-content">
+                <div id="photo" class="tab-pane active">
                     <div class="row-fluid test">
                         {% thumbnail item.photo "300x300" as im %}
                             <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
@@ -49,7 +49,6 @@
 
                 </div>
                 <div id="description" class="tab-pane">
-
                 </div>
 
             </div>

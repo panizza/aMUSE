@@ -9,3 +9,9 @@ def mult(value, arg):
 @register.filter()
 def module(value, arg):
     return float(value) % float(arg)
+def get_uidb36( value ):
+    return  value.split('-')[0]
+
+@register.filter()
+def get_token( value ):
+    return  value.split('-')[1]
