@@ -130,7 +130,7 @@ class ViewError(TestCase):
 
         ########################################## da completare ##############################################
 class ExperiencePreview(TestCase):
-    """ Here we have to test the experience_preview view (found at webinator/views.py)
+    """ Here we have to test the story_preview view (found at webinator/views.py)
         1. is there the user?
         2. is there the experience?
         3. the 'if' works? (test it in all the possible cases)
@@ -143,12 +143,12 @@ class ExperiencePreview(TestCase):
 
     def test_unexisting_experience(self):
         self.client.login(username='admin', password='admin')
-        response = self.client.get(reverse('preview', kwargs={'uidb36':'12','token':'asddqadwerwerfAWE234536TY4'}))
+        response = self.client.get(reverse('story_preview', kwargs={'uidb36':'12','token':'asddqadwerwerfAWE234536TY4'}))
         self.assertEquals(response.status_code, 404)
 
     def test_without_user(self):
         self.client.login(username='admin', password='admin')
-        response = self.client.get('preview')
+        response = self.client.get('story_preview')
 
         self.assertEquals(response.status_code, 403)
 

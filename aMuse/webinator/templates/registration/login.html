@@ -44,6 +44,16 @@
 
     </style>
 {% endblock %}
+{% block extrascript %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#removeError').click(function(){
+                $('#spanErrors').fadeOut(400)
+            });
+
+        });
+    </script>
+{% endblock %}
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="../assets/js/html5shiv.js"></script>
@@ -71,7 +81,14 @@
         <div class="span5">
         <form class="form-signin" method="post" action="{% url 'login' %}">
             {% csrf_token %}
-            {{ form.errors }}
+            {% if form.errors %}
+                <div style="margin-bottom: -5px" class="alert alert-error" id="spanErrors">
+                    <strong>Wrong username or password!</strong>
+                    <a style="margin-top:3px;float:right"class="close" id="removeError">×</a>
+                </div>
+
+            {% endif %}
+
             <h2 class="form-signin-heading">Please sign in</h2>
             <input name="username" id="username" type="text" class="input-block-level" placeholder="Email address">
             <input name="password"  id="password" type="password" class="input-block-level" placeholder="Password">

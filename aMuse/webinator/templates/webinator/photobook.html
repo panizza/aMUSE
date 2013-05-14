@@ -3,6 +3,13 @@
 {% load amuse_math %}
 {% block title %}
 {% endblock %}
+{% block extrameta %}
+
+    <meta property="og:title" content="aMuse Photobook" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{ site_url }}{{ MEDIA_URL }}{% static "img/timeline/logo.png" %}" />
+    <meta property="og:description" content="Take a look at my aMuse experience" />
+{% endblock %}
 {% block extrastyle %}
     <link href="{% static "css/impress-demo.css" %}" rel="stylesheet" />
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">

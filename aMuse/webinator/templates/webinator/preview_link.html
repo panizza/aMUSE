@@ -1,3 +1,6 @@
 {% load url from future %}
 {% load amuse_math %}
-{{ site_url }}{% url 'preview' exp.hash_url|get_uidb36 exp.hash_url|get_token %}
+
+<center>
+    https://www.facebook.com/sharer/sharer.php?u={{ site_url }}{% url 'story_preview' exp.hash_url|get_uidb36 exp.hash_url|get_token %}<br>
+</center>

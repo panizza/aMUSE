@@ -63,7 +63,7 @@
 
 {% block state %}
     <div class="btn-group pull-right">
-        <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+        <button style="margin-right: 20px" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
             Hello, {{ user.username }}
         <span class="caret"></span>
         </button>
@@ -106,11 +106,19 @@
             $(this).toggleClass("active");
             var pk = $("#gallery-content").data("pk");
             var url = "{% url 'add_new_action' 123 %}".replace(123,pk);
-
             $("#gallery-content").load(url, function(){
-            $('#gallery-content>form').attr("action", url);
+                $('#gallery-content>form').attr("action", url);
+            });
         });
-    });
+        $("#publish").click(function(e){
+            e.preventDefault();
+            $(this).toggleClass("active");
+            var pk = $("#gallery-content").data("pk");
+            var url = "{% url 'preview_experience' 123 %}".replace(123,pk);
+            $("#gallery-content").load(url, function(){
+            });
+        });
+
     });
 </script>
 

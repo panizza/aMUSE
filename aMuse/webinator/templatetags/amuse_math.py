@@ -9,6 +9,8 @@ def mult(value, arg):
 @register.filter()
 def module(value, arg):
     return float(value) % float(arg)
+
+@register.filter()
 def get_uidb36( value ):
     return  value.split('-')[0]
 

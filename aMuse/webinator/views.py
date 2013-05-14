@@ -104,7 +104,7 @@ def action_list(request, experience_id):
     })
 
 
-def experience_preview(request, uidb36, token):
+def story_preview(request, uidb36, token):
     """
     (no docs)
     :param request: the standard request given by Django
@@ -114,8 +114,9 @@ def experience_preview(request, uidb36, token):
     exp = user.experience_set.get(hash_url="{0}-{1}".format(uidb36, token))
     #TODO[panizza]: controllare if, non funziona
     if exp and ((request.user.is_authenticated() and exp.user == request.user) or (exp.public)):
-        return render(request, 'webinator/preview.html', {
-            'action_list': exp.action_set.all()
+        return render(request, 'webinator/photobook.html', {
+            'action_list': exp.action_set.all(),
+            'site_url': settings.SITE_URL,
         })
     else:
         return HttpResponseForbidden()
@@ -279,7 +280,7 @@ def publish_experience(request, experience_id):
 
     return HttpResponseRedirect(reverse('index'))
 
-@login_required
+
 def preview_experience(request, experience_id):
 
     exp = get_object_or_404(Experience, pk=experience_id)
