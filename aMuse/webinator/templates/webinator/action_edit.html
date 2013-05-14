@@ -12,11 +12,7 @@
             var url = "{% url 'edit_action' '123' %}".replace('123', pk);
             $.post(url,{comment: $(".comment").val()});
         });
-        $("#myTab a").click(function(e){
-            e.preventDefault();
-            console.log($(this))
-            $(this).tab('show');
-        })
+
 
     </script>
 
