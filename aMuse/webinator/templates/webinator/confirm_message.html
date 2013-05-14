@@ -1,0 +1,22 @@
+
+<div class="alert alert-block alert-success fade in">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4 class="alert-heading">This is important!!</h4>
+    <p>Are you really sure to do this? After publishing your experience you won't be able to modify elements anymore!
+    </p>
+    <p>
+       <a id="confirm" class="btn btn-info" href="#">Continue</a> <a id="cancel" class="btn" href="#">Cancel</a>
+    </p>
+</div>
+<script>
+    $("#confirm").click(function(){
+        var url = "{% url 'publish_experience' exp_id %}";
+        $.get(url,function(data){
+            location.reload(); // bad thing, searching for other ways to do that
+        });
+
+    });
+    $("#cancel").click(function(){
+        location.reload();
+    });
+</script>

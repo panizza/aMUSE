@@ -205,7 +205,9 @@ def delete_experience(request, experience_id):
 
 
 def view_error(request, error_id):
-    if error_id == "1":
+    if error_id == "0":
+        return render(request, 'webinator/error.html', {'error': 'There was an error while loading data','id':error_id})
+    elif error_id == "1":
         return render(request, 'webinator/error.html', {'error': 'There was an error while deleting this experience','id':error_id})
     elif error_id == "2":
         return render(request, 'webinator/error.html', {'error': 'There was an error while uploading the file!','id':error_id})
@@ -272,7 +274,7 @@ def add_new_action(request, experience_id):
 
 @ajax(require='GET', login_required=True)
 def publish_experience(request, experience_id):
-
+    #import pdb;pdb.set_trace()
     exp = get_object_or_404(Experience, pk=experience_id)
     exp.public = True
     exp.save()
@@ -283,5 +285,9 @@ def publish_experience(request, experience_id):
 def preview_experience(request, experience_id):
 
     exp = get_object_or_404(Experience, pk=experience_id)
-
     return render(request, 'webinator/preview_link.html', {'exp': exp, 'site_url': settings.SITE_URL})
+
+
+@login_required
+def confirm_publish(request,experience_id):
+    return render(request,'webinator/confirm_message.html', {'exp_id': experience_id})
