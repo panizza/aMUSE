@@ -22,5 +22,7 @@ urlpatterns = patterns('webinator.views',
         url(r'^experience/(?P<experience_id>\d+)/publish/$', 'publish_experience', name='publish_experience'),
         url(r'^experience/(?P<experience_id>\d+)/confirm/$', 'confirm_publish', name='confirm_publish'),
         url(r'^experience/(?P<experience_id>\d+)/preview/$', 'preview_experience', name='preview_experience'),
+        url(r'^experience/(?P<experience_id>\d+)/show/$', 'show_preview', name='show_preview'),
         url(r'^error/(?P<error_id>\d+)$', 'view_error', name='view_error'),
+
 )

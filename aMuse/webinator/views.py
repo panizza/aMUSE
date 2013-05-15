@@ -234,7 +234,6 @@ def scan_info(request,scan_id):
     :param scan_id: scan id
     :return:
     """
-
     scan = get_object_or_404(Item, pk=scan_id)
     return render(request,'webinator/item_info.html',{'item' : scan,})
 
@@ -289,3 +288,12 @@ def preview_experience(request, experience_id):
 @login_required
 def confirm_publish(request,experience_id):
     return render(request,'webinator/confirm_message.html', {'exp_id': experience_id})
+
+
+@login_required
+def show_preview(request, experience_id):
+    exp = get_object_or_404(Experience, pk=experience_id)
+    return render(request, 'webinator/photobook.html', {
+            'action_list': exp.action_set.all(),
+            'site_url': settings.SITE_URL,
+        })

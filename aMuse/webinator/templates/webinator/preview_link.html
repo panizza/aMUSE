@@ -1,8 +1,11 @@
 {% load url from future %}
 {% load amuse_math %}
 {% load staticfiles %}
+
+
 <center>
-    {{ site_url }}{% url 'story_preview' exp.hash_url|get_uidb36 exp.hash_url|get_token %}<br>
+    <p id="text">{{ site_url }}{% url 'story_preview' exp.hash_url|get_uidb36 exp.hash_url|get_token %}</p>
+        <br>
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ site_url }}{% url 'story_preview' exp.hash_url|get_uidb36 exp.hash_url|get_token %}">
         <img src="{{ MEDIA_URL }}{% static 'img/fb.png' %}">
     </a>

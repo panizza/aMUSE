@@ -1,36 +1,41 @@
 {% load thumbnail %}
-    <script>
+{% load staticfiles %}
+<script src="{% static "js/utils.js" %}" type="text/javascript"/>
 
-       $(".description_tag").click(function(){
-       var m_pk = $(this).data("pk");
-       var url = "{% url 'scan_info' '123' %}".replace('123', m_pk);
-       $("#description").load(url);
+<script>
 
-        });
-        $(".save").click(function(){
-            var pk = $(this).data("pk");
-            var url = "{% url 'edit_action' '123' %}".replace('123', pk);
-            $.post(url,{comment: $(".comment").val()});
-        });
+   $(".description_tag").click(function(){
+        var m_pk = $(this).data("pk");
+        var url = "{% url 'scan_info' '123' %}".replace('123', m_pk);
+        $("#description").load(url);
+    });
+    $(".save").click(function(){
+        var pk = $(this).data("pk");
+        var url = "{% url 'edit_action' '123' %}".replace('123', pk);
+        $.post(url,{comment: $(".comment").val()});
+    });
 
 
-    </script>
+
+</script>
 
     <div class="modal-header document" style="text-align: center; background: #f5f5f5" >
         <h3 id="title"></h3>
     </div>
     <div class="modal-body">
         <div class="tabbable tabs-left">
+        {% if item.scan %}
             <ul id="myTab" class="nav nav-tabs">
                 <li class="active">
-                    <a href="#photo">Photo</a>
+                    <a href="#photo" data-toggle="tab">Photo</a>
                 </li>
-                {% if item.scan %}
+
                 <li class="description_tag" data-pk="{{ item.scan.content.pk }}" >
-                   <a href="#description">Description</a>
+                   <a href="#description" data-toggle="tab" >Description</a>
                 </li>
-                {% endif %}
+
             </ul>
+        {% endif %}
             <div  class="tab-content">
                 <div id="photo" class="tab-pane active">
                     <div class="row-fluid test">
@@ -41,8 +46,6 @@
                      </div> <!-- /row fluid -->
                     <button id="save_btn" data-pk="{{ item.pk }}" class="btn  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
                     <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
-
-
                 </div>
                 <div id="description" class="tab-pane">
                 </div>
