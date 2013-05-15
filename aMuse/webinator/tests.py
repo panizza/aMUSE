@@ -147,20 +147,49 @@ class StoryPreview(TestCase):
         self.client = Client()
         self.user = User.objects.get(username='coop.eater@alice.it')
         self.experience = Experience.objects.get(pk=1)
-        self.experience.user.is_active = True
-        self.experience.user.save()
 
     def test_unexisting_experience(self):
-        self.client.login(username='coop.eater@alice.it', password='berlino')
+        self.client.login(username=self.user.username, password='berlino')
         response = self.client.get(reverse('story_preview', kwargs={'uidb36':'12','token':'asddqadwerwerfAWE234536TY4'}))
         self.assertEquals(response.status_code, 404)
 
+    #private, not logged
     def test_existing_experience_NO_user(self):
         response = self.client.get(reverse('story_preview', kwargs={'uidb36': self.experience.hash_url.split('-')[0],'token': self.experience.hash_url.split('-')[1]}))
         self.assertEquals(response.status_code, 403)
-
+    
+    #private, logged with owner
     def test_existing_experience_WITH_user(self):
-        self.client.login(username='coop.eater@alice.it', password='berlino')
+        self.client.login(username=self.user.username, password='berlino')
+        response = self.client.get(reverse('story_preview', kwargs={'uidb36': self.experience.hash_url.split('-')[0],'token': self.experience.hash_url.split('-')[1]}))
+        self.assertEquals(response.status_code, 200)
+
+    #private, logged but not owner
+    def test_existing_experience_WITH_user_BUT_NOT_owner(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(reverse('story_preview', kwargs={'uidb36': self.experience.hash_url.split('-')[0],'token': self.experience.hash_url.split('-')[1]}))
+        self.assertEquals(response.status_code, 403)
+    
+    #public, not logged
+    def test_existing_experience_NO_user_BUT_public(self):
+        self.experience.public = True
+        self.experience.save()
+        response = self.client.get(reverse('story_preview', kwargs={'uidb36': self.experience.hash_url.split('-')[0],'token': self.experience.hash_url.split('-')[1]}))
+        self.assertEquals(response.status_code, 200)
+
+    #public, logged with owner
+    def test_existing_experience_NO_user_BUT_public(self):
+        self.experience.public = True
+        self.experience.save()
+        self.client.login(username=self.user.username, password='berlino')
+        response = self.client.get(reverse('story_preview', kwargs={'uidb36': self.experience.hash_url.split('-')[0],'token': self.experience.hash_url.split('-')[1]}))
+        self.assertEquals(response.status_code, 200)
+        
+    #public, logged but not owner
+    def test_existing_experience_NO_user_BUT_public(self):
+        self.experience.public = True
+        self.experience.save()
+        self.client.login(username='admin', password='admin')
         response = self.client.get(reverse('story_preview', kwargs={'uidb36': self.experience.hash_url.split('-')[0],'token': self.experience.hash_url.split('-')[1]}))
         self.assertEquals(response.status_code, 200)
 
