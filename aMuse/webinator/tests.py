@@ -147,7 +147,6 @@ class StoryPreview(TestCase):
         self.client = Client()
         self.user = User.objects.get(username='coop.eater@alice.it')
         self.experience = Experience.objects.get(pk=1)
-        self.experience.user.set_password('berlino')
         self.experience.user.is_active = True
         self.experience.user.save()
 
@@ -161,7 +160,7 @@ class StoryPreview(TestCase):
         self.assertEquals(response.status_code, 403)
 
     def test_existing_experience_WITH_user(self):
-        self.client.login(username=self.experience.user.username, password='berlino')
+        self.client.login(username='coop.eater@alice.it', password='berlino')
         response = self.client.get(reverse('story_preview', kwargs={'uidb36': self.experience.hash_url.split('-')[0],'token': self.experience.hash_url.split('-')[1]}))
         self.assertEquals(response.status_code, 200)
 
