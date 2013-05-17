@@ -18,13 +18,13 @@
 
 
 </script>
-
+<style type="text/css">
+    .nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus{
+        background-color:#f5f5f5 ;
+    }
+</style>
     <div class="modal-header document" style="text-align: center; background: #f5f5f5" >
-        <h3 id="title"></h3>
-    </div>
-    <div class="modal-body">
-        <div class="tabbable tabs-left">
-        {% if item.scan %}
+                {% if item.scan %}
             <ul id="myTab" class="nav nav-tabs">
                 <li class="active">
                     <a href="#photo" data-toggle="tab">Photo</a>
@@ -36,21 +36,28 @@
 
             </ul>
         {% endif %}
+    </div>
+    <div class="modal-body">
+        <div class="tabbable tabs-below">
             <div  class="tab-content">
-                <div id="photo" class="tab-pane active">
+                <div id="photo" class="tab-pane active pagination-centered">
                     <div class="row-fluid test">
                         {% thumbnail item.photo "300x300" as im %}
-                            <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
+                            <img style="padding-right: 10px"  src="{{ im.url }}" />
                         {% endthumbnail %}
-                            <textarea style="text-align: left; width: 300px" class="comment" rows="3">{{ item.comment.content }}</textarea>
+                    <br/>
+                            <textarea style="text-align: left;" width=""  class="comment" rows="3">{{ item.comment.content }}</textarea>
                      </div> <!-- /row fluid -->
-                    <button id="save_btn" data-pk="{{ item.pk }}" class="btn  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
-                    <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
+
                 </div>
                 <div id="description" class="tab-pane">
                 </div>
 
             </div>
         </div> <!-- /tabbable -->
+    </div>
+    <div class="modal-footer">
+        <button id="save_btn" data-pk="{{ item.pk }}" class="btn  btn-warning save" data-dismiss="modal" aria-hidden="true">Save</button>
+        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
 
