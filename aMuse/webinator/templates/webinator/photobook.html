@@ -7,7 +7,7 @@
 
     <meta property="og:title" content="aMuse Photobook" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="{{ site_url }}{{ MEDIA_URL }}{% static "img/timeline/logo.png" %}" />
+    <meta property="og:image" content="{{ site_url }}{{ MEDIA_URL }}{% static "img/logo-aTeam.png" %}" />
     <meta property="og:description" content="Take a look at my aMuse experience" />
 {% endblock %}
 {% block extrastyle %}
@@ -50,17 +50,20 @@
 {% block container %}
 
 <div id="impress">
+    <div id="0" class="step" data-x="-4000" data-y="-2000" data-rotate="0" data-scale="4">
+        <h1>Here your eXperience begins..</h1>
+    </div>
     {% for obj in action_list %}
         {% if forloop.counter0|module:5 == 0 %}
-            <div id="{{ forloop.counter0 }}" class="step" data-x="{{ forloop.counter0|mult:20000 }}" data-y="{{ forloop.counter0|mult:-1000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
+            <div id="{{ forloop.counter0|add:1 }}" class="step" data-x="{{ forloop.counter0|mult:20000 }}" data-y="{{ forloop.counter0|mult:-1000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
         {% elif forloop.counter0|module:5 == 1 %}
-            <div id="{{ forloop.counter0 }}" class="step" data-x="{{ forloop.counter0|mult:16000 }}" data-y="{{ forloop.counter0|mult:-2000 }}" data-rotate="{{ forloop.counter0|mult:200 }}" data-scale="4">
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:16000 }}" data-y="{{ forloop.counter0|mult:-2000 }}" data-rotate="{{ forloop.counter0|mult:200 }}" data-scale="4">
         {% elif forloop.counter0|module:5 == 2 %}
-            <div id="{{ forloop.counter0 }}" class="step" data-x="{{ forloop.counter0|mult:1000 }}" data-y="{{ forloop.counter0|mult:-4000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:1000 }}" data-y="{{ forloop.counter0|mult:-4000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
         {% elif forloop.counter0|module:5 == 3 %}
-            <div id="{{ forloop.counter0 }}" class="step" data-x="{{ forloop.counter0|mult:7000 }}" data-y="{{ forloop.counter0|mult:-6000 }}" data-rotate="{{ forloop.counter0|mult:200 }}" data-scale="4">
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:7000 }}" data-y="{{ forloop.counter0|mult:-6000 }}" data-rotate="{{ forloop.counter0|mult:200 }}" data-scale="4">
         {% else%}
-            <div id="{{ forloop.counter0 }}" class="step" data-x="{{ forloop.counter0|mult:12000 }}" data-y="{{ forloop.counter0|mult:-9000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:12000 }}" data-y="{{ forloop.counter0|mult:-9000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
         {% endif %}
         <center>
         {% if obj.scan %}
@@ -94,10 +97,7 @@
     {% endfor %}
     <div id="tiny" class="step" data-x="6000" data-y="2325" data-z="-5000" data-rotate="300" data-scale="1">
         <h2>Created by<strong> aTeam</strong></h2>
-        <img src="{% static "img/timeline/logo.png" %}" style="width: 400px"/>
-        <p style="color: red">In attesa del logo ultimato!</p>
-        <h2 style="color: red">Quindi in attesa di Sosi!!! </h2>
-        <p style="color: red">un'attesa che potrebbe durare anni, anni e molti anni ancora</p>
+        <img src="{% static "img/logo-aTeam.png" %}" style="width: 400px"/>
         <button class="btn btn-large btn-primary btn-warning" onclick="window.location.href='{% url 'index' %}'">Back to Home</button>
     </div>
 

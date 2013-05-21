@@ -43,10 +43,10 @@
                 <div id="photo" class="tab-pane active pagination-centered">
                     <div class="row-fluid test">
                         {% thumbnail item.photo "300x300" as im %}
-                            <img style="padding-right: 10px"  src="{{ im.url }}" />
+                            <img style="padding-right: 10px; padding-bottom: 10px"  src="{{ im.url }}" />
                         {% endthumbnail %}
                     <br/>
-                            <textarea style="text-align: left;" width=""  class="comment" rows="3">{{ item.comment.content }}</textarea>
+                            <textarea style="text-align: left;"  class="comment" rows="3">{{ item.comment.content }}</textarea>
                      </div> <!-- /row fluid -->
 
                 </div>

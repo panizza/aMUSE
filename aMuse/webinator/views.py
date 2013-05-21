@@ -70,7 +70,7 @@ def qr_code_generator(request):
     Generate the qr code (experiences validator) and put it into the db.
     :param request: the standard request given by Django
     """
-    interval_sec = 60 #24 * 60 * 60 # 24h
+    interval_sec = 24 * 60 * 60 # 24h
     size = 500
     if SuperQRCode.objects.count() < 1:
         qr = create_qr(datetime.now(), (date.today() - date(2001, 1, 1)).days)
