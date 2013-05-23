@@ -48,13 +48,115 @@
 {% endblock %}
 {% block extrascript %}
     <script src="{% static "js/jquery.timelinr-0.9.52.js" %}" ></script>
+    <script src="{% static "js/utils.js" %}" ></script>
     <script>
-        $(function(){
-           $(".visit").click(function(){
-                $("#visit_title").text(this.text);
-           });
+    $(function(){
+        $(document).ready(function(){
+                $("#exp_menu").hide();
         });
-    </script>
+        $(".visit").click(function(){
+                   var id= $(this).closest("li").data("pk");
+
+
+                    setTitle($("#visit_title"),this.text);
+                    $("#exp_menu").show();
+                    $("#gallery-content").data("pk",id);
+                    $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
+
+                    var url = "{% url 'show_preview' 123 %}".replace(123,id);
+                    $("#preview").attr("href",url);
+                }
+        );
+        $('.visit-closed').click(function(){
+            var pk = $(this).parent().data('pk');
+
+            setTitle($("#visit_title"),this.text);
+            $("#gallery-content").load("{% url 'preview_experience' 4269 %}".replace(4269,pk));
+        });
+        $(".ui-icon-trash").click(function(){
+            li = $(this).closest("li");
+            var pk=li.data("pk");
+            console.log(pk);
+
+
+            var result = $.get("experience/"+pk+"/delete/",function(response){console.log(response);})
+                        .fail(function(){
+                            $("#gallery-content").load("{% url 'view_error' '1' %}");
+                            $(".hero-unit").css("background-color","#FFFFFF");
+                        })
+                        .success(function(){
+                            li.remove();
+                        });
+        });
+        $("#add-action").click(function(e){
+            e.preventDefault();
+            setElementActive($(this).closest("li"));
+            var pk = $("#gallery-content").data("pk");
+            if(pk) {
+                var url = "{% url 'add_new_action' 123 %}".replace(123,pk);
+                $(".hero-unit").css("background-color","#eeeeee");
+                $("#gallery-content").load(url, function() {
+                    $('#gallery-content>form').attr("action", url);
+                });
+            }
+            else {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+                $(".hero-unit").css("background-color","#FFFFFF");
+            }
+        });
+
+        $("#actions").click(function(e){
+            e.preventDefault();
+            setElementActive($(this).closest("li"));
+
+            var pk = $("#gallery-content").data("pk");
+
+            if(pk) {
+                var url = "{% url 'action_list' 123 %}".replace(123,pk);
+                $(".hero-unit").css("background-color","#eeeeee");
+                $("#gallery-content").load(url);
+            }
+            else {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+                $(".hero-unit").css("background-color","#FFFFFF");
+            }
+        });
+        $("#publish").click(function(e){
+            e.preventDefault();
+            setElementActive($(this).closest("li"));
+
+            var pk = $("#gallery-content").data("pk");
+
+            if(pk) {
+                var url ="{% url 'confirm_publish' 123 %}".replace(123,pk);
+                $("#gallery-content").load(url);
+                $(".hero-unit").css("background-color","#FFFFFF");
+
+            }
+            else {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+                $(".hero-unit").css("background-color","#FFFFFF");
+
+            }
+        });
+        $("#preview").click(function(){
+            //e.preventDefault();
+            setElementActive($(this).closest("li"));
+            var pk = $("#gallery-content").data("pk");
+
+            if(pk) {
+                $(".hero-unit").css("background-color","#eeeeee");
+                var url ="{% url 'preview_experience' 123 %}".replace(123,pk);
+            }
+            else {
+                $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123, 0));
+                $(".hero-unit").css("background-color","#FFFFFF");
+            }
+        });
+
+    });
+</script>
+
 {% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -63,7 +165,7 @@
 
 {% block state %}
     <div class="btn-group pull-right">
-        <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+        <button style="margin-right: 20px" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
             Hello, {{ user.username }}
         <span class="caret"></span>
         </button>
@@ -79,30 +181,6 @@
 
 {% block container %}
 
-<script>
-    $(function(){
-        $(".visit").click(function(){
-                    var id= $(this).closest("li").data("pk");
-                    $("#gallery-content").data("pk",id);
-                    $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
-                }
-        );
-        $(".ui-icon-trash").click(function(){
-            li = $(this).closest("li");
-            var pk=li.data("pk");
-            console.log(pk);
-
-
-            var result = $.get("experience/"+pk+"/delete/",function(response){console.log(response);})
-                        .fail(function(){
-                            $("#gallery-content").load("{% url 'view_error' '1' %}");
-                        })
-                        .success(function(){
-                            li.remove();
-                        });
-        });
-    });
-</script>
 
 <div class="container-fluid">
     <div class="row-fluid">
@@ -115,7 +193,7 @@
                     {% endfor %}
                     <li class="nav-header">Published visits</li>
                     {% for vis in visit_public %}
-                        <li><a class="visit-closed" data-pk={{ vis.pk }}>{{ vis.date }}</a></li>
+                        <li data-pk="{{ vis.pk }}"><a class="visit-closed"><span class="icon-globe"></span>{{ vis.date }}</a></li>
                     {% endfor %}
                 </ul>
             </div><!--/.well -->
@@ -124,7 +202,19 @@
 
         </script>
         <div class="span9">
-            <h1 id="visit_title">No visit selected</h1>
+            <div class="masthead">
+                    <ul id="exp_menu" class="nav nav-pills pull-right">
+                        <li class="active"><a id="actions" href="#">Actions</a></li>
+                        <li><a id="add-action" href="#">Add</a></li>
+                        <li><a id="publish" href="#">Publish</a></li>
+                        <li><a id="preview" href="#">Preview</a></li>
+                     </ul>
+                <h3 id="visit_title" class="muted">No visit selected</h3>
+                <hr>
+
+
+            </div>
+
             <div class="hero-unit content-container">
                 <div class="row">
                     <div id="gallery-content" class="ui-widget ui-helper-clearfix">

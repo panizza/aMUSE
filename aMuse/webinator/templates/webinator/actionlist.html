@@ -6,12 +6,12 @@
 <script>
     $(".open-modal").click(function(){
         var pk= $(this).data("pk");
-        console.log(pk);
-        var url = "{% url 'action_info' '123' %}".replace('123', pk)
+        var url = "{% url 'action_info' '123' %}".replace('123', pk);
+
         $.get(url, function(data) {
-            $('<div class="modal hide fade my_modal" style="width:600px">' + data + '</div>').modal()
+           $('<div class="modal hide fade my_modal" style="width:600px;height:auto">' + data + '</div>').modal()
                     .on('hide',function(){
-                        id = $("#gallery-content").data("pk");
+                        var id = $("#gallery-content").data("pk");
                         $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
                         $(this).remove();
                     })
@@ -19,13 +19,7 @@
         }).success(function() { $('input:text:visible:first').focus();
                 });
     });
-    $(".add-action").click(function(e){
-        e.preventDefault();
-        //var pk = $(this).data("pk");
-        $("#gallery-content").load("{% url 'add_new_action' exp_id %}", function(){
-            $('#gallery-content>form').attr("action", "{% url 'add_new_action' exp_id %}");
-        });
-    });
+
     $(".trash-action").click(function(){
     var pk= $(this).closest("div").data("pk");
     var trash = $(this);
@@ -56,10 +50,10 @@
             {% endif%}
                 <p>{{ obj.comment }}</p>
             {% if obj.scan != None %}
-                <a href="{{ obj.photo.url }}" title="View larger image" class="ui-icon ui-icon-zoomin open-modal"
+                <a title="View larger image" class="ui-icon ui-icon-zoomin open-modal"
                    data-pk="{{ obj.pk }}">View larger</a>
             {% else %}
-                <a href="{{ obj.photo.url }}" data-pk="{{ obj.pk }}" title="Edit item" class="ui-icon ui-icon-pencil open-modal">Edit this item</a>
+                <a data-pk="{{ obj.pk }}" title="Edit item" class="ui-icon ui-icon-pencil open-modal">Edit this item</a>
 
             {% endif %}
             <a title="Delete this image" class="ui-icon ui-icon-trash trash-action">Delete</a>
@@ -67,10 +61,4 @@
         </div><!-- span2 -->
     {% endfor %}
 
-
-{% if not public %}
-   <div class="row">
-        <button class="btn btn-large btn-info add-action"  aria-hidden="true" data-pk="{{ exp_id }}">Add new action</button>
-   </div><!-- row -->
-{% endif %}
 

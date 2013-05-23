@@ -3,6 +3,13 @@
 {% load amuse_math %}
 {% block title %}
 {% endblock %}
+{% block extrameta %}
+
+    <meta property="og:title" content="aMuse Photobook" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{ site_url }}{{ MEDIA_URL }}{% static "img/logo-aTeam.png" %}" />
+    <meta property="og:description" content="Take a look at my aMuse experience" />
+{% endblock %}
 {% block extrastyle %}
     <link href="{% static "css/impress-demo.css" %}" rel="stylesheet" />
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
@@ -18,9 +25,15 @@
         text-align: center;
         text-align: center;
         margin-top: 15px;
+        margin-bottom: 20px;
     }
     img{
         text-align: center;
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+    h2{
+        color:#ad6704;
     }
 
 
@@ -37,24 +50,33 @@
 {% block container %}
 
 <div id="impress">
+    <div id="0" class="step" data-x="-4000" data-y="-2000" data-rotate="0" data-scale="4">
+        <h1>Here your eXperience begins..</h1>
+    </div>
     {% for obj in action_list %}
-        {% if forloop.counter0|divisibleby:2 %}
-            <div id="{{ forloop.counter0 }}" class="step" data-x="{{ forloop.counter0|mult:4000 }}" data-y="-850" data-rotate="500" data-scale="6">
+        {% if forloop.counter0|module:5 == 0 %}
+            <div id="{{ forloop.counter0|add:1 }}" class="step" data-x="{{ forloop.counter0|mult:20000 }}" data-y="{{ forloop.counter0|mult:-1000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
+        {% elif forloop.counter0|module:5 == 1 %}
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:16000 }}" data-y="{{ forloop.counter0|mult:-2000 }}" data-rotate="{{ forloop.counter0|mult:200 }}" data-scale="4">
+        {% elif forloop.counter0|module:5 == 2 %}
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:1000 }}" data-y="{{ forloop.counter0|mult:-4000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
+        {% elif forloop.counter0|module:5 == 3 %}
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:7000 }}" data-y="{{ forloop.counter0|mult:-6000 }}" data-rotate="{{ forloop.counter0|mult:200 }}" data-scale="4">
         {% else%}
-            <div id="{{ forloop.counter0 }}" class="step" data-x="{{ forloop.counter0|mult:4000 }}" data-y="200" data-rotate="300" data-scale="6">
+            <div id="{{ forloop.counter0|add:1  }}" class="step" data-x="{{ forloop.counter0|mult:12000 }}" data-y="{{ forloop.counter0|mult:-9000 }}" data-rotate="{{ forloop.counter0|mult:100 }}" data-scale="4">
         {% endif %}
         <center>
         {% if obj.scan %}
             <h1>{{ obj.scan.content.title }}</h1>
             {%if obj.photo %}
-                {% thumbnail obj.scan.content.photo "200x200" as im %}
+                {% thumbnail obj.scan.content.photo "350x350" as im %}
                     <img style="padding-right: 10px" src="{{ im.url }}" />
                 {% endthumbnail %}
-                {% thumbnail obj.photo "200x200" as im %}
+                {% thumbnail obj.photo "350x350" as im %}
                     <img style="padding-right: 10px" src="{{ im.url }}" />
                 {% endthumbnail %}
             {% else %}
-                {% thumbnail obj.scan.photo.content "400x400" as im %}
+                {% thumbnail obj.scan.photo.content "350x350" as im %}
                     <legend>
                         {{ obj.scan.content.title }}
                     </legend>
@@ -63,23 +85,20 @@
             {% endif %}
             <p>{{ obj.scan.content.description }}</p>
         {% elif obj.photo %}
-            {% thumbnail obj.photo "400x400" as im %}
+            {% thumbnail obj.photo "350x350" as im %}
                 <img style="padding-right: 10px" src="{{ im.url }}" />
             {% endthumbnail %}
         {% endif %}
         {% if obj.comment %}
-            <p>{{ obj.comment.content }}</p>
+            <h3>Comment: {{ obj.comment.content }}</h3>
         {% endif %}
         </center>
     </div>
     {% endfor %}
-    <div id="tiny" class="step" data-x="2025" data-y="2325" data-z="-3000" data-rotate="300" data-scale="1">
+    <div id="tiny" class="step" data-x="6000" data-y="2325" data-z="-5000" data-rotate="300" data-scale="1">
         <h2>Created by<strong> aTeam</strong></h2>
-        <img src="{% static "img/timeline/logo.png" %}" style="width: 400px"/>
-        <p style="color: red">In attesa del logo ultimato!</p>
-        <h2 style="color: red">Quindi in attesa di Sosi!!! </h2>
-        <p style="color: red">un'attesa che potrebbe durare anni, anni e molti anni ancora</p>
-        <button class="btn btn-large btn-primary btn-warning" onclick="window.location.href='localhost:8000/webinator/'">Back to Home</button>
+        <img src="{% static "img/logo-aTeam.png" %}" style="width: 400px"/>
+        <button class="btn btn-large btn-primary btn-warning" onclick="window.location.href='{% url 'index' %}'">Back to Home</button>
     </div>
 
 </div>

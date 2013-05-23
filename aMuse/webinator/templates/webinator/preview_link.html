@@ -1,0 +1,17 @@
+{% load url from future %}
+{% load amuse_math %}
+{% load staticfiles %}
+
+
+<center>
+    <a href="http://goo.gl/Rg5jc" id="text">http://goo.gl/Rg5jc</p>
+        <br>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ site_url }}{% url 'story_preview' exp.hash_url|get_uidb36 exp.hash_url|get_token %}">
+        <img src="{{ MEDIA_URL }}{% static 'img/fb.png' %}">
+    </a>
+
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://panizza1.dyndns.org:8888/webinator/story/2-356a192b7913b04c54574d18c28d46e6395428ab/" data-count="none">
+        <img src="{{ MEDIA_URL }}{% static 'img/twitter.png' %}" />
+    </a>
+
+</center>

@@ -13,11 +13,10 @@ from sorl.thumbnail import get_thumbnail
 
 @ajax(require="GET", login_required=False)
 def get_item_info(request, hash_item):
-    """
-    Provides information regarding a specific object identified by id
+    """ Provides information regarding a specific object identified by id
     :rtype : application/json
     :param request: the standard request given by Django
-    :param id_item: the pk of an item instance
+    :param hash_item: the hash of an item instance
     """
 
     size = request.GET.get('size', 470)
@@ -35,8 +34,7 @@ def get_item_info(request, hash_item):
 @ajax(require="POST", login_required=False)
 @csrf_exempt
 def save_experience(request):
-    """
-    Save all the experience information receiver by a POST request
+    """ Save all the experience information receiver by a POST request
     :rtype : application/json
     :param request: the standard request given by Django
     """
@@ -69,14 +67,16 @@ def save_experience(request):
         }, 400
 
 
-######################################
-##### ONLY FOR DEBUG! DO NOT EDIT#####
-######################################
-@login_required
-def api_test_for_some_code(request):
-    pass
-
 @ajax(require="GET")
-def exhibition_list(self):
+def exhibition_list(request):
+    """ Return all the useful information for the client. Some fields will be excluded
+    :param request: the standard request given by Django
+    """
     exhibitions = Exhibit.objects.available()
-    return exhibitions.values, 200
+    toret = []
+    for ex in exhibitions:
+        a = model_to_dict(ex, exclude=['image', 'description', 'owner'])
+        a['date_begin'] = str(a['date_begin'])
+        a['date_end'] = str(a['date_end'])
+        toret.append(a)
+    return json.loads(json.dumps(toret)), 200
