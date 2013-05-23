@@ -4,13 +4,14 @@
         </div>
         <div class="modal-body">
             <div class="row-fluid">
-                    {% thumbnail item.photo "400x400" as im %}
+                    {% thumbnail item.photo "300x300" as im %}
                         <legend>
                             <strong>Author:</strong> {{ item.author }}
                             <strong>Release Date:</strong> {{ item.release_date }}
                         </legend>
                         <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
                     {% endthumbnail %}
+                <img src="http://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{item.tag }}" align="right" style="margin-top: -22px"/>
                 <p>{{ item.description }}</p>
 
 

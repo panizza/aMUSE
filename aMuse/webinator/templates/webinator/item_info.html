@@ -1,0 +1,13 @@
+{% load thumbnail %}
+<div class="modal-body">
+    <div class="row-fluid">
+            {% thumbnail item.photo "300x300" as im %}
+                <legend>
+                    <strong>Author:</strong> {{ item.author }}
+                </legend>
+                <img style="padding-right: 10px" align="left" src="{{ im.url }}" />
+            {% endthumbnail %}
+        <p>{{ item.description }}</p>
+    </div>
+</div>
+

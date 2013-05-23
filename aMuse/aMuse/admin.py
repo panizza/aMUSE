@@ -1,5 +1,5 @@
 from django.contrib import admin
-from basetyzer.models import Item, Exhibit, Experience, Action, Photo
+from basetyzer.models import Item, Exhibit, Experience, Action, Photo, Comment
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
 from sorl.thumbnail.admin import AdminImageMixin
@@ -28,7 +28,7 @@ class ExtraUserAdmin(UserAdmin):
 class ExhibitAdmin(AdminImageMixin, admin.ModelAdmin):
     fieldsets = (
         (
-            'Exhibition', dict(fields=['name', 'description', 'image'])
+            'Exhibition', dict(fields=['name', 'description', 'image', 'scan_limit'])
         ),
         (
             'Dates', dict(fields=['date_begin', 'date_end'])
@@ -38,7 +38,7 @@ class ExhibitAdmin(AdminImageMixin, admin.ModelAdmin):
         ),
     )
     list_filter = ['name']
-    list_display = ('name', 'my_description', 'date_begin', 'date_end', 'is_visitable', )
+    list_display = ('name', 'my_description', 'date_begin', 'date_end', 'is_visitable', 'scan_limit',)
     search_fields = ['name']
 
     def my_description(self, exhibit):
@@ -63,16 +63,20 @@ class ItemAdmin(AdminImageMixin, admin.ModelAdmin):
     )
     filter_horizontal = ['exhibit',]
     list_filter = ['exhibit', 'author']
-    list_display = ('title', 'description', 'author' )
+    list_display = ('title', 'description', 'author', 'qr', )
     search_fields = ['title', 'author']
     readonly_fields = ('tag',)
 
+    def qr(self, item):
+        return "<a href='http://chart.googleapis.com/chart?cht=qr&chs=500x500&chl="+item.tag+"'>Press me!</a>"
+    qr.short_description = "QRCode"
+    qr.allow_tags = True
 
 admin.site.register(Exhibit, ExhibitAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Experience)
-admin.site.register(Action)
-admin.site.register(Photo)
+#admin.site.register(Action)
+#admin.site.register(Photo)
 
 #$#CHEAT: disattivo la visualizzazione normale di user
 admin.site.unregister(User)

@@ -1,0 +1,64 @@
+{% load staticfiles %}
+{% load url from future %}
+{% load thumbnail %}
+
+<script src="{% static "js/image_viewer.js" %}" type="text/javascript"/>
+<script>
+    $(".open-modal").click(function(){
+        var pk= $(this).data("pk");
+        var url = "{% url 'action_info' '123' %}".replace('123', pk);
+
+        $.get(url, function(data) {
+           $('<div class="modal hide fade my_modal" style="width:600px;height:auto">' + data + '</div>').modal()
+                    .on('hide',function(){
+                        var id = $("#gallery-content").data("pk");
+                        $("#gallery-content").load("{% url 'action_list' 4269 %}".replace(4269,id));
+                        $(this).remove();
+                    })
+            ;
+        }).success(function() { $('input:text:visible:first').focus();
+                });
+    });
+
+    $(".trash-action").click(function(){
+    var pk= $(this).closest("div").data("pk");
+    var trash = $(this);
+
+    var result = $.get("action/"+pk+"/delete/")
+        .done(function(){
+            trash.closest("div").remove();
+        })
+        .fail(function(){
+            $("#gallery-content").load("{% url 'view_error' 123 %}".replace(123,"1"));
+        });
+});
+
+</script>
+<style type="text/css">
+    .items { float: left; width: 150px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center;font-size: 11pt;line-height: 14px }
+    .items  a { float: right; }
+    .items  a.ui-icon-zoomin { float: left; }
+    .items  a.ui-icon-pencil {float: left; }
+
+</style>
+    {% for obj in lista %}
+        <div class="span2 ui-widget-content items" data-pk="{{ obj.pk }}">
+            {% if obj.photo != None %}
+                {% thumbnail obj.photo "150x150" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
+            {% endif%}
+                <p>{{ obj.comment }}</p>
+            {% if obj.scan != None %}
+                <a title="View larger image" class="ui-icon ui-icon-zoomin open-modal"
+                   data-pk="{{ obj.pk }}">View larger</a>
+            {% else %}
+                <a data-pk="{{ obj.pk }}" title="Edit item" class="ui-icon ui-icon-pencil open-modal">Edit this item</a>
+
+            {% endif %}
+            <a title="Delete this image" class="ui-icon ui-icon-trash trash-action">Delete</a>
+
+        </div><!-- span2 -->
+    {% endfor %}
+
+

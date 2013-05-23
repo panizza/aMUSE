@@ -22,10 +22,12 @@ from django_rq.decorators import job
 def send_email(email, body, subject):
     if email_validator(email):
         try:
-            send_mail(subject, body, "no-reply@amux.net", [email], fail_silently=True)
+            send_mail(subject, body, "no-reply@amux.net", [email],
+                      fail_silently=True)
         except BadHeaderError:
             return 'failed'
     return 'success'
+
 
 def email_validator(email):
     """
